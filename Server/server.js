@@ -4,8 +4,8 @@ require('dotenv').config();
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan')
-const connect = require("./config/mongodb");
-const userRoute=require("./routes/userRoute")
+const connect = require("./infrastructure/config/mongodb");
+const userRoute=require("./interface/routes/userRoute")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
