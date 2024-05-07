@@ -9,6 +9,6 @@ Router.post('/otp-verify',otpController.verifyOtp)
 Router.post('/login',userController.userLogin)
 Router.post('/forget_pass_req',userController.forgetpassword)
 Router.post('/newpassword',userController.newpass_reset)
-
+Router.post('/resend-otp',otpController.resend_otp)
 
 module.exports = Router

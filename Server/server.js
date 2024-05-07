@@ -15,6 +15,7 @@ app.use(cors({
     credentials:true
 }));
 
+
 connect();
 // Route middleware
 app.use('/api',userRoute)

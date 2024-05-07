@@ -3,34 +3,39 @@ const {sendOTP}=require('./otpControl')
 const jwt = require("jsonwebtoken");
 const {hashdata, comparedata}=require('../util/Bcrypthash')
 
-const userSignup=async(req,res)=>{
-    try{
-        console.log("here")
+const userSignup = async (req, res) => {
+    try {
+        console.log("here====>",req.body)
         const { email, password, name } = req.body;
         if (!email || !password || !name) {
-            res.status(400)
-            throw new Error('Missing credentials')
+            res.status(400).json({ message: 'Missing credentials' }); 
+            return; 
         }
         const exist = await User.findOne({ email: email });
         console.log(exist)
         if (exist) {
-            if(exist.is_verified){
-                res.status(400)
-                throw new Error('Email id already exist')
-            }else{
-                await sendOTP(email)
-            }  
-        } else{
-        await new User({
-            email,password,name
-        }).save()  
-        await sendOTP(email);
-       }
-       return res.status(200).json({ message: "OTP sent" });    
-    }catch(error){
-        console.log(error.message)
+            if (exist.is_verified) {
+                console.log("email already exist ")
+               return res.json({ message: "Email exists!" }); 
+            } else {
+                console.log("otp send")
+                await sendOTP(email);
+               return res.status(200).json({ message: "OTP sent" }); 
+            }
+        } else {
+            await new User({
+                email, password, name
+            }).save();
+            console.log("new user saved and otp send")
+            await sendOTP(email);
+          return  res.status(200).json({ message: "OTP sent" }); 
+        }
+    } catch (error) {
+        console.log(error.message,"error caught");
+       return res.status(500).json({ message: "Server Error" }); 
     }
 }
+
 
 const userLogin = async (req, res) => {
     try {
@@ -73,7 +78,7 @@ const userLogin = async (req, res) => {
 const forgetpassword=async (req,res)=>{
     try{
         const {email}=req.body
-        userexist=await User.findOne({email:email})
+       const  userexist=await User.findOne({email:email})
         if(!userexist){
             res.status(404).json({message:"Email not found"})
         }else{
@@ -87,12 +92,14 @@ const forgetpassword=async (req,res)=>{
 }
 const newpass_reset=async (req,res)=>{
     try{
-        const{email,newpassword}=req.body
+        console.log(req.body,"==<>")
+        const{email,password}=req.body
         const userexist=await User.findOne({email:email})
+        console.log(userexist)
         if(!userexist){
             res.status(400).json({message:"user not found"})
         }else{
-            hashedpassword=await hashdata(newpassword)
+            hashedpassword=await hashdata(password)
             await User.updateOne({email:email},{password: hashedpassword})
             res.status(200).json({message:"Password changed.."})
         }

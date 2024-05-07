@@ -56,8 +56,8 @@ const verifyOtp = async (req, res) => {
                 res.status(200).json({message:"Successfully Registered.."})
                 }
             } else {
-                res.status(400)
-                throw new Error('OTP not matched')
+                res.status(400).json({message:"Otp not matched"})
+                
             }
         } else {
             res.status(404);
@@ -68,10 +68,26 @@ const verifyOtp = async (req, res) => {
     }
 }
 
+const resend_otp=async(req,res)=>{
+    try{
+        console.log("here")
+        const{email}=req.body
+        if(email){
+            console.log("email sended")
+            sendOTP(email)
+            res.status(200).json({message:"Otp resended.."})
+        }else{
+            res.status(400).json({message:"No credential"})
+        }
 
+    }catch(e){
+        console.log(e.message)
+    }
+}
 
 
 module.exports={
     sendOTP,
-    verifyOtp
+    verifyOtp,
+    resend_otp
 }
