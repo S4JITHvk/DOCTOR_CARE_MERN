@@ -41,7 +41,6 @@ const userLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
         const userExist = await User.findOne({ email: email });
-        
         if (!userExist) {
             res.status(404).json({ message: "User not found" });
             return;
@@ -108,11 +107,32 @@ const newpass_reset=async (req,res)=>{
         console.log(err.message)
     }
 }
+const fetchData = async (req, res) => {
+    try {
+      const token = req.cookies.token;
+      console.log(token,"===>token")
+      if (!token) {
+        return res.status(401).json({ error: "Unauthorized1" });
+      }
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      if (!verified) {
+        return res.status(401).json({ error: "Unauthorized2" });
+      }
+      const data = await User.findById(verified.user);
+      if (!data) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.status(200).json({data});
+    } catch (error) {
+      console.error("error while fetch data:", error);
+    }
+  };
              
 
 module.exports={
     userSignup,
     userLogin,
     forgetpassword,
-    newpass_reset
+    newpass_reset,
+    fetchData 
 }

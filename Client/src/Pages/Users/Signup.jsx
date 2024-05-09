@@ -60,7 +60,7 @@ function Signup() {
     if (isEmpty(userData.email)) {
       errors.emailred = true;
       errorMessages.emailerr = "Email can't be empty";
-    } else if (isEmailValid(userData.email)) { 
+    } else if (!isEmailValid(userData.email)) { 
       errors.emailred = true;
       errorMessages.emailerr = "Enter a valid email";
     }
