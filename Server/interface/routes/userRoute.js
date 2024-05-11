@@ -11,5 +11,5 @@ Router.post('/forget_pass_req',userController.forgetpassword)
 Router.post('/newpassword',userController.newpass_reset)
 Router.post('/resend-otp',otpController.resend_otp)
 Router.get('/fetchuser',userController.fetchData)
-
+Router.get('/logout',userController.logout)
 module.exports = Router

@@ -1,7 +1,11 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-
+import { useSelector } from 'react-redux'
+import { clearUser} from "../../ReduxStore/features/userSlice"
+import Api from "../../API/DoctorCareApi"
+import { useDispatch } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 const navigation = [
   { name: 'Home', href: '/home', current: true },
   { name: 'Doctors', href: '', current: false },
@@ -13,7 +17,20 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header() {
+function Header() {
+  const user=useSelector((state)=>state.user)
+  const dispatch=useDispatch()
+  const logout=async()=>{
+      try{
+        let response=await Api.get('/logout')
+        if(response.status===200){
+             dispatch(clearUser())
+             Navigate('/login')
+        }
+      }catch(err){
+        console.log(err)
+      }
+  }
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -74,11 +91,7 @@ export default function Header() {
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                      <h2 className="text-white">{user.user.name}</h2>
                     </Menu.Button>
                   </div>
                   <Transition
@@ -114,7 +127,7 @@ export default function Header() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                           onClick={logout}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out
@@ -151,3 +164,5 @@ export default function Header() {
     </Disclosure>
   )
 }
+
+export default Header

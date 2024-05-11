@@ -24,7 +24,7 @@ const userSignup = async (req, res) => {
             }
         } else {
             await new User({
-                email, password, name
+                name,email, password
             }).save();
             console.log("new user saved and otp send")
             await sendOTP(email);
@@ -127,12 +127,20 @@ const fetchData = async (req, res) => {
       console.error("error while fetch data:", error);
     }
   };
-             
+  const logout = (req, res) => {
+    try{
+        res.clearCookie("token").status(200).json({ message: "Logged out" });
+    }catch(err){
+        console.log(err.message)
+    }
+   
+  };          
 
 module.exports={
     userSignup,
     userLogin,
     forgetpassword,
     newpass_reset,
-    fetchData 
+    fetchData ,
+    logout 
 }
