@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Api from "../../API/DoctorCareApi";
-import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import {clearUser} from "../../ReduxStore/features/userSlice"
-import { useDispatch } from 'react-redux';
 import toast, { Toaster } from "react-hot-toast";
 import { useLocation } from 'react-router-dom';
 function Otp() {
-  const dispatch=useDispatch()
-  const userdata=useSelector(state => state.user)
+  
+
   const navigate=useNavigate()
   const [otp, setOtp] = useState(['', '', '', '']);
   const [errors, setErrors] = useState(Array(4).fill(false));
@@ -60,8 +57,8 @@ function Otp() {
     }
     try {
       const {state}=location
+      console.log(state,"==>state")
       if(state && state.action==="forgot_pass"){
-        console.log("reset pass reqest")
         const email=state.email
         const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email,action:state.action });
         if(response.status===200){
@@ -70,12 +67,10 @@ function Otp() {
           setErrorMessage("Otp Not Matched! Request denied");
         }
       }else{
-        console.log("registation send")
-      const response = await Api.post("/otp-verify", { otp: enteredOtp,email:userdata.user.email });
+      const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email });
       console.log(response.data,"===>")
       if (response.status === 200) {
         toast("Successfully Registered")
-       dispatch(clearUser())
         navigate('/login');
       } else if(response.status===400) {
         setErrorMessage("Otp Not Matched! Request denied");

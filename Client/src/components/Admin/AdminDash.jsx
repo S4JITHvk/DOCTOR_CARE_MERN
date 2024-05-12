@@ -1,11 +1,10 @@
 import React from 'react'
-import Adminhead from '../../components/Admin/Adminhead'
 
 function AdminDash() {
   return (
-    <>
-    <Adminhead/>
-    </>
+    <div>
+      <h1>Dashboard</h1>
+            </div>
   )
 }
 

@@ -99,8 +99,7 @@ function Signup() {
         });
         console.log(response.data, '=======>');
         if (response.data.message === "OTP sent") {
-          dispatch(setUser(userData));
-          navigate('/Otp');
+          navigate('/otp',{ state: { email:userData.email } });
         } else if (response.data.message === "Email exists!") {
           toast.error("Email already exists!");
           setError((previous) => ({

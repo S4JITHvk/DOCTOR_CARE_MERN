@@ -1,21 +1,36 @@
+import { lazy, Suspense } from "react"
 import { Routes, Route, Navigate } from "react-router-dom";
-import UsersList from "../../components/Admin/UsersList";
-import DoctorsList from "../../components/Admin/DoctorsList";
-import ApprovalsList from "../../components/Admin/Approvals";
-import AppointmentsList from "../../components/Admin/Appointments";
-import Dashboard from "../../Pages/Admin/AdminDash";
-
+import Loader from "../../components/Loader/Loader";
+const UsersList = lazy(() => import("../../components/Admin/UsersList"));
+const  DoctorsList = lazy(() => import("../../components/Admin/DoctorsList"));
+const ApprovalsList = lazy(() => import("../../components/Admin/Approvals"));
+const AppointmentsList = lazy(() => import("../../components/Admin/Appointments"));
+const   Siderbar = lazy(() => import("../../Pages/Admin/AdminHome"));
+const Adminhead=lazy(()=>import("../../components/Admin/Adminhead"))
+const AdminDash=lazy(()=>import("../../components/Admin/AdminDash"))
 function AdminRoutes() {
   return (
-    <div>
-      <Dashboard />
-      <Routes>
-        <Route path="/admin/userList" element={<UsersList />} />
-        <Route path="/admin/doctors" element={<DoctorsList />} />
-        <Route path="/admin/approvals" element={<ApprovalsList />} />
-        <Route path="/admin/appointments" element={<AppointmentsList />} />
-      </Routes>
+    <>
+    <div className="grid grid-cols-12 h-screen bg-background">
+    <div className="col-span-2 text-text">
+      <Siderbar/>
     </div>
+    <div className="col-span-10">
+    <div className="col-span-12 ">
+    <Adminhead />
+    </div>
+    <Suspense fallback={<Loader />}>
+      <Routes>  
+        <Route path="/" element={<AdminDash/>} />
+        <Route path="/userList" element={<UsersList />} />
+        <Route path="/doctors" element={<DoctorsList />} />
+        <Route path="/approvals" element={<ApprovalsList />} />
+        <Route path="/appointments" element={<AppointmentsList />} />
+      </Routes>
+      </Suspense>
+    </div>
+    </div>
+    </>
   );
 }
 

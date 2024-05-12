@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux'
 import { clearUser} from "../../ReduxStore/features/userSlice"
 import Api from "../../API/DoctorCareApi"
 import { useDispatch } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 const navigation = [
   { name: 'Home', href: '/home', current: true },
-  { name: 'Doctors', href: '', current: false },
+  { name: 'Doctors', href: '/Doctors', current: false },
   { name: 'Hospitals', href: '', current: false },
   { name: 'About us', href: '', current: false },
 ]
@@ -18,12 +18,14 @@ function classNames(...classes) {
 }
 
 function Header() {
+  const Navigate = useNavigate();
   const user=useSelector((state)=>state.user)
   const dispatch=useDispatch()
   const logout=async()=>{
       try{
         let response=await Api.get('/logout')
         if(response.status===200){
+          console.log("here noww")
              dispatch(clearUser())
              Navigate('/login')
         }
@@ -91,7 +93,7 @@ function Header() {
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <h2 className="text-white">{user.user.name}</h2>
+                      <h2 className="text-white">{user.user?.name}</h2>
                     </Menu.Button>
                   </div>
                   <Transition

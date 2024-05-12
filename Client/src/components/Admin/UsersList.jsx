@@ -28,7 +28,7 @@ function UsersList() {
 
   return (
     <>
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg ml-64 mt-35">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg ml-37 mr-20 mt-45">
       <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
         <label htmlFor="table-search" className="sr-only">Search</label>
         <div className="relative">

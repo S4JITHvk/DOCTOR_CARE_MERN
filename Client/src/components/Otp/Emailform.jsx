@@ -10,14 +10,14 @@ function EmailForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isEmailValid(email)) {
+    if (!isEmailValid(email)) {
       setErrorMessage('Please enter a valid email address.');
       return;
     }
     try {
       const response = await Api.post("/forget_pass_req", { email });
       if (response.status === 200) {
-        navigate('/Otp', { state: { email, action: "forgot_pass" } });
+        navigate('/otp', { state: { email, action: "forgot_pass" } });
       } else {
         setErrorMessage("Email not Found");
       }

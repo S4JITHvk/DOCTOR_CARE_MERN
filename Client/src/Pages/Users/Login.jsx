@@ -47,6 +47,7 @@ function Login() {
           const fetcheduser=await Api.get('/fetchuser')
           console.log(fetcheduser,"===>user data")
           if(fetcheduser){
+            localStorage.setItem('user', JSON.stringify(fetcheduser.data.data))
             dispatch(setUser(fetcheduser.data.data))
             navigate('/home')
           }
