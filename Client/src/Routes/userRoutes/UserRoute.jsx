@@ -9,6 +9,7 @@ const Otp= lazy(() => import("../../components/Otp/Otp"));
 const Email = lazy(() => import("../../components/Otp/Emailform"));
 const ResetPass = lazy(() => import("../../components/Otp/Newpass"));
 const Doctor=lazy(()=>import("../../components/Home/Doctors"))
+const Guest=lazy(()=>import("../../Pages/Users/Guest"))
 import { setUser } from "../../ReduxStore/features/userSlice";
 import Api from "../../API/DoctorCareApi";
 import AdminDash from "../../components/Admin/AdminDash"
@@ -18,11 +19,13 @@ import Loader from "../../components/Loader/Loader";
 
 
 function UserRoute() {
+ 
   return (
     <>
    <Suspense fallback={<Loader />}>
     <Routes>
     <Route element={<Authenticate />}>
+      <Route path="/" element={<Guest/>} />
       <Route path="/login" element={ <Login />} />
       <Route path="/usersignup" element={<Signup />} />
       <Route path="/otp" element={<Otp />} />
