@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux'
 import { clearUser} from "../../ReduxStore/features/userSlice"
 import Api from "../../API/DoctorCareApi"
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom' // Import Link from react-router-dom
+
 const navigation = [
   { name: 'Home', href: '/home', current: true },
   { name: 'Doctors', href: '/Doctors', current: false },
@@ -19,20 +20,22 @@ function classNames(...classes) {
 
 function Header() {
   const Navigate = useNavigate();
-  const user=useSelector((state)=>state.user)
-  const dispatch=useDispatch()
-  const logout=async()=>{
-      try{
-        let response=await Api.get('/logout')
-        if(response.status===200){
-          console.log("here noww")
-             dispatch(clearUser())
-             Navigate('/login')
-        }
-      }catch(err){
-        console.log(err)
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const logout = async () => {
+    try {
+      let response = await Api.get('/logout');
+      if (response.status === 200) {
+        console.log("here noww")
+        dispatch(clearUser());
+        Navigate('/login');
       }
-  }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -52,19 +55,18 @@ function Header() {
                 </Disclosure.Button>
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div className="flex flex-shrink-0 items-center">
-  <h1>
-    <span style={{ color: 'white' }}>Doctor</span> <span style={{ color: 'red' }}>Care</span>
-  </h1>
-</div>
-
+                <div className="flex flex-shrink-0 items-center">
+                  <h1>
+                    <span style={{ color: 'white' }}>Doctor</span> <span style={{ color: 'red' }}>Care</span>
+                  </h1>
+                </div>
 
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href} // Use `to` instead of `href` for Link
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
@@ -72,7 +74,7 @@ function Header() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -118,22 +120,23 @@ function Header() {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            to="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Settings
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                           onClick={logout}
+                          <Link 
+                            to="#" 
+                            onClick={logout}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                     </Menu.Items>

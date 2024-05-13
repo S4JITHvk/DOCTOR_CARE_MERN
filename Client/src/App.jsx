@@ -1,36 +1,36 @@
 import { Route, Routes } from 'react-router-dom';
 import React,{useEffect} from "react";
 import UserRoute from "./Routes/userRoutes/UserRoute"
-import AdminRoutes from "./Routes/adminRoutes/AdminRoutes";
+import AdminRoutes from "./Routes/AdminRoutes/AdminRoutes";
 import Protect from './components/Auth/Protect';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './ReduxStore/features/userSlice';
 import Api from "./API/DoctorCareApi"
+import  { Toaster } from "react-hot-toast";
+import Doctorroute from './Routes/DoctorRoutes/Doctorroute';
 function App() {
   const dispatch=useDispatch()
-  const userData=useSelector((state)=>state.user)
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await Api.get('/fetchuser');
-        console.log(response.data,"==>mount")
         dispatch(setUser(response.data.data)); 
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
-  if(!userData.user){
-    fetchUser();
-  }  
+    fetchUser(); 
   }, [dispatch]);
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
     <Routes>
      <Route element={<Protect role="ADMIN"/>}>
           <Route path={"/admin/*"} element={<AdminRoutes />} />
      </Route>
      <Route path={"/*"} element={<UserRoute />} />
+     <Route path={"/doctor/*"} element={<Doctorroute/>} />
      </Routes>
     </>
   );

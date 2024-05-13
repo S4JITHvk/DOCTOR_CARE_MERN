@@ -10,7 +10,7 @@ const features = [
   {
     name: 'Sleepless',
     description:
-      `Struggling with sleeplessness can take a toll on your physical and mental well-being, but you don't have to face it alone. At Doctor Care, we recognize the impact of insomnia and the importance of quality sleep for overall health. Our Doctor Care app offers a range of solutions and support tailored to address your specific sleep concerns`,
+      `Struggling with sleeplessness can take a toll on your physical and mental well-being, but you don't have to face it alone. At Doctor Care, we recognize the impact of insomnia and the importance of quality sleep for overall health. `,
     icon: LockClosedIcon,
   },
   {
@@ -29,14 +29,17 @@ const features = [
 
 export default function Example() {
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div
+    id="home"
+    className="relative overflow-hidden bg-gradient-r from-[#3e1734] to-background pt-[120px] pb-[120px] md:pt-[120px] lg:pt-[160px]"
+  >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h1 className="text-base font-semibold leading-7 text-indigo-600">DOCTOR CARE</h1>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Make your mind being fresh..
           </p>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 font-bold text-gray-600">
           Whether you suffer from daily depression or get bouts of depressed feelings, it's important to remember you're not alone in your mental health ,"Doctor Care" is here to feel your pain and care for you.
           </p>
         </div>
@@ -46,16 +49,22 @@ export default function Example() {
               <div key={feature.name} className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
                   <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                    <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                    <feature.icon className="h-6 w-6 text-white font-bold" aria-hidden="true" />
                   </div>
                   {feature.name}
                 </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-600">{feature.description}</dd>
+                <dd className="mt-2 text-base leading-7 font-bold text-gray-600">{feature.description}</dd>
               </div>
             ))}
           </dl>
         </div>
       </div>
+      <img
+            className="absolute top-0 opacity-20 left-0 w-full h-full object-cover"
+            src="https://wallpapercave.com/wp/wp10299388.jpg"
+            // src="https://media.newyorker.com/photos/64177e0c6534701061ec3f19/master/pass/Bing_Ani_Final_B_2A.gif"
+            alt=""
+          />
     </div>
   )
 }

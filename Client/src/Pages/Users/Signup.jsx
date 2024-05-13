@@ -3,6 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { setUser} from "../../ReduxStore/features/userSlice"
 import { useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
 import {
   isEmpty,
   isPasswordValid,
@@ -99,6 +100,7 @@ function Signup() {
         });
         console.log(response.data, '=======>');
         if (response.data.message === "OTP sent") {
+          toast.success("Enter otp send to your mail")
           navigate('/otp',{ state: { email:userData.email } });
         } else if (response.data.message === "Email exists!") {
           toast.error("Email already exists!");
@@ -273,12 +275,10 @@ function Signup() {
 
           <p className="mt-8 text-center text-sm text-gray-500">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Sign in
-            </a>
+            <Link to="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+  Sign in
+</Link>
+
           </p>
         </div>
       </div>

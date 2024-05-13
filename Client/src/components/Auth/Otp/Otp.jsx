@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Api from "../../API/DoctorCareApi";
+import Api from "../../../API/DoctorCareApi";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useLocation } from 'react-router-dom';
@@ -70,7 +70,7 @@ function Otp() {
       const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email });
       console.log(response.data,"===>")
       if (response.status === 200) {
-        toast("Successfully Registered")
+        toast.success("Successfully Registered")
         navigate('/login');
       } else if(response.status===400) {
         setErrorMessage("Otp Not Matched! Request denied");

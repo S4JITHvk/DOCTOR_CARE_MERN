@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Api from "../../API/DoctorCareApi";
-import {isEmailValid} from "../../../helpers/validation"
+import Api from "../../../API/DoctorCareApi";
+import {isEmailValid} from "../../../../helpers/validation"
 
 function EmailForm() {
   const [email, setEmail] = useState('');

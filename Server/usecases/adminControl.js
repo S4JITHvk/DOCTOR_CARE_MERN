@@ -15,5 +15,6 @@ if(fetchedata){
 
 
 module.exports={
-    usersFetch
+    usersFetch,
+    
 }

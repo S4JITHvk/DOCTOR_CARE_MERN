@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Api from "../../API/DoctorCareApi"
-
+import Api from "../../../API/DoctorCareApi"
+import toast from 'react-hot-toast';
 function Newpass() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -22,6 +22,7 @@ function Newpass() {
                 password: newPassword
             });
             if (response.status === 200) {
+                toast.success("Successfully Reset password.")
                 navigate('/login');
             } else {
                 setErrorMessage("Failed to reset password. Please try again.");
