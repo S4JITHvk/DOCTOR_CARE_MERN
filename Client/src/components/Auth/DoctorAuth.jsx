@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 function DoctorAuth() {
   const navigate = useNavigate();
   const doctor= useSelector((state) => state.doctor);
-  console.log(doctor,"===><in authin")
   useEffect(() => {
     if (doctor?.doctor) {
       navigate("/doctor");

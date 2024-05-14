@@ -48,7 +48,7 @@ const userLogin = async (req, res) => {
             res.status(401).json({ message: "User not verified" });
             return;
         } else if (userExist.is_banned) {
-            res.status(403).json({ message: "User is banned" });
+            res.status(403).json({ message: "Your Authorization Denied By Admin!." });
             return;
         } else {
             const isMatch = await comparedata(password, userExist.password);

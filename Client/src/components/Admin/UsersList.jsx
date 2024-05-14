@@ -1,26 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import Api from '../../API/DoctorCareApi';
+import toast from "react-hot-toast"
+
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const fetchData = async () => {
+    try {
+      const response = await Api('/admin/usersFetch');
+      if (response.status === 200) {
+        const filteredUsers = response.data.data.filter(user =>
+          user.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setUsers(filteredUsers);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Api('/admin/usersFetch');
-        if (response.status === 200) {
-          setUsers(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchData();
-  }, []);
+  }, [searchQuery]);
 
-  console.log(users, "===>list");
+  const handleBanUser = async (userid) => {
+    try {
+      const response = await Api.put(`/admin/banUser/${userid}`);
+      if (response.status === 200) {
+        fetchData();
+        toast.success(response.data.message);
+      } else {
+        console.log('Failed to ban user');
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   if (isLoading) {
     return <><h1>Fetching users...</h1></>;
@@ -29,6 +49,8 @@ function UsersList() {
   return (
     <>
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg ml-37 mr-20 mt-45">
+    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 ml-5">Users List</h1>
+
       <div className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
         <label htmlFor="table-search" className="sr-only">Search</label>
         <div className="relative">
@@ -37,7 +59,14 @@ function UsersList() {
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
           </div>
-          <input type="text" id="table-search-users" className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users"/>
+          <input 
+            type="text" 
+            id="table-search-users" 
+            className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+            placeholder="Search for users"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -53,10 +82,16 @@ function UsersList() {
               Joined
             </th>
             <th scope="col" className="px-6 py-3">
+              Updated
+            </th>
+            <th scope="col" className="px-6 py-3">
               Status
             </th>
             <th scope="col" className="px-6 py-3">
-              {/* Any additional headings */}
+              Role
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Ban/Unban
             </th>
           </tr>
         </thead>
@@ -66,13 +101,18 @@ function UsersList() {
               <td className="p-4">{user.name}</td>
               <td className="px-6 py-4">{user.email}</td>
               <td className="px-6 py-4">{new Date(user.createdAt).toLocaleDateString()}</td>
+              <td className="px-6 py-4">{new Date(user.updatedAt).toLocaleDateString()}</td>
               <td className="px-6 py-4">
                 {user.is_banned ? 'Inactive' : 'Active'}
              </td>
+             <td className="px-6 py-4">
+                {user.role}
+             </td>
               <td className="px-6 py-4">
                 <button
-                  className={`py-2 px-4 rounded ${user.is_banned ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
-                  onClick={() => handleBanUser(user.id)}
+                  className={`py-2 px-5 rounded ${user.is_banned ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+                  onClick={() => handleBanUser(user._id)}
+                  style={{ width: '100px' }} 
                 >
                   {user.is_banned ? 'Unblock' : 'Block'}
                 </button>

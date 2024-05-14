@@ -54,10 +54,13 @@ function Login() {
         if (error.response) {
           const { status, data } = error.response;
           if (status === 404) {
+            toast.error(data.message)
             setErrorMessage(data.message);
           } else if (status === 401) {
+            toast.error(data.message)
             setErrorMessage(data.message);
           } else if (status === 403) {
+            toast.error(data.message)
             setErrorMessage(data.message);
           } else {
             console.error('Login failed:', error.message);

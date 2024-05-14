@@ -16,7 +16,7 @@ app.use(cors({
     credentials:true
 }));
 
-
+app.use(morgan('dev'))
 connect();
 // Route middleware
 app.use('/api',userRoute)
