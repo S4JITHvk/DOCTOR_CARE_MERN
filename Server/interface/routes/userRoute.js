@@ -5,6 +5,7 @@ const otpController=require('../../usecases/otpControl')
 
 
 Router.post('/usersignup',userController.userSignup)
+Router.post('/google-login',userController.googleAuth)
 Router.post('/otp-verify',otpController.verifyOtp)
 Router.post('/login',userController.userLogin)
 Router.post('/forget_pass_req',userController.forgetpassword)

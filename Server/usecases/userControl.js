@@ -135,12 +135,45 @@ const fetchData = async (req, res) => {
     }
    
   };          
-
+  const googleAuth = async (req, res) => {
+    try {
+        const { email, name } = req.body;
+        let user = await User.findOne({ email: email });
+        console.log(user,"user")
+        if (user) {
+            if (user.is_banned) {
+                return res.status(403).json({ message: "Your Authorization is Denied By Admin!" });
+            }
+        } else {
+            const newUser = new User({
+                name: name,
+                email: email,
+                password: '123456', 
+                is_verified: true
+            });
+            user = await newUser.save();
+        }
+        const token = jwt.sign(
+            {
+                user: user._id,
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "30d"
+            }
+        );
+        res.status(200).json({ token: token, message: "Successfully logged in." });
+    } catch (e) {
+        console.log(e.message);
+        res.status(500).json({ message: "An error occurred during authentication." });
+    }
+};
 module.exports={
     userSignup,
     userLogin,
     forgetpassword,
     newpass_reset,
     fetchData ,
+    googleAuth,
     logout 
 }
