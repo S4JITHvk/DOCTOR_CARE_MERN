@@ -19,7 +19,8 @@ function Newpass() {
         try {
             const response = await Api.post("/newpassword", {
                 email: location.state.email,
-                password: newPassword
+                password: newPassword,
+                action:location.state.action
             });
             if (response.status === 200) {
                 toast.success("Successfully Reset password.")

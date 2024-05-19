@@ -8,12 +8,9 @@ const Doctorslogin=lazy(()=>import("../../Pages/Doctors/Login"))
 const Dashboard=lazy(()=>import("../../Pages/Doctors/Dashboard"))
 import Api from "../../API/DoctorCareApi"
 import { useDispatch ,useSelector} from 'react-redux';
-import Auth from "../../components/Auth/DoctorAuth"
-import Authprotect from '../../components/Auth/Authprotect';
 function Doctorroute() {
     const doctor=useSelector((state)=>state.doctor)
     const dispatch=useDispatch()
-    console.log(doctor,"==>doctsngsmnd,lsm")
     useEffect(() => {
         const fetchUser = async () => {
           try {
@@ -26,8 +23,7 @@ function Doctorroute() {
         };
         if(!doctor.doctor){
             fetchUser(); 
-        }
-               
+        }              
       }, [dispatch]);
   return (
     <>

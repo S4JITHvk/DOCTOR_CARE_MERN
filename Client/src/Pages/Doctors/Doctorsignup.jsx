@@ -53,9 +53,9 @@ function Doctorsignup() {
     expertise: "",
     experience_years: "",
     working_Hospital: "",
-    working_Hospital_contact:"",
-    dob:"",
-    gender:"",
+    working_Hospital_contact: "",
+    dob: "",
+    gender: "",
     medical_license_no: "",
   });
 
@@ -190,7 +190,8 @@ function Doctorsignup() {
     // Validate working place contact
     if (isEmpty(userData.working_Hospital_contact)) {
       newError.working_Hospital_contact_red = true;
-      newErrorDef.working_Hospital_contact_err = "Working place contact is required";
+      newErrorDef.working_Hospital_contact_err =
+        "Working place contact is required";
       isValid = false;
     } else {
       newError.working_Hospital_contact_red = false;
@@ -214,34 +215,41 @@ function Doctorsignup() {
   };
 
   const handleSignup = async (event) => {
-     event.preventDefault();
+    event.preventDefault();
     const isValid = validateInputs();
-    console.log(userData,"==>userdata",isValid)
+    console.log(userData, "==>userdata", isValid);
     if (isValid) {
-        try {
-            const response = await Api.post('/doctor/signup', userData);
-            if (response.status === 200) {
-                toast.success('Doctor registered successfully');
-                navigate('/doctor/login');
-            } else {
-                const errorMessage = response.data.message || 'Failed to register doctor. Please try again.';
-                toast.error(errorMessage);
-            }
-        } catch (error) {
-            toast.error(error.response.data.message);
+      try {
+        const response = await Api.post("/doctor/signup", userData);
+        if (response.status === 200) {
+          toast.success("Enter otp send to your mail");
+          navigate("/otp", {
+            state: { email: userData.email, action: "Doctor" },
+          });
+        } else {
+          const errorMessage =
+            response.data.message ||
+            "Failed to register doctor. Please try again.";
+          toast.error(errorMessage);
         }
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     }
-};
+  };
 
   return (
     <>
-      <div className="flex min-h-full justify-center px-10 py-12 lg:px-8" style={{
+      <div
+        className="flex min-h-full justify-center px-10 py-12 lg:px-8"
+        style={{
           backgroundImage: `url('/public/assets/bg.jpg')`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           paddingBottom: "9rem",
-        }}>
+        }}
+      >
         <Toaster position="top-center" reverseOrder={false} />
         <div className="sm:w-full sm:max-w-sm">
           <h1 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
@@ -322,7 +330,9 @@ function Doctorsignup() {
                   </button>
                 </div>
                 {error.passwordred && (
-                  <div className="text-red-500 mt-1">{errordef.passworderr}</div>
+                  <div className="text-red-500 mt-1">
+                    {errordef.passworderr}
+                  </div>
                 )}
               </div>
               <div>
@@ -373,8 +383,10 @@ function Doctorsignup() {
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
-                   {error. phone_number_red && (
-                    <div className="text-red-500 mt-1">{errordef. phone_number_err}</div>
+                  {error.phone_number_red && (
+                    <div className="text-red-500 mt-1">
+                      {errordef.phone_number_err}
+                    </div>
                   )}
                 </div>
               </div>
@@ -386,20 +398,24 @@ function Doctorsignup() {
                   Expertise
                 </label>
                 <div className="mt-1">
-                  <input
+                  <select
                     id="expertise"
                     name="expertise"
-                    type="text"
-                    placeholder="eg-physcatry"
                     value={userData.expertise}
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                   {error.expertise_red&& (
-                    <div className="text-red-500 mt-1">{errordef.expertise_err}</div>
+                  >
+                    <option value="">Select</option>
+                    <option value="Psychiatry">Psychiatry</option>
+                  </select>
+                  {error.expertise_red && (
+                    <div className="text-red-500 mt-1">
+                      {errordef.expertise_err}
+                    </div>
                   )}
                 </div>
               </div>
+
               <div>
                 <label
                   htmlFor="experience_years"
@@ -417,8 +433,10 @@ function Doctorsignup() {
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
-                   {error.experience_years_red && (
-                    <div className="text-red-500 mt-1">{errordef.experience_years_err}</div>
+                  {error.experience_years_red && (
+                    <div className="text-red-500 mt-1">
+                      {errordef.experience_years_err}
+                    </div>
                   )}
                 </div>
               </div>
@@ -426,9 +444,8 @@ function Doctorsignup() {
                 <label
                   htmlFor="working_places"
                   className="block text-xs font-bold leading-6 text-gray-900"
-                
                 >
-                Working Hospital/Previous
+                  Working Hospital/Previous
                 </label>
                 <div className="mt-1">
                   <input
@@ -439,85 +456,90 @@ function Doctorsignup() {
                     value={userData.working_Hospital}
                     onChange={handleChange}
                     className="block w-full  rounded-md border-0 py-1.5  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-  
                   />
-                   {error. working_Hospital_red&& (
-                    <div className="text-red-500 mt-1">{errordef. working_Hospital_err}</div>
+                  {error.working_Hospital_red && (
+                    <div className="text-red-500 mt-1">
+                      {errordef.working_Hospital_err}
+                    </div>
                   )}
                 </div>
               </div>
               <div>
-    <label
-      htmlFor="dob"
-      className="block text-sm font-bold leading-6 text-gray-900"
-    >
-      Date of Birth
-    </label>
-    <div className="mt-1">
-      <input
-        id="dob"
-        name="dob"
-        type="date"
-        value={userData.dob}
-        onChange={handleChange}
-        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      />
-       {error.DOB_red && (
+                <label
+                  htmlFor="dob"
+                  className="block text-sm font-bold leading-6 text-gray-900"
+                >
+                  Date of Birth
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="dob"
+                    name="dob"
+                    type="date"
+                    value={userData.dob}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {error.DOB_red && (
                     <div className="text-red-500 mt-1">{errordef.DOB_err}</div>
                   )}
-    </div>
-  </div>
-  
-  {/* Gender Selection */}
-  <div>
-    <label
-      htmlFor="gender"
-      className="block text-sm font-bold leading-6 text-gray-900"
-    >
-      Gender
-    </label>
-    <div className="mt-1">
-      <select
-        id="gender"
-        name="gender"
-        value={userData.gender}
-        onChange={handleChange}
-        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      >
-        <option value="">Select</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-      </select>
-      {error.Gender_red && (
-                    <div className="text-red-500 mt-1">{errordef.Gender_err}</div>
+                </div>
+              </div>
+
+              {/* Gender Selection */}
+              <div>
+                <label
+                  htmlFor="gender"
+                  className="block text-sm font-bold leading-6 text-gray-900"
+                >
+                  Gender
+                </label>
+                <div className="mt-1">
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={userData.gender}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  >
+                    <option value="">Select</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                  {error.Gender_red && (
+                    <div className="text-red-500 mt-1">
+                      {errordef.Gender_err}
+                    </div>
                   )}
-    </div>
-  </div>
-  
-  {/* Current Working Place Contact Number */}
-  <div>
-    <label
-      htmlFor="working_place_contact"
-      className="block text-xs font-bold leading-6 text-gray-900"
-    >
-    Working Hospital PH-Number
-    </label>
-    <div className="mt-1">
-      <input
-        id="working_Hospital_contact"
-        name="working_Hospital_contact"
-        type="tel"
-        placeholder="eg-9744XXXXXXX"
-        value={userData.working_Hospital_contact}
-        onChange={handleChange}
-        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-      />
-       {error.working_Hospital_contact_red && (
-                    <div className="text-red-500 mt-1">{errordef.working_Hospital_contact_err}</div>
+                </div>
+              </div>
+
+              {/* Current Working Place Contact Number */}
+              <div>
+                <label
+                  htmlFor="working_place_contact"
+                  className="block text-xs font-bold leading-6 text-gray-900"
+                >
+                  Working Hospital PH-Number
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="working_Hospital_contact"
+                    name="working_Hospital_contact"
+                    type="tel"
+                    placeholder="eg-9744XXXXXXX"
+                    value={userData.working_Hospital_contact}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {error.working_Hospital_contact_red && (
+                    <div className="text-red-500 mt-1">
+                      {errordef.working_Hospital_contact_err}
+                    </div>
                   )}
-    </div>
-  </div>
+                </div>
+              </div>
               <div>
                 <label
                   htmlFor="medical_license_no"
@@ -535,12 +557,13 @@ function Doctorsignup() {
                     onChange={handleChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
-                   {error.medical_license_no_red && (
-                    <div className="text-red-500 mt-1">{errordef.medical_license_no_err}</div>
+                  {error.medical_license_no_red && (
+                    <div className="text-red-500 mt-1">
+                      {errordef.medical_license_no_err}
+                    </div>
                   )}
                 </div>
               </div>
-              
             </div>
             <div>
               <button

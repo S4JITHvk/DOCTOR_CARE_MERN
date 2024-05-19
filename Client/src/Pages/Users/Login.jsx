@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Api from "../../API/DoctorCareApi";
 import { isEmailValid, isEmpty } from "../../../helpers/validation";
-import { jwtDecode } from "jwt-decode"
+import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";
 
@@ -14,6 +14,15 @@ function Login() {
 
   const [errors, setErrors] = useState({});
   const [errormsg, setErrorMessage] = useState("");
+  useEffect(() => {
+    if (errormsg || errors) {
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+        setErrors({});
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [errormsg, errors]);
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -30,10 +39,9 @@ function Login() {
         window.location.reload();
       }
     } catch (error) {
-      const { status, data } = error.response
-      if(status)
-      setErrorMessage(data.message);
-      toast.error(data.message)
+      const { status, data } = error.response;
+      if (status) setErrorMessage(data.message);
+      toast.error(data.message);
     }
   };
   const handleSubmit = async (e) => {
@@ -146,7 +154,8 @@ function Login() {
                 </label>
                 <div className="text-sm">
                   <Link
-                    to="/emailfrom"
+                    to="/emailform" 
+                    state={{ action: "User_forgot_pass" }} 
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
@@ -184,8 +193,8 @@ function Login() {
             <p className="text-center text-sm text-gray-500">OR</p>
             <GoogleLogin
               onSuccess={(credentialResponse) => {
-                const decoded=jwtDecode(credentialResponse.credential)
-                googleAuth(decoded)
+                const decoded = jwtDecode(credentialResponse.credential);
+                googleAuth(decoded);
               }}
               onError={() => {
                 console.log("Login Failed");
@@ -201,6 +210,10 @@ function Login() {
             >
               Sign Up
             </Link>
+          </p>
+          <p className="mt-5 text-center text-lg text-gray-500">
+            Back to home?
+            <Link to="/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Home</Link>
           </p>
         </div>
       </div>

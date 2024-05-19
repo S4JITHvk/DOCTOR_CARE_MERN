@@ -2,6 +2,7 @@ const generateOTP=require('../util/otpGenerator')
 const sendEmail=require('../infrastructure/config/nodemailer')
 const OTP=require('../entities/otpmodel')
 const User=require('../entities/usermodel')
+const Doctor=require('../entities/Doctormodel')
 require('dotenv').config()
 const {hashdata, comparedata}=require('../util/Bcrypthash')
 
@@ -49,9 +50,16 @@ const verifyOtp = async (req, res) => {
         if (otp) {
             const match = await comparedata(req.body.otp, otp.otp);
             if (match) {
-                if(req.body.action==='forgot_pass'){
-                    return res.json({message:"Redirect to reset page"})
-                }else{
+                if(req.body.action==='User_forgot_pass' ){
+                    return res.json({message:"User_reset"})
+                }else if(req.body.action==='Doctor_forgot_pass'){
+                     return res.json({message:"Doc_reset"})
+                }
+                else if(req.body.action==='Doctor'){
+                    await Doctor.updateOne({email:req.body.email},{is_registered:true})
+                    return res.json({message:"Doctor Registered SuccessFully"})
+                }         
+                else{
                 await User.updateOne({ email: req.body.email }, { is_verified: true });
                 res.status(200).json({message:"Successfully Registered.."})
                 }

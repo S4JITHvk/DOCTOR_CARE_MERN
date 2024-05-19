@@ -1,18 +1,22 @@
 const Doctor=require("../entities/Doctormodel")
 const jwt = require("jsonwebtoken");
 const {hashdata, comparedata}=require('../util/Bcrypthash')
-
+const {sendOTP}=require('./otpControl')
 
 
 const Doctor_signup=async(req,res)=>{
     try{
         console.log(req.body,"===>doctors registration")
-        const existingEmail = await Doctor.findOne({email:req.body.email });
+        const {email}=req.body
+        const existingEmail = await Doctor.findOne({email:email });
         if (existingEmail) {
             if(existingEmail.is_verified){
                 return res.status(400).json({ message: 'Doctor with this email already exists' });
+            }else if(!existingEmail.is_registered){
+                await sendOTP(email)
+                return res.status(200).json({ message: 'OTP sent' });
             }else{
-               return res.status(400).json({message:"You are on Admin verification Process!."})
+                return res.status(400).json({message:"You are on Admin verification Process!."})
             }   
         }
         const existingLicenseNo = await Doctor.findOne({medical_license_no:req.body.medical_license_no });
@@ -22,7 +26,8 @@ const Doctor_signup=async(req,res)=>{
         const doctorData = req.body;
         const newDoctor = new Doctor(doctorData);
         await newDoctor.save();
-        return res.status(200).json({ message: 'Doctor registered successfully' });
+        await sendOTP(email)
+        return res.status(200).json({ message: 'OTP sent' });
 
     }catch(error){
         console.error('Error in Doctor_signup:', error);
@@ -39,7 +44,10 @@ const Doctor_login = async (req, res) => {
         }  else if (doctorExist.is_banned) {
             res.status(403).json({ message: " UnAuthorized!" });
             return;
-        } else {
+        } else if(!doctorExist.is_registered){
+            res.status(403).json({ message: " Not registered Yet!" })
+        }       
+        else {
             const isMatch = await comparedata(password, doctorExist.password);
             if (!isMatch) {
                 res.status(401).json({ message: "Wrong password" });

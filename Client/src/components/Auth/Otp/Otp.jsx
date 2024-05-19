@@ -58,20 +58,20 @@ function Otp() {
     try {
       const {state}=location
       console.log(state,"==>state")
-      if(state && state.action==="forgot_pass"){
+      if (state && (state.action === "User_forgot_pass" || state.action === "Doctor_forgot_pass")){
         const email=state.email
         const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email,action:state.action });
         if(response.status===200){
-          navigate("/Resetpass",{state:{email}})
+          navigate("/Resetpass",{state:{email,action:response.data.message}})
         }else if(response.status===400) {
           setErrorMessage("Otp Not Matched! Request denied");
         }
       }else{
-      const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email });
+      const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email,action:state.action });
       console.log(response.data,"===>")
       if (response.status === 200) {
-        toast.success("Successfully Registered")
-        navigate('/login');
+        toast.success(response.data.message)
+        navigate('/');
       } else if(response.status===400) {
         setErrorMessage("Otp Not Matched! Request denied");
       }

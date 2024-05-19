@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Api from "../../../API/DoctorCareApi";
 import {isEmailValid} from "../../../../helpers/validation"
-
+import { useLocation } from 'react-router-dom';
 function EmailForm() {
+  const location = useLocation();
+  console.log(location,"fljal")
+  const action  = location.state?.action
+  console.log(action,"actionnfkanfk")
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isEmailValid(email)) {
@@ -15,9 +18,9 @@ function EmailForm() {
       return;
     }
     try {
-      const response = await Api.post("/forget_pass_req", { email });
+      const response = await Api.post("/forget_pass_req", { email,action });
       if (response.status === 200) {
-        navigate('/otp', { state: { email, action: "forgot_pass" } });
+        navigate('/otp', { state: { email, action: action } });
       } else {
         setErrorMessage("Email not Found");
       }

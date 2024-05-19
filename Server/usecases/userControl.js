@@ -1,4 +1,5 @@
 const User=require("../entities/usermodel")
+const Doctor=require("../entities/Doctormodel")
 const {sendOTP}=require('./otpControl')
 const jwt = require("jsonwebtoken");
 const {hashdata, comparedata}=require('../util/Bcrypthash')
@@ -76,7 +77,9 @@ const userLogin = async (req, res) => {
 
 const forgetpassword=async (req,res)=>{
     try{
-        const {email}=req.body
+        console.log(req.body)
+        const {email,action}=req.body
+        if(action==="User_forgot_pass"){
        const  userexist=await User.findOne({email:email})
         if(!userexist){
             res.status(404).json({message:"Email not found"})
@@ -84,7 +87,15 @@ const forgetpassword=async (req,res)=>{
             await sendOTP(email)
             res.json({message:"OTP Sended ForgetPass"})
         }
-
+    }else if(action==="Doctor_forgot_pass"){
+        const  Doctorexist=await Doctor.findOne({email:email})
+        if(!Doctorexist){
+            res.status(404).json({message:"Email not found"})
+        }else{
+            await sendOTP(email)
+            res.json({message:"OTP Sended ForgetPass"})
+        }
+    }
     }catch(err){
         console.log(err.message)
     }
@@ -92,16 +103,24 @@ const forgetpassword=async (req,res)=>{
 const newpass_reset=async (req,res)=>{
     try{
         console.log(req.body,"==<>")
-        const{email,password}=req.body
+        const{email,password,action}=req.body
+        if(action==='User_reset'){
         const userexist=await User.findOne({email:email})
-        console.log(userexist)
         if(!userexist){
             res.status(400).json({message:"user not found"})
         }else{
-            hashedpassword=await hashdata(password)
-            await User.updateOne({email:email},{password: hashedpassword})
+            await User.updateOne({email:email},{password: password})
             res.status(200).json({message:"Password changed.."})
         }
+    }else if(action==='Doc_reset'){
+               const doctorexist=await Doctor.findOne({email:email})
+               if(!doctorexist){
+                res.status(400).json({message:"Doctor not found"})
+            }else{
+                await Doctor.updateOne({email:email},{password: password})
+                res.status(200).json({message:"Password changed.."})
+            }
+    }
       
     }catch(err){
         console.log(err.message)
@@ -168,6 +187,48 @@ const fetchData = async (req, res) => {
         res.status(500).json({ message: "An error occurred during authentication." });
     }
 };
+const uploadImage = async (req, res) => {
+    try {
+      // Verify token and get user ID
+      const token = req.cookies.token;
+      if (!token) {
+        return res.status(401).json({ error: "No token provided" });
+      }
+      
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findOne({ _id: verified.user });
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      // Remove the old profile image if it's not the default one
+      const imageUrl = user.profile;
+      if ( imageUrl !== "./src/assets/profileimg.jpg") {
+        const parsedUrl = new URL(imageUrl, `http://${req.headers.host}`);
+        const imageName = path.basename(parsedUrl.pathname);
+        const folderPath = './public/profileimages';
+        const imagePath = path.join(folderPath, imageName);
+        
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+          console.log(`${imageName} has been deleted successfully.`);
+        } else {
+          console.log(`${imageName} does not exist in the folder.`);
+        }
+      }
+  
+      // Save new profile image path
+      const newImagePath = `/profileimages/${req.file.filename}`;
+      user.profile = newImagePath;
+      await user.save();
+  
+      res.json({ success: true, profile: newImagePath });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
 module.exports={
     userSignup,
     userLogin,
@@ -175,5 +236,7 @@ module.exports={
     newpass_reset,
     fetchData ,
     googleAuth,
-    logout 
+    logout ,
+    uploadImage
+   
 }

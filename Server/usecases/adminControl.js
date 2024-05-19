@@ -15,7 +15,7 @@ const usersFetch = async (req, res) => {
 
 const approvals = async (req, res) => {
   try {
-    const fetchedata = await Doctor.find({is_verified: false });
+    const fetchedata = await Doctor.find({ is_verified: false, is_registered: true});
     if (fetchedata) {
       return res.status(200).json({ data: fetchedata });
     } else {

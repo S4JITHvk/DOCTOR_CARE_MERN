@@ -19,6 +19,7 @@ app.use(cors({
 app.use(morgan('dev'))
 connect();
 // Route middleware
+app.use('/profileimages', express.static('public'))
 app.use('/api',userRoute)
 app.use('/api/admin',adminRoute)
 app.use('/api/doctor',doctorRoute)

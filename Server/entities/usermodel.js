@@ -30,7 +30,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["ADMIN", "USER"],
         default: "USER"
-    }
+    },
+    profile: {
+        type: String,
+      },
 }, { timestamps: true });
 
 // Hash password

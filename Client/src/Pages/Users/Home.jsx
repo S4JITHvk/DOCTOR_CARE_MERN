@@ -6,10 +6,8 @@ import AboutUs from '../../components/Guest/About'
 function Home() {
   return (
     <>
-    <Header/>  
     <Banner/> 
     <AboutUs/>
-    <Footer/>
     </>
   )
 }

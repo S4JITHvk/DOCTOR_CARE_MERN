@@ -58,6 +58,11 @@ is_verified:{
     required:true,
     default:false
 },
+is_registered:{
+  type:Boolean,
+  required:true,
+  default:false
+},
 role: {
     type: String,
     default: "DOCTOR"

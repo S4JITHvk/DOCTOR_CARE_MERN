@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { setUser} from "../../ReduxStore/features/userSlice"
-import { useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 import {
   isEmpty,
@@ -13,7 +11,6 @@ import {
 import Api from "../../API/DoctorCareApi"
 
 function Signup() {
-  const dispatch=useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState({
@@ -28,6 +25,27 @@ function Signup() {
     passworderr: "",
     confirmpassworderr: "",
   });
+  useEffect(() => {
+    const hasError = Object.values(error).some(err => err) || 
+                     Object.values(errordef).some(err => err);
+    if (hasError) {
+        const timer = setTimeout(() => {
+            setError({
+                emailred: false,
+                namered: false,
+                passwordred: false,
+                confirmpasswordred: false,
+            });
+            seterrordef({
+                emailerr: "",
+                nameerr: "",
+                passworderr: "",
+                confirmpassworderr: "",
+            });
+        }, 3000);
+        return () => clearTimeout(timer);
+    }
+}, [error, errordef]);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
