@@ -14,6 +14,7 @@ Router.post('/forget_pass_req',userController.forgetpassword)
 Router.post('/newpassword',userController.newpass_reset)
 Router.post('/resend-otp',otpController.resend_otp)
 Router.get('/fetchuser',userController.fetchData)
-Router.post('/uploadprofileimage',upload.single('profile'),userController.uploadImage)
+Router.post('/editprofile',upload.single('profilePic'),userController. edit_profile )
+Router.post('/deleteprofilepic',userController.delete_propic)
 Router.get('/logout',userController.logout)
 module.exports = Router

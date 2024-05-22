@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { clearUser } from "../../../ReduxStore/features/userSlice";
+import profilePlaceholder from '/assets/user.png'
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -22,8 +23,12 @@ function Sidebar() {
           <h1 className="text-xl font-bold">
             Doctor <span className="text-red-500">Care</span>
           </h1>
-
-          <h1 className="text-xl mt-10 font-bold">{user.user.name}</h1>
+          <img
+              className="h-24 w-24 rounded-full mt-4"
+              src={user.user?.profile || profilePlaceholder}
+              alt="Profile"
+            />
+          <h1 className="text-xl font-bold">{user.user.name}</h1>
           <p className="text-gray-700 ">{user.user.email}</p>
           {/* <div className="mt-6 flex flex-wrap gap-4 justify-center">
             <Link to="#" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</Link>
@@ -63,7 +68,7 @@ function Sidebar() {
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                <Link to="/ResetPass" className="block">
+                <Link to="/Newpassword" className="block">
                   Change Password
                 </Link>
               </div>

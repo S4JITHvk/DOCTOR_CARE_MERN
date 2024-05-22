@@ -14,7 +14,7 @@ function Otp() {
   const [timer, setTimer] = useState(60);
   const location = useLocation();
 
-  console.log(location.state,"=====>reset email")
+ 
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -57,7 +57,6 @@ function Otp() {
     }
     try {
       const {state}=location
-      console.log(state,"==>state")
       if (state && (state.action === "User_forgot_pass" || state.action === "Doctor_forgot_pass")){
         const email=state.email
         const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email,action:state.action });
@@ -83,10 +82,11 @@ function Otp() {
   };
   
   const handleResend = async () => {
+    const {state}=location
     setTimer(60);
     setResendEnabled(false);
     try {
-      const response = await Api.post('/resend-otp', { email: userdata.user.email },{withCredentials:true});
+      const response = await Api.post('/resend-otp', { email:state.email },{withCredentials:true});
       if (response.status === 200) {
         toast.success("OTP successfully resent.");
       } else {

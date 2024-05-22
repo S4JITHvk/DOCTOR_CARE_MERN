@@ -96,7 +96,7 @@ function Login() {
       <div
         className="flex min-h-full flex-col justify-center px-10 py-12 lg:px-8"
         style={{
-          backgroundImage: `url('/public/assets/bg.jpg')`,
+          backgroundImage: `url('/assets/bg.jpg')`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",

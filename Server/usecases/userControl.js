@@ -3,7 +3,8 @@ const Doctor=require("../entities/Doctormodel")
 const {sendOTP}=require('./otpControl')
 const jwt = require("jsonwebtoken");
 const {hashdata, comparedata}=require('../util/Bcrypthash')
-
+const path = require('path');
+const fs = require('fs')
 const userSignup = async (req, res) => {
     try {
         console.log("here====>",req.body)
@@ -104,12 +105,13 @@ const newpass_reset=async (req,res)=>{
     try{
         console.log(req.body,"==<>")
         const{email,password,action}=req.body
+        const hashedpass=await hashdata(password)
         if(action==='User_reset'){
         const userexist=await User.findOne({email:email})
         if(!userexist){
             res.status(400).json({message:"user not found"})
         }else{
-            await User.updateOne({email:email},{password: password})
+            await User.updateOne({email:email},{password: hashedpass})
             res.status(200).json({message:"Password changed.."})
         }
     }else if(action==='Doc_reset'){
@@ -117,7 +119,7 @@ const newpass_reset=async (req,res)=>{
                if(!doctorexist){
                 res.status(400).json({message:"Doctor not found"})
             }else{
-                await Doctor.updateOne({email:email},{password: password})
+                await Doctor.updateOne({email:email},{password: hashedpass})
                 res.status(200).json({message:"Password changed.."})
             }
     }
@@ -129,7 +131,6 @@ const newpass_reset=async (req,res)=>{
 const fetchData = async (req, res) => {
     try {
       const token = req.cookies.token;
-      console.log(token,"===>token")
       if (!token) {
         return res.status(401).json({ error: "Unauthorized1" });
       }
@@ -187,48 +188,67 @@ const fetchData = async (req, res) => {
         res.status(500).json({ message: "An error occurred during authentication." });
     }
 };
-const uploadImage = async (req, res) => {
+const edit_profile = async (req, res) => {
     try {
-      // Verify token and get user ID
-      const token = req.cookies.token;
-      if (!token) {
-        return res.status(401).json({ error: "No token provided" });
-      }
-      
-      const verified = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findOne({ _id: verified.user });
-  
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-      // Remove the old profile image if it's not the default one
-      const imageUrl = user.profile;
-      if ( imageUrl !== "./src/assets/profileimg.jpg") {
-        const parsedUrl = new URL(imageUrl, `http://${req.headers.host}`);
-        const imageName = path.basename(parsedUrl.pathname);
-        const folderPath = './public/profileimages';
-        const imagePath = path.join(folderPath, imageName);
-        
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-          console.log(`${imageName} has been deleted successfully.`);
-        } else {
-          console.log(`${imageName} does not exist in the folder.`);
+        const token = req.cookies.token;
+        const verified = jwt.verify(token, process.env.JWT_SECRET);  
+        const user = await User.findOne({ _id: verified.user });
+
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
         }
-      }
-  
-      // Save new profile image path
-      const newImagePath = `/profileimages/${req.file.filename}`;
-      user.profile = newImagePath;
-      await user.save();
-  
-      res.json({ success: true, profile: newImagePath });
+
+        let updateData = { name: req.body.name };
+        if (req.file) {
+            const imageUrl = user.profile;
+            if ( imageUrl) {
+                const parsedUrl = new URL(imageUrl);
+                const imageName = path.basename(parsedUrl.pathname);
+                const imagePath = path.join(__dirname, '../public', imageName);
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);
+                } 
+            }
+            const path_image = process.env.IMAGE_PATH + `profileimages/${req.file.filename}`;
+            updateData.profile = path_image;
+        }
+        await User.updateOne({ _id: verified.user }, { $set: updateData });
+        return res.status(200).json({ message: 'Profile updated successfully' });
+
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
-  };
+};
 
+const delete_propic=async(req,res)=>{
+    try{
+        const token = req.cookies.token;
+        const verified = jwt.verify(token, process.env.JWT_SECRET);  
+        const user = await User.findOne({ _id: verified.user });
+
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+        const imageUrl = user.profile;
+            if ( imageUrl) {
+                const parsedUrl = new URL(imageUrl);
+                const imageName = path.basename(parsedUrl.pathname);
+                const imagePath = path.join(__dirname, '../public', imageName);
+                if (fs.existsSync(imagePath)) {
+                    fs.unlinkSync(imagePath);
+                } 
+            }
+            await User.updateOne(
+                { _id: verified.user },
+                { $unset: { profile: "" } }
+            );
+    
+            return res.status(200).json({ message: 'Profile picture deleted successfully' });
+    }catch(e){
+        console.log(e.message)
+    }
+}
 module.exports={
     userSignup,
     userLogin,
@@ -237,6 +257,7 @@ module.exports={
     fetchData ,
     googleAuth,
     logout ,
-    uploadImage
+    edit_profile ,
+    delete_propic
    
 }

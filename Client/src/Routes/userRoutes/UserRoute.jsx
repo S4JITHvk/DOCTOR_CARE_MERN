@@ -11,6 +11,7 @@ const Guest=lazy(()=>import("../../Pages/Users/Guest"))
 const Header=lazy(()=>import("../../components/Home/Header"))
 const Footer=lazy(()=>import("../../components/Home/Footer"))
 const Profile=lazy(()=>import("../../Pages/Users/Profile"))
+const Newpass=lazy(()=>import("../../components/User/Profile/Changepass"))
 import Authenticate from "../../components/Auth/Authenticate";
 import Protect from "../../components/Auth/Protect";
 import Loader from "../../components/Loader/Loader";
@@ -32,6 +33,7 @@ function UserRoute() {
       <Route path="/home" element={<><Header /> <Home /><Footer/></>} />
       <Route path="/Doctors" element={<><Header /><Doctor/> <Footer/></>}/>
       <Route path="/Profile" element={<><Header /><Profile/> <Footer/></>}/>
+      <Route path="/Newpassword" element={<><Header /><Newpass/><Footer/></>}/>
     </Route>
   </Routes>
 </Suspense>

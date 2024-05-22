@@ -23,7 +23,7 @@ export default function AboutUs() {
                 </p>
 
                 <Link
-                  to={"/signup"}
+                  to={"/userSignup"}
                   className="inline-flex items-center justify-center rounded-md border border-secondary bg-primary px-7 py-3 text-center text-base font-medium text-white hover:border-blue-dark hover:bg-blue-dark"
                 >
                   Know More
