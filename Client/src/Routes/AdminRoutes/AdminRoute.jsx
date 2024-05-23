@@ -30,7 +30,7 @@ function AdminRoutes() {
                 <Route path="/userList" element={<UsersList />} />
                 <Route path="/doctors" element={<DoctorsList />} />
                 <Route path="/approvals" element={<ApprovalsList />} />
-                <Route path="/appointments" element={<AppointmentsList />} />
+                <Route path="/appointments" element={<AppointmentsList />} />              
               </Routes>
             </Suspense>
           </div>

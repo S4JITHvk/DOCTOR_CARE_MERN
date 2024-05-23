@@ -1,56 +1,36 @@
-import React ,{useEffect}from 'react'
-import { Routes, Route, Navigate } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import React, { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { useDispatch } from 'react-redux';
 import Loader from '../../components/Loader/Loader';
-import{setDoctor} from "../../ReduxStore/features/doctorSlice"
-const Doctorsignup=lazy(()=> import("../../Pages/Doctors/Doctorsignup"))
-const Doctorslogin=lazy(()=>import("../../Pages/Doctors/Login"))
-const Dashboard=lazy(()=>import("../../Pages/Doctors/Dashboard"))
-import Api from "../../API/DoctorCareApi"
-import { useDispatch ,useSelector} from 'react-redux';
+import Authprotect from '../../components/Auth/Authprotect';
+import DoctorAuth from '../../components/Auth/DoctorAuth';
+import Doctorlayout from '../../Pages/Doctors/Doctorlayout'; 
+import fetchDoctor from "../../Services/Doctorfetch"
+
+const Doctorsignup = lazy(() => import('../../Pages/Doctors/Doctorsignup'));
+const Doctorslogin = lazy(() => import('../../Pages/Doctors/Login'));
+const Dashboard = lazy(() => import('../../Pages/Doctors/Dashboard'));
+
 function Doctorroute() {
-    const doctor=useSelector((state)=>state.doctor)
-    const dispatch=useDispatch()
-    useEffect(() => {
-        const fetchUser = async () => {
-          try {
-            const response = await Api.get('/doctor/fetchdoctor');
-            console.log(response.data,"==>doctor")
-            dispatch(setDoctor(response.data.data)); 
-          } catch (error) {
-            console.error("Error fetching user:", error);
-          }
-        };
-        if(!doctor.doctor){
-            fetchUser(); 
-        }              
-      }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    fetchDoctor(dispatch);
+  }, [dispatch]);
+
   return (
-    <>
-    <Suspense fallback={<Loader/>}>
-  <Routes>
-    {doctor && doctor.doctor ? (
-      <Route path="/" element={<Dashboard />} />
-    ) : (
-      <Route path="/" element={<Navigate to="/doctor/login" />} />
-    )}
-
-    {!doctor || !doctor.doctor ? (
-      <Route path="/signup" element={<Doctorsignup />} />
-    ) : (
-      <Route path="/signup" element={<Navigate to="/doctor" />} />
-    )}
-
-    {!doctor || !doctor.doctor ? (
-      <Route path="/login" element={<Doctorslogin />} />
-    ) : (
-      <Route path="/login" element={<Navigate to="/doctor" />} />
-    )}
-  </Routes>
-</Suspense>
-
-    </>
-  )
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route element={<Authprotect role="DOCTOR" />}>
+          <Route path="/" element={  <Doctorlayout> <Dashboard /> </Doctorlayout> }/>
+        </Route>
+        <Route element={<DoctorAuth />}>
+          <Route path="/signup" element={<Doctorsignup />} />
+          <Route path="/login" element={<Doctorslogin />} />
+        </Route>
+      </Routes>
+    </Suspense>
+  );
 }
 
-export default Doctorroute
+export default Doctorroute;

@@ -1,7 +1,7 @@
-const Doctor=require("../entities/Doctormodel")
+const Doctor=require("../../entities/Doctor/Doctormodel")
 const jwt = require("jsonwebtoken");
-const {hashdata, comparedata}=require('../util/Bcrypthash')
-const {sendOTP}=require('./otpControl')
+const {hashdata, comparedata}=require('../../util/Bcrypthash')
+const {sendOTP}=require('../Users/otpControl')
 
 
 const Doctor_signup=async(req,res)=>{

@@ -1,5 +1,95 @@
 import React, { useState, useEffect } from "react";
 import Api from "../../API/DoctorCareApi";
+import toast from "react-hot-toast"
+function Modal({ isVisible, onClose, doctor }) {
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden w-full max-w-lg mx-4">
+        <div className="flex justify-between items-center p-4 border-b dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+            Doctor Details
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-1 gap-6">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-300 mb-2">
+                Personal Information
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Name:</strong> {doctor.name}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Email:</strong> {doctor.email}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Phone No:</strong> {doctor.phone_number}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Joined:</strong>{" "}
+                {new Date(doctor.createdAt).toLocaleDateString()}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Gender:</strong> {doctor.gender}
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-300 mb-2">
+                Professional Details
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Medical License No:</strong> {doctor.medical_license_no}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Expertise:</strong> {doctor.expertise}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Experience:</strong> {doctor.experience_years} Years
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Working Hospital:</strong> {doctor.working_Hospital}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 mb-1">
+                <strong>Hospital Contact:</strong> {doctor.working_Hospital_contact}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-end p-4 border-t dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
+          
+          <button
+            className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 function Approvals() {
   const [list, setList] = useState([]);
@@ -7,20 +97,22 @@ function Approvals() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Api("/admin/approvals");
-        if (response.status === 200) {
-          setList(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
+  const fetchData = async () => {
+    try {
+      const response = await Api("/admin/approvals");
+      if (response.status === 200) {
+        setList(response.data.data);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -45,6 +137,28 @@ function Approvals() {
       );
     } else {
       setCurrentPage(pageNumber);
+    }
+  };
+
+  const viewList = (doctorId) => {
+    const doctor = list.find((item) => item._id === doctorId);
+    setSelectedDoctor(doctor);
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setSelectedDoctor(null);
+  };
+  const verifyDoctor = async (doctorid) => {
+    try {
+      const response = await Api.put(`/admin/doctorverify/${doctorid}`);
+      if (response.status === 200) {
+        toast.success("Doctor verified successfully");
+         fetchData()
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -139,7 +253,7 @@ function Approvals() {
                 <button
                   className="py-1 px-3 rounded bg-green-500 text-white"
                   style={{ width: "80px" }}
-                  onClick={() => viewList(item.id)}
+                  onClick={() => viewList(item._id)}
                 >
                   View
                 </button>
@@ -148,7 +262,7 @@ function Approvals() {
                 <button
                   className="py-1 px-3 rounded bg-red-500 text-white"
                   style={{ width: "80px" }}
-                  onClick={() => verifyDoctor(item.id)}
+                  onClick={() => verifyDoctor(item._id)}
                 >
                   Verify
                 </button>
@@ -192,6 +306,11 @@ function Approvals() {
           Next
         </button>
       </div>
+      <Modal
+        isVisible={isModalVisible}
+        onClose={closeModal}
+        doctor={selectedDoctor}
+      />
     </div>
   );
 }

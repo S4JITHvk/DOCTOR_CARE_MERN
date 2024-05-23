@@ -1,39 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import Api from '../../API/DoctorCareApi';
-
+import toast from "react-hot-toast"
 function DoctorsList() {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Api('/admin/doctorlist');
-        if (response.status === 200) {
-          setList(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
+  const fetchData = async () => {
+    try {
+      const response = await Api('/admin/doctorlist');
+      if (response.status === 200) {
+        setList(response.data.data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset current page when performing a new search
+    setCurrentPage(1);
   };
 
   const filteredList = list.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
@@ -48,8 +45,18 @@ function DoctorsList() {
     }
   };
 
-  const blockDoctor = (id) => {
-    // Implement block functionality
+  const blockDoctor =async (id) => {
+    try {
+      const response = await Api.put(`/admin/banDoctor/${id}`);
+      if (response.status === 200) {
+        fetchData();
+        toast.success(response.data.message);
+      } else {
+        console.log('Failed to ban user');
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   if (isLoading) {
@@ -96,24 +103,23 @@ function DoctorsList() {
               <td className="p-2">{item.name}</td>
               <td className="px-4 py-2">{item.email}</td>
               <td className="px-4 py-2">{new Date(item.createdAt).toLocaleDateString()}</td>
-              <td className="px-4 py-2">{item.is_verified ? 'Inactive' : 'Active'}</td>
+              <td className="px-4 py-2">{item.is_banned ? 'Inactive' : 'Active'}</td>
               <td className="px-4 py-2">{item.medical_license_no}</td>
               <td className="px-4 py-2">{item.expertise}</td>
               <td className="px-4 py-2">{item.gender}</td>
               <td className="px-4 py-2">
-                <button
-                  className="py-1 px-3 rounded bg-red-500 text-white"
-                  style={{ width: '80px' }}
-                  onClick={() => blockDoctor(item.id)}
+              <button
+                  className={`py-1 px-3 rounded ${item.is_banned ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}
+                  onClick={() => blockDoctor(item._id)}
+                  style={{ width: '80px' }} 
                 >
-                  Block
+                  {item.is_banned ? 'Unblock' : 'Block'}
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {/* Pagination */}
       <div className="flex justify-center ">
         <button
           onClick={() => paginate('prev')}

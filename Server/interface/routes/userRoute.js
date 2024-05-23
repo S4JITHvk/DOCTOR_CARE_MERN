@@ -1,7 +1,7 @@
 const express=require('express')
 const Router = express.Router()
-const userController=require('../../usecases/userControl')
-const otpController=require('../../usecases/otpControl')
+const userController=require('../../usecases/Users/userControl')
+const otpController=require('../../usecases/Users/otpControl')
 const multer = require('multer');
 const storage = require("../../util/multerConfig");
 const upload = multer({ storage: storage });

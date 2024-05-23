@@ -1,10 +1,11 @@
 const express=require('express')
 const Router = express.Router()
-const adminControl=require("../../usecases/adminControl")
+const adminControl=require("../../usecases/Admin/adminControl")
 const Auth=require("../middlewares/Auth")
 Router.get('/usersFetch',Auth,adminControl.usersFetch)
 Router.get('/approvals',Auth,adminControl.approvals)
 Router.get('/doctorlist',Auth,adminControl.doctorlist)
 Router.put('/banUser/:userid',Auth,adminControl.userBan)
-
+Router.put('/doctorverify/:doctorid',Auth,adminControl.verifyDoctor)
+Router.put('/banDoctor/:id',Auth,adminControl.banDoctor)
 module.exports=Router

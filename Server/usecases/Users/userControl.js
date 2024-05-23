@@ -1,20 +1,19 @@
-const User=require("../entities/usermodel")
-const Doctor=require("../entities/Doctormodel")
+const User=require("../../entities/User/usermodel")
+const Query=require("../../infrastructure/DBquerys/Users/usersCrud")
+const Doctor=require("../../entities/Doctor/Doctormodel")
 const {sendOTP}=require('./otpControl')
 const jwt = require("jsonwebtoken");
-const {hashdata, comparedata}=require('../util/Bcrypthash')
+const {hashdata, comparedata}=require('../../util/Bcrypthash')
 const path = require('path');
 const fs = require('fs')
 const userSignup = async (req, res) => {
     try {
-        console.log("here====>",req.body)
         const { email, password, name } = req.body;
         if (!email || !password || !name) {
             res.status(400).json({ message: 'Missing credentials' }); 
             return; 
         }
-        const exist = await User.findOne({ email: email });
-        console.log(exist)
+        const exist = await Query.findbyEmail( email );
         if (exist) {
             if (exist.is_verified) {
                 console.log("email already exist ")
@@ -25,9 +24,10 @@ const userSignup = async (req, res) => {
                return res.status(200).json({ message: "OTP sent" }); 
             }
         } else {
-            await new User({
+            const data={
                 name,email, password
-            }).save();
+            }
+            await Query.createUser(data)
             console.log("new user saved and otp send")
             await sendOTP(email);
           return  res.status(200).json({ message: "OTP sent" }); 
@@ -42,7 +42,7 @@ const userSignup = async (req, res) => {
 const userLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userExist = await User.findOne({ email: email });
+        const userExist = await Query.findbyEmail( email );
         if (!userExist) {
             res.status(404).json({ message: "User not found" });
             return;
@@ -53,6 +53,7 @@ const userLogin = async (req, res) => {
             res.status(403).json({ message: "Your Authorization Denied By Admin!." });
             return;
         } else {
+            console.log(userExist,"user")
             const isMatch = await comparedata(password, userExist.password);
             if (!isMatch) {
                 res.status(401).json({ message: "Wrong password" });
@@ -81,7 +82,7 @@ const forgetpassword=async (req,res)=>{
         console.log(req.body)
         const {email,action}=req.body
         if(action==="User_forgot_pass"){
-       const  userexist=await User.findOne({email:email})
+       const  userexist=await  Query.findbyEmail( email );
         if(!userexist){
             res.status(404).json({message:"Email not found"})
         }else{
@@ -103,16 +104,16 @@ const forgetpassword=async (req,res)=>{
 }
 const newpass_reset=async (req,res)=>{
     try{
-        console.log(req.body,"==<>")
         const{email,password,action}=req.body
         const hashedpass=await hashdata(password)
         if(action==='User_reset'){
-        const userexist=await User.findOne({email:email})
+        const userexist=await  Query.findbyEmail( email );
         if(!userexist){
             res.status(400).json({message:"user not found"})
         }else{
-            await User.updateOne({email:email},{password: hashedpass})
+            await Query.Updatepassword(email, hashedpass)
             res.status(200).json({message:"Password changed.."})
+            
         }
     }else if(action==='Doc_reset'){
                const doctorexist=await Doctor.findOne({email:email})
@@ -138,7 +139,7 @@ const fetchData = async (req, res) => {
       if (!verified) {
         return res.status(401).json({ error: "Unauthorized2" });
       }
-      const data = await User.findById(verified.user);
+      const data = await Query.findbyid(verified.user);
       if (!data) {
         return res.status(404).json({ error: "User not found" });
       }
@@ -158,20 +159,19 @@ const fetchData = async (req, res) => {
   const googleAuth = async (req, res) => {
     try {
         const { email, name } = req.body;
-        let user = await User.findOne({ email: email });
-        console.log(user,"user")
+        let user = await Query.findbyEmail(email);
         if (user) {
             if (user.is_banned) {
                 return res.status(403).json({ message: "Your Authorization is Denied By Admin!" });
             }
         } else {
-            const newUser = new User({
+            const newUser = {
                 name: name,
                 email: email,
                 password: '123456', 
                 is_verified: true
-            });
-            user = await newUser.save();
+            }
+            await Query.createUser (newUser);
         }
         const token = jwt.sign(
             {
@@ -192,7 +192,7 @@ const edit_profile = async (req, res) => {
     try {
         const token = req.cookies.token;
         const verified = jwt.verify(token, process.env.JWT_SECRET);  
-        const user = await User.findOne({ _id: verified.user });
+        const user = await Query.findbyid(verified.user );
 
         if (!user) {
           return res.status(404).json({ error: "User not found" });
@@ -225,7 +225,7 @@ const delete_propic=async(req,res)=>{
     try{
         const token = req.cookies.token;
         const verified = jwt.verify(token, process.env.JWT_SECRET);  
-        const user = await User.findOne({ _id: verified.user });
+        const user = await Query.findbyid(verified.user);
 
         if (!user) {
           return res.status(404).json({ error: "User not found" });

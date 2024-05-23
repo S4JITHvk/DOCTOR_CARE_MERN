@@ -1,6 +1,6 @@
 const express=require('express')
 const Router = express.Router()
-const DoctorControl=require("../../usecases/doctorControl")
+const DoctorControl=require("../../usecases/Doctor/doctorControl")
 
 
 Router.post("/signup",DoctorControl.Doctor_signup)

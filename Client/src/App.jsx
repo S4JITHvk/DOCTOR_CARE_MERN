@@ -3,11 +3,9 @@ import React,{useEffect} from "react";
 import UserRoute from "./Routes/userRoutes/UserRoute"
 import Protect from './components/Auth/Protect';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from './ReduxStore/features/userSlice';
-import Api from "./API/DoctorCareApi"
 import  { Toaster } from "react-hot-toast";
 import Doctorroute from './Routes/DoctorRoutes/Doctorroute';
-import AdminRoutes from "./Routes/AdminRoutes/AdminRoutes";
+import AdminRoutes from './Routes/AdminRoutes/AdminRoute';
 import fetchUser  from './Services/usersFetch';
 function App() {
   const dispatch=useDispatch()

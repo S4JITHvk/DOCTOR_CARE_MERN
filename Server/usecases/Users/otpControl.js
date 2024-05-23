@@ -1,10 +1,10 @@
-const generateOTP=require('../util/otpGenerator')
-const sendEmail=require('../infrastructure/config/nodemailer')
-const OTP=require('../entities/otpmodel')
-const User=require('../entities/usermodel')
-const Doctor=require('../entities/Doctormodel')
+const generateOTP=require('../../util/otpGenerator')
+const sendEmail=require('../../infrastructure/config/nodemailer')
+const OTP=require('../../entities/User/otpmodel')
+const User=require('../../entities/User/usermodel')
+const Doctor=require('../../entities/Doctor/Doctormodel')
 require('dotenv').config()
-const {hashdata, comparedata}=require('../util/Bcrypthash')
+const {hashdata, comparedata}=require('../../util/Bcrypthash')
 
 const sendOTP=async (email)=>{
     try{
