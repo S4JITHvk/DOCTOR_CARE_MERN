@@ -1,8 +1,10 @@
-const users = require("../../entities/User/usermodel");
-const Doctor = require("../../entities/Doctor/Doctormodel");
+
+const AdminQuery=require("../../infrastructure/DBquerys/Admin/AdminQuery")
+const UserQuery=require("../../infrastructure/DBquerys/Users/usersCrud")
+const DocQuery=require("../../infrastructure/DBquerys/Doctor/DocQuery")
 const usersFetch = async (req, res) => {
   try {
-    const fetchedata = await users.find({ role: { $ne: "ADMIN" } });
+    const fetchedata = await AdminQuery.UserList()
     if (fetchedata) {
       return res.status(200).json({ data: fetchedata });
     } else {
@@ -15,10 +17,7 @@ const usersFetch = async (req, res) => {
 
 const approvals = async (req, res) => {
   try {
-    const fetchedata = await Doctor.find({
-      is_verified: false,
-      is_registered: true,
-    });
+    const fetchedata = await AdminQuery.Approvals()
     if (fetchedata) {
       return res.status(200).json({ data: fetchedata });
     } else {
@@ -31,7 +30,7 @@ const approvals = async (req, res) => {
 
 const doctorlist = async (req, res) => {
   try {
-    const fetchedata = await Doctor.find({ is_verified: true });
+    const fetchedata = await AdminQuery.DoctorList()
     if (fetchedata) {
       return res.status(200).json({ data: fetchedata });
     } else {
@@ -47,21 +46,17 @@ const userBan = async (req, res) => {
     console.log("ban user");
     const userid = req.params.userid;
     console.log(userid, "userid==>");
-    const user = await users.findById(userid);
+    
+    const user = await UserQuery.findbyid(userid);
     if (!user) {
       console.log("no user");
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.is_banned) {
-      user.is_banned = false;
-      await user.save();
-      return res.status(200).json({ message: "User unbanned successfully" });
-    } else {
-      user.is_banned = true;
-      await user.save();
-      return res.status(200).json({ message: "User banned successfully" });
-    }
+    user.is_banned = !user.is_banned;
+    await UserQuery.saveUser(user);
+    return res.status(200).json({ message: user.is_banned ? "User banned successfully" : "User unbanned successfully" });
+    
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ error: "Internal server error" });
@@ -70,14 +65,12 @@ const userBan = async (req, res) => {
 const verifyDoctor = async (req, res) => {
   try {
     const doctorid = req.params.doctorid;
-    console.log(doctorid, "===>");
-    const doctor = await Doctor.findOne({ _id: doctorid });
-    console.log(doctor, "==>doctor");
+    const doctor = await DocQuery.docfindbyId( doctorid );
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
     doctor.is_verified = true;
-    await doctor.save();
+    await DocQuery.Docupdate(doctor);
     return res.status(200).json({ message: "successfully verified." });
   } catch (error) {
     console.log(error.message);
@@ -87,20 +80,14 @@ const verifyDoctor = async (req, res) => {
 const banDoctor= async (req, res) => {
   try {
     const doctorid = req.params.id;
-    const doctor = await Doctor.findById(doctorid);
+    const doctor = await DocQuery.docfindbyId(doctorid);
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
-
-    if (doctor.is_banned) {
-      doctor.is_banned = false;
-      await doctor.save();
-      return res.status(200).json({ message: "Doctor unbanned successfully" });
-    } else {
-      doctor.is_banned = true;
-      await doctor.save();
-      return res.status(200).json({ message: "Doctor banned successfully" });
-    }
+ 
+    doctor.is_banned = !doctor.is_banned;
+    await DocQuery.Docupdate(doctor);
+    return res.status(200).json({ message: doctor.is_banned ? "Doctor banned successfully" : "Doctor unbanned successfully" });
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({ error: "Internal server error" });

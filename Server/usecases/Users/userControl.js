@@ -1,6 +1,6 @@
-const User=require("../../entities/User/usermodel")
+
 const Query=require("../../infrastructure/DBquerys/Users/usersCrud")
-const Doctor=require("../../entities/Doctor/Doctormodel")
+const DocQuery=require("../../infrastructure/DBquerys/Doctor/DocQuery")
 const {sendOTP}=require('./otpControl')
 const jwt = require("jsonwebtoken");
 const {hashdata, comparedata}=require('../../util/Bcrypthash')
@@ -90,7 +90,7 @@ const forgetpassword=async (req,res)=>{
             res.json({message:"OTP Sended ForgetPass"})
         }
     }else if(action==="Doctor_forgot_pass"){
-        const  Doctorexist=await Doctor.findOne({email:email})
+        const  Doctorexist=await DocQuery.docfindbyEmail(email)
         if(!Doctorexist){
             res.status(404).json({message:"Email not found"})
         }else{
@@ -116,11 +116,11 @@ const newpass_reset=async (req,res)=>{
             
         }
     }else if(action==='Doc_reset'){
-               const doctorexist=await Doctor.findOne({email:email})
+               const doctorexist=await DocQuery.docfindbyEmail(email)
                if(!doctorexist){
                 res.status(400).json({message:"Doctor not found"})
             }else{
-                await Doctor.updateOne({email:email},{password: hashedpass})
+                await DocQuery.DocUpdatepassword(email,hashedpass)
                 res.status(200).json({message:"Password changed.."})
             }
     }
@@ -212,7 +212,7 @@ const edit_profile = async (req, res) => {
             const path_image = process.env.IMAGE_PATH + `profileimages/${req.file.filename}`;
             updateData.profile = path_image;
         }
-        await User.updateOne({ _id: verified.user }, { $set: updateData });
+        await Query.profileUpdate(verified.user,updateData)
         return res.status(200).json({ message: 'Profile updated successfully' });
 
     } catch (error) {
@@ -239,10 +239,7 @@ const delete_propic=async(req,res)=>{
                     fs.unlinkSync(imagePath);
                 } 
             }
-            await User.updateOne(
-                { _id: verified.user },
-                { $unset: { profile: "" } }
-            );
+            await Query.deletepro(verified.user ,{ profile: "" } );
     
             return res.status(200).json({ message: 'Profile picture deleted successfully' });
     }catch(e){

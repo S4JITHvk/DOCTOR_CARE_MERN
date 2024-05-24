@@ -24,7 +24,7 @@ function Newpass() {
             });
             if (response.status === 200) {
                 toast.success("Successfully Reset password.")
-                navigate('/login');
+                navigate('/');
             } else {
                 setErrorMessage("Failed to reset password. Please try again.");
             }

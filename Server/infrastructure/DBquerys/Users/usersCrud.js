@@ -35,14 +35,30 @@ const createUser = async (userData) => {
   };
   const Updatepassword = async (email, hashedpass) => {
     try {
-      const user = await findbyEmail(email);
-      if (user) {
         await User.updateOne({ email: email }, { password: hashedpass });
-      } else {
-        throw new Error("User not found");
-      }
     } catch (e) {
       console.error(e.message);
+    }
+  };
+  const profileUpdate=async (id,data)=>{
+    try{
+     await User.updateOne({ _id: id }, { $set: data})
+    }catch(err){
+      console.log(err.message)
+    }
+  }
+  const deletepro=async(id,data)=>{
+    try{
+  await User.updateOne({_id:id},{$unset:data})
+    }catch(e){
+      console.log(e.message)
+    }
+  }
+  const saveUser = async (user) => {
+    try {
+      await user.save();
+    } catch (err) {
+      throw new Error('Error saving user');
     }
   };
   
@@ -51,5 +67,7 @@ module.exports = {
   findbyEmail,
   createUser,
   Updatepassword,
-
+  profileUpdate,
+  deletepro,
+  saveUser
 };

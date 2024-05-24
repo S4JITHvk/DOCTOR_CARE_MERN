@@ -1,8 +1,6 @@
 const generateOTP=require('../../util/otpGenerator')
 const sendEmail=require('../../infrastructure/config/nodemailer')
-const OTP=require('../../entities/User/otpmodel')
-const User=require('../../entities/User/usermodel')
-const Doctor=require('../../entities/Doctor/Doctormodel')
+const AuthQuery=require("../../infrastructure/DBquerys/Users/AuthQuery")
 require('dotenv').config()
 const {hashdata, comparedata}=require('../../util/Bcrypthash')
 
@@ -11,7 +9,7 @@ const sendOTP=async (email)=>{
         if(!(email)){
             throw Error("provide values for email,subject,message")
         }
-        await OTP.deleteOne({email})
+        await AuthQuery.deleteotp(email)
         const generatedOTP=await generateOTP();
         const mailOptions={
             from:process.env.AUTH_EMAIL,
@@ -27,13 +25,13 @@ const sendOTP=async (email)=>{
           }
         const currentDate =new Date();
         const newDate = addMinutesToDate(currentDate, 10);
-        const newOTP= await new OTP({
+        const newOTP= {
             email,
             otp:hashedData,
             createdAt:Date.now(),
             expireAt:newDate,
-        })
-        await newOTP.save()
+        }
+        await AuthQuery.OtpSave(newOTP)
     }catch(err){
         throw err;
     }
@@ -45,7 +43,7 @@ const verifyOtp = async (req, res) => {
             res.status(400)
             throw new Error('OTP not found')
         }
-        const otp = await OTP.findOne({ email: req.body.email });
+        const otp = await AuthQuery.otpfindbyEmail(req.body.email);
         console.log(otp)
         if (otp) {
             const match = await comparedata(req.body.otp, otp.otp);
@@ -56,11 +54,11 @@ const verifyOtp = async (req, res) => {
                      return res.json({message:"Doc_reset"})
                 }
                 else if(req.body.action==='Doctor'){
-                    await Doctor.updateOne({email:req.body.email},{is_registered:true})
+                    await AuthQuery.Docupdate(req.body.email)
                     return res.json({message:"Doctor Registered SuccessFully"})
                 }         
                 else{
-                await User.updateOne({ email: req.body.email }, { is_verified: true });
+                await AuthQuery.Userupdate(req.body.email);
                 res.status(200).json({message:"Successfully Registered.."})
                 }
             } else {
