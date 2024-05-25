@@ -11,7 +11,7 @@ import fetchDoctor from "../../Services/Doctorfetch"
 const Doctorsignup = lazy(() => import('../../Pages/Doctors/Doctorsignup'));
 const Doctorslogin = lazy(() => import('../../Pages/Doctors/Login'));
 const Dashboard = lazy(() => import('../../Pages/Doctors/Dashboard'));
-
+const Profile=lazy(()=>import('../../components/Doctor/DoctorProfile'))
 function Doctorroute() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -23,6 +23,7 @@ function Doctorroute() {
       <Routes>
         <Route element={<Authprotect role="DOCTOR" />}>
           <Route path="/" element={  <Doctorlayout> <Dashboard /> </Doctorlayout> }/>
+          <Route path="/Profile" element={<Doctorlayout><Profile/></Doctorlayout>} />
         </Route>
         <Route element={<DoctorAuth />}>
           <Route path="/signup" element={<Doctorsignup />} />

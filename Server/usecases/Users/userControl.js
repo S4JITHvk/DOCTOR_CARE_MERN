@@ -204,7 +204,7 @@ const edit_profile = async (req, res) => {
             if ( imageUrl) {
                 const parsedUrl = new URL(imageUrl);
                 const imageName = path.basename(parsedUrl.pathname);
-                const imagePath = path.join(__dirname, '../public', imageName);
+                const imagePath = path.join(__dirname, '../../public', imageName);
                 if (fs.existsSync(imagePath)) {
                     fs.unlinkSync(imagePath);
                 } 
@@ -234,7 +234,7 @@ const delete_propic=async(req,res)=>{
             if ( imageUrl) {
                 const parsedUrl = new URL(imageUrl);
                 const imageName = path.basename(parsedUrl.pathname);
-                const imagePath = path.join(__dirname, '../public', imageName);
+                const imagePath = path.join(__dirname, '../../public', imageName);
                 if (fs.existsSync(imagePath)) {
                     fs.unlinkSync(imagePath);
                 } 

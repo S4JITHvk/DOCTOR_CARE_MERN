@@ -10,7 +10,7 @@ const Doctorlayout = ({ children }) => {
         <div className="flex-none w-64 bg-gray-100 dark:bg-gray-800">
           <Doctorsider />
         </div>
-        <div className="flex-1 bg-gray-50 dark:bg-gray-900 overflow-auto">
+        <div className="flex-1 bg-gray-50  dark:bg-gray-900 overflow-auto">
           {children}
         </div>
       </div>

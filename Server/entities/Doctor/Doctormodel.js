@@ -66,6 +66,9 @@ is_registered:{
 role: {
     type: String,
     default: "DOCTOR"
+},
+profile: {
+  type: String,
 }
 },{ timestamps: true });
 doctorSchema.pre("save", async function (next) {
