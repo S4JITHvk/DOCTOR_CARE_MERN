@@ -12,6 +12,7 @@ const Doctorsignup = lazy(() => import('../../Pages/Doctors/Doctorsignup'));
 const Doctorslogin = lazy(() => import('../../Pages/Doctors/Login'));
 const Dashboard = lazy(() => import('../../Pages/Doctors/Dashboard'));
 const Profile=lazy(()=>import('../../components/Doctor/DoctorProfile'))
+const Newpass=lazy(()=>import("../../components/Doctor/Docchangepass"))
 function Doctorroute() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,6 +25,7 @@ function Doctorroute() {
         <Route element={<Authprotect role="DOCTOR" />}>
           <Route path="/" element={  <Doctorlayout> <Dashboard /> </Doctorlayout> }/>
           <Route path="/Profile" element={<Doctorlayout><Profile/></Doctorlayout>} />
+          <Route path="/Newpassword" element={<Doctorlayout><Newpass/></Doctorlayout>}/>
         </Route>
         <Route element={<DoctorAuth />}>
           <Route path="/signup" element={<Doctorsignup />} />

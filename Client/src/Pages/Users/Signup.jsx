@@ -116,7 +116,6 @@ function Signup() {
         const response = await Api.post("/usersignup", userData, {
           withCredentials: true,
         });
-        console.log(response.data, '=======>');
         if (response.data.message === "OTP sent") {
           toast.success("Enter otp send to your mail")
           navigate('/otp',{ state: { email:userData.email } });

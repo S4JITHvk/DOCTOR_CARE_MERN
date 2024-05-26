@@ -60,6 +60,20 @@ const Docupdate=async(doctor)=>{
         console.log(e.message)
     }
 }
+const profileUpdate=async (id,data)=>{
+  try{
+   await Doctor.updateOne({ _id: id }, { $set: data})
+  }catch(err){
+    console.log(err.message)
+  }
+}
+const deletepro=async(id,data)=>{
+  try{
+await Doctor.updateOne({_id:id},{$unset:data})
+  }catch(e){
+    console.log(e.message)
+  }
+}
 
 module.exports={
  docfindbyId,
@@ -67,5 +81,7 @@ module.exports={
  DocUpdatepassword,
  docfindbyLicense,
  Doctorsave,
- Docupdate
+ Docupdate,
+ profileUpdate,
+ deletepro
 }

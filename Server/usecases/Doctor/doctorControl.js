@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const DocQuery = require("../../infrastructure/DBquerys/Doctor/DocQuery");
 const { comparedata } = require("../../util/Bcrypthash");
 const { sendOTP } = require("../Users/otpControl");
-
+const path = require('path');
+const fs = require('fs')
 const Doctor_signup = async (req, res) => {
   try {
     const { email } = req.body;
@@ -80,7 +81,6 @@ const Doctor_login = async (req, res) => {
 const fetch_doctor = async (req, res) => {
   try {
     const token = req.cookies.doctortoken;
-    console.log(token, "===>token in doctor");
     if (!token) {
       return res.status(401).json({ error: "Unauthorized1" });
     }
@@ -90,16 +90,72 @@ const fetch_doctor = async (req, res) => {
     }
     const data = await DocQuery.docfindbyId(verified.doctor);
     if (!data) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Doctor not found" });
     }
     res.status(200).json({ data });
   } catch (error) {
     console.error("error while fetch data:", error);
   }
 };
+const edit_profile =async (req,res)=>{
+  try{
+    const token = req.cookies.doctortoken;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);  
+    const doctor = await DocQuery.docfindbyId(verified.doctor );
 
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor not found" });
+    }
+
+    let updateData = { name: req.body.name, phone_number:req.body.phone_number,dob:req.body.dob };
+    if (req.file) {
+      const imageUrl = doctor.profile;
+      if ( imageUrl) {
+          const parsedUrl = new URL(imageUrl);
+          const imageName = path.basename(parsedUrl.pathname);
+          const imagePath = path.join(__dirname, '../../public', imageName);
+          if (fs.existsSync(imagePath)) {
+              fs.unlinkSync(imagePath);
+          } 
+      }
+      const path_image = process.env.IMAGE_PATH + `profileimages/${req.file.filename}`;
+      updateData.profile = path_image;
+  }
+  await DocQuery.profileUpdate(verified.doctor,updateData)
+        return res.status(200).json({ message: 'Profile updated successfully' });
+  }catch(e){
+    console.log(e.message)
+  }
+}
+const delete_propic=async(req,res)=>{
+  try{
+      const token = req.cookies.doctortoken;
+      const verified = jwt.verify(token, process.env.JWT_SECRET);  
+      const doctor = await DocQuery.docfindbyId(verified.doctor);
+
+      if (!doctor) {
+        return res.status(404).json({ error: "Doctor not found" });
+      }
+      const imageUrl = doctor.profile;
+          if ( imageUrl) {
+              const parsedUrl = new URL(imageUrl);
+              const imageName = path.basename(parsedUrl.pathname);
+              const imagePath = path.join(__dirname, '../../public', imageName);
+              if (fs.existsSync(imagePath)) {
+                  fs.unlinkSync(imagePath);
+              } 
+          }
+          await DocQuery.deletepro(verified.doctor ,{ profile: "" } );
+  
+          return res.status(200).json({ message: 'Profile picture deleted successfully' });
+  }catch(e){
+      console.log(e.message)
+  }
+}
 module.exports = {
   Doctor_signup,
   Doctor_login,
   fetch_doctor,
+  edit_profile ,
+  delete_propic
 };

@@ -30,7 +30,7 @@ function Doctorsidebar() {
           <button className="h-6 w-32 rounded bg-blue-500 text-white font-semibold mt-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300 ease-in-out">
             <Link to="/doctor/Profile">View Profile</Link>
           </button>
-          <h1 className="text-xl font-bold text-center mt-2 sm:mt-4">{doctorData.doctor.name}</h1>
+          <h1 className="text-xl font-bold text-center mt-2 sm:mt-4">Dr. {doctorData.doctor.name}</h1>
           <p className="text-gray-700 text-center">{doctorData.doctor.expertise}</p>
         </div>
         <hr className="my-5 border-t border-gray-300" />

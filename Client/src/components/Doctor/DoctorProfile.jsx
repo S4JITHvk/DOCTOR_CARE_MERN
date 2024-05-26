@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import Api from "../../API/DoctorCareApi";
 import toast from "react-hot-toast";
 import { FiUpload, FiTrash } from "react-icons/fi";
+import fetchDoctor from "../../Services/Doctorfetch";
 import Swal from 'sweetalert2';
-
+import Compressor from 'compressorjs';
 function DoctorProfile() {
   const [selectedImage, setSelectedImage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,70 +43,119 @@ function DoctorProfile() {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
-        setIsChanged(true);
-      };
-      reader.readAsDataURL(file);
+      new Compressor(file, {
+        quality: 0.6, 
+        maxWidth: 800, 
+        maxHeight: 800,
+        success(result) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setSelectedImage(reader.result);
+            setImageFile(result);
+            setIsChanged(true);
+          };
+          reader.readAsDataURL(result);
+        },
+        error(err) {
+          console.log(err.message);
+        },
+      });
     }
   };
-
-  const handleDeleteImage = () => {
-    setSelectedImage('');
-    setIsChanged(true);
-  };
-
   const handleChange = (setter) => (event) => {
     setter(event.target.value);
     setIsChanged(true);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    let errors = {};
-
-    if (!name.trim()) {
-      errors.name = 'Name is required';
+  const validateForm = () => {
+    const newErrors = {};
+    if (name.trim() === '') {
+      newErrors.name = 'Name is required';
     }
+    if (phoneNumber.trim() === '' || !/^\d{10}$/.test(phoneNumber)) {
+      newErrors.phoneNumber = 'Phone number is required and must be 10 digits';
+    }
+    if (dob.trim() === '') {
+      newErrors.dob = 'Date of birth is required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    if (Object.keys(errors).length === 0) {
-      Api.updateUserProfile({
-        name,
-        selectedImage,
-        phoneNumber,
-        expertise,
-        experienceYears,
-        workingHospital,
-        workingHospitalContact,
-        dob,
-        gender,
-        medicalLicenseNo,
-      })
-        .then(() => {
-          toast.success('Profile updated successfully');
-          setIsChanged(false);
-        })
-        .catch(() => {
-          toast.error('Failed to update profile');
-        });
-    } else {
-      setErrors(errors);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!validateForm()) return;
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('phone_number', phoneNumber);
+    formData.append('dob', dob);
+    if (imageFile) {
+      formData.append('profilePic', imageFile);
+    }
+    try {
+      const response = await Api.post('/doctor/editprofile', formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (response.status === 200) {
+        toast.success("Profile updated successfully");
+        fetchDoctor(dispatch);
+        setIsChanged(false); 
+      } else {
+        toast.error("Failed to update profile");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  const handleDeleteImage = async () => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "Remove Profile image.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      });
+
+      if (result.isConfirmed) {
+        const response = await Api.post('/doctor/deleteprofilepic');
+        if (response.status === 200) {
+          fetchDoctor(dispatch);
+          setSelectedImage(null);
+          setImageFile(null);
+          toast.success("Profile Picture removed successfully.");
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+        } else {
+          toast.error("Failed to update profile");
+        }
+      }
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
+
   return (
-    <div className="col-span-4 sm:col-span-9 flex justify-center">
-      <div className="bg-white shadow   rounded-lg px-[150px] w-full max-w-6xl">
+    <div className="col-span-4 sm:col-span-9 flex justify-center py-8">
+      <div className="bg-white shadow rounded-lg px-8 py-10 w-full max-w-6xl">
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center justify-center ">
+          <div className="flex flex-col items-center justify-center mb-6">
             <img
               src={selectedImage || "/assets/doctor.jpg"}
-              className="w-32 h-32 bg-green-500 rounded-full mb-4 mt-2"
+              className="w-24 h-24 bg-green-500 rounded-full mb-4 mt-2 object-cover"
               alt="Profile"
             />
             <div className="flex items-center justify-center mb-4">
-              <label htmlFor="file-upload" className="cursor-pointer">
+              <label htmlFor="file-upload" className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-full shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
                 <FiUpload className="text-2xl" />
                 <input
                   id="file-upload"
@@ -115,21 +166,25 @@ function DoctorProfile() {
                 />
               </label>
               {selectedImage && selectedImage !== "/assets/doctor.jpg" && (
-                <button type="button" onClick={handleDeleteImage} className="ml-4">
-                  <FiTrash className="text-2xl text-red-500" />
+                <button
+                  type="button"
+                  onClick={handleDeleteImage}
+                  className="ml-4 bg-red-500 text-white py-2 px-4 rounded-full shadow-md hover:bg-red-700 transition duration-300 ease-in-out"
+                >
+                  <FiTrash className="text-2xl" />
                 </button>
               )}
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className='font-bold  text-fuchsia-600 underline ml-10 text-lg'>PERSONAL DETAILS</div>
+            <div className='font-bold text-fuchsia-600 underline ml-10 text-lg'>PERSONAL DETAILS</div>
             <div className='font-bold text-fuchsia-600 underline ml-10 text-lg'>PROFESSIONAL DETAILS</div>
             <div className="mb-6">
               <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name</label>
               <input
                 type="text"
                 id="name"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 placeholder="Enter your name"
                 value={name}
                 onChange={handleChange(setName)}
@@ -152,7 +207,7 @@ function DoctorProfile() {
               <input
                 type="email"
                 id="email"
-                className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight custom-border-green focus:border-blue-500 border-green-500 "
+                className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight custom-border-green focus:border-blue-500 border-green-500"
                 placeholder="Enter your email"
                 value={email}
                 readOnly
@@ -163,7 +218,7 @@ function DoctorProfile() {
               <input
                 type="text"
                 id="expertise"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 placeholder="Enter your expertise"
                 value={expertise}
                 readOnly
@@ -174,22 +229,22 @@ function DoctorProfile() {
               <input
                 type="text"
                 id="phone_number"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 placeholder="Enter your phone number"
                 value={phoneNumber}
                 onChange={handleChange(setPhoneNumber)}
               />
+              {errors.phoneNumber && <p className="text-red-500 text-sm mt-2">{errors.phoneNumber}</p>}
             </div>
-           
             <div className="mb-6">
               <label htmlFor="experience_years" className="block text-gray-700 font-bold mb-2">Years of Experience</label>
               <input
                 type="number"
                 id="experience_years"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 placeholder="Enter your years of experience"
                 value={experienceYears}
-                onChange={handleChange(setExperienceYears)}
+                readOnly
               />
             </div>
             <div className="mb-6">
@@ -197,29 +252,30 @@ function DoctorProfile() {
               <input
                 type="date"
                 id="dob"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 value={dob}
-                readOnly
+                onChange={handleChange(setDob)}
               />
+              {errors.dob && <p className="text-red-500 text-sm mt-2">{errors.dob}</p>}
             </div>
             <div className="mb-6">
               <label htmlFor="working_Hospital" className="block text-gray-700 font-bold mb-2">Working Hospital</label>
               <input
                 type="text"
                 id="working_Hospital"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight"
                 placeholder="Enter your working hospital"
                 value={workingHospital}
-                onChange={handleChange(setWorkingHospital)}
+                readOnly
               />
             </div>
             <div className="mb-6">
               <label htmlFor="gender" className="block text-gray-700 font-bold mb-2">Gender</label>
-               <input
+              <input
                 type="text"
                 id="gender"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                placeholder="gender"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                placeholder="Enter your gender"
                 value={gender}
                 readOnly
               />
@@ -229,25 +285,20 @@ function DoctorProfile() {
               <input
                 type="text"
                 id="working_Hospital_contact"
-                className="w-full border border-green-500  rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                className="w-full border border-green-500 rounded-md py-2 px-3 text-gray-700 leading-tight"
                 placeholder="Enter your working hospital contact"
                 value={workingHospitalContact}
-                onChange={handleChange(setWorkingHospitalContact)}
+                readOnly
               />
             </div>
-           
-          
-           
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-6">
             <button
               type="submit"
-              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-                !isChanged && 'opacity-50 cursor-not-allowed'
-              }`}
+              className={`px-4 py-2 rounded ${isChanged ? 'bg-blue-500 text-white' : 'bg-gray-500 text-white cursor-not-allowed'}`}
               disabled={!isChanged}
             >
-              Save
+              Update Profile
             </button>
           </div>
         </form>
