@@ -7,7 +7,7 @@ import {
   isPasswordValid,
   isEmailValid,
   passwordcheck,
-} from "../../../helpers/validation";
+} from "../../helpers/validation";
 import Api from "../../API/DoctorCareApi"
 
 function Signup() {
@@ -90,10 +90,15 @@ function Signup() {
     if (isEmpty(userData.password)) {
       errors.passwordred = true;
       errorMessages.passworderr = "Password can't be empty";
-    }
-    if (!isPasswordValid(userData.password)) { 
-      errors.passwordred = true;
-      errorMessages.passworderr = "Password must contain at least 6 characters";
+    }else{
+    const passwordValidationResult = isPasswordValid(userData.password);
+      if (!passwordValidationResult.valid) {
+        errors.passwordred = true;
+        errorMessages.passworderr = passwordValidationResult.message;
+      } else {
+        errors.passwordred = false;
+        errorMessages.passworderr = "";
+      }
     }
     if (isEmpty(userData.confirmpassword)) {
       errors.confirmpasswordred = true;

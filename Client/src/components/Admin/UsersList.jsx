@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Api from '../../API/DoctorCareApi';
 import toast from "react-hot-toast";
-
+import { MdOutlineKeyboardDoubleArrowLeft,MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
+import Swal from 'sweetalert2';
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -125,7 +126,7 @@ function UsersList() {
     className={`px-2 py-1 mx-1 rounded bg-blue-500 text-white border border-gray-300`}
     disabled={currentPage === 1}
   >
-    Prev
+    <MdOutlineKeyboardDoubleArrowLeft />
   </button>
   {[...Array(Math.min(3, Math.ceil(users.length / usersPerPage))).keys()].map((index) => (
     <button
@@ -141,7 +142,7 @@ function UsersList() {
     className={`px-2 py-1 mx-1 rounded bg-blue-500 text-white border border-gray-300`}
     disabled={currentPage === Math.ceil(users.length / usersPerPage)}
   >
-    Next
+    <MdOutlineKeyboardDoubleArrowRight/>
   </button>
 </div>
 

@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 import Api from "../../API/DoctorCareApi";
-import { isEmailValid, isEmpty } from "../../../helpers/validation";
-import { useDispatch } from 'react-redux';
-import { setDoctor } from "../../ReduxStore/features/doctorSlice";
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-
+import { isEmailValid, isEmpty } from "../../helpers/validation";
 function Login() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -26,8 +19,6 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validation
     const errors = {};
     if (!isEmailValid(formData.email)) {
       errors.email = 'Please enter a valid email address';

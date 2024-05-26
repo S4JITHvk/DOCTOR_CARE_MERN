@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import Api from "../../../API/DoctorCareApi"; 
 import toast from "react-hot-toast";
 import Sidebar from "./Sidebar"
-import { useSelector } from 'react-redux';
+import{isPasswordValid,isEmpty} from "../../../helpers/validation"
 function Changepass() {
-    const user = useSelector((state) => state.user);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -16,12 +15,21 @@ function Changepass() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (newPassword !== confirmPassword) {
-      setErrorMessage('Passwords do not match');
-      return;
+    let error = '';
+    const passwordValidationResult = isPasswordValid(newPassword);
+    if (!passwordValidationResult.valid) {
+      error = passwordValidationResult.message;
+    } else if (isEmpty(confirmPassword)) {
+      error = "Confirm password can't be empty";
+    } else if (newPassword !== confirmPassword) {
+      error = 'Passwords do not match';
     }
-    try {
-      const response = await Api.post('/newpassword', {email:user.user.email, password: newPassword ,action:"User_reset"});
+    if (error) {
+        setErrorMessage(error);
+        return;
+    }
+    try {      
+      const response = await Api.post('/newpassword', {email:Doctor.doctor.email, password: newPassword ,action:"User_reset"});
       if (response.status === 200) {
         toast.success('Password reset successfully');
         setNewPassword('');
@@ -30,6 +38,7 @@ function Changepass() {
       } else {
         setErrorMessage('Failed to reset password');
       }
+    
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage('An error occurred. Please try again.');

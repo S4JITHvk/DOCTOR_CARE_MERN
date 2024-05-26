@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Api from "../../API/DoctorCareApi";
-import { isEmailValid, isEmpty } from "../../../helpers/validation";
+import { isEmailValid, isEmpty } from "../../helpers/validation";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";

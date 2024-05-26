@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Api from "../../API/DoctorCareApi"; 
 import toast from "react-hot-toast";
 import { useSelector } from 'react-redux';
-import{isPasswordValid,isEmpty} from "../../../helpers/validation"
+import{isPasswordValid,isEmpty} from "../../helpers/validation"
 function Docchangepass() {
-    const Doctor = useSelector((state) => state.doctor);
+  const Doctor = useSelector((state) => state.doctor);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -17,14 +17,14 @@ function Docchangepass() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let error = '';
-    if (!isPasswordValid(newPassword)) { 
-        error = "Password must contain at least 6 characters";
+    const passwordValidationResult = isPasswordValid(newPassword);
+    if (!passwordValidationResult.valid) {
+      error = passwordValidationResult.message;
     } else if (isEmpty(confirmPassword)) {
-        error = "Confirm password can't be empty";
+      error = "Confirm password can't be empty";
     } else if (newPassword !== confirmPassword) {
-        error = 'Passwords do not match';
+      error = 'Passwords do not match';
     }
-
     if (error) {
         setErrorMessage(error);
         return;
@@ -88,6 +88,7 @@ function Docchangepass() {
                 </button>
               </div>
             </div>
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             <div>
               <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-gray-900">Confirm Password</label>
               <div className="mt-2">
@@ -102,7 +103,7 @@ function Docchangepass() {
                 />
               </div>
             </div>
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            
             <div>
               <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Reset Password</button>
             </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Api from "../../../API/DoctorCareApi"
 import toast from 'react-hot-toast';
+import{isPasswordValid,isEmpty} from "../../../helpers/validation"
 function Newpass() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -12,8 +13,17 @@ function Newpass() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (newPassword !== confirmPassword) {
-            setErrorMessage('Passwords do not match');
+        let error = '';
+        const passwordValidationResult = isPasswordValid(newPassword);
+        if (!passwordValidationResult.valid) {
+          error = passwordValidationResult.message;
+        } else if (isEmpty(confirmPassword)) {
+          error = "Confirm password can't be empty";
+        } else if (newPassword !== confirmPassword) {
+          error = 'Passwords do not match';
+        }
+        if (error) {
+            setErrorMessage(error);
             return;
         }
         try {

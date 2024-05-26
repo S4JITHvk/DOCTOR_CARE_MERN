@@ -9,7 +9,7 @@ import {
   isPasswordValid,
   isEmailValid,
   passwordcheck,
-} from "../../../helpers/validation";
+} from "../../helpers/validation";
 import Api from "../../API/DoctorCareApi";
 
 function Doctorsignup() {
@@ -74,8 +74,6 @@ function Doctorsignup() {
     let isValid = true;
     const newError = { ...error };
     const newErrorDef = { ...errordef };
-
-    // Validate name
     if (isEmpty(userData.name)) {
       newError.namered = true;
       newErrorDef.nameerr = "Name is required";
@@ -84,8 +82,6 @@ function Doctorsignup() {
       newError.namered = false;
       newErrorDef.nameerr = "";
     }
-
-    // Validate email
     if (isEmpty(userData.email)) {
       newError.emailred = true;
       newErrorDef.emailerr = "Email is required";
@@ -98,22 +94,21 @@ function Doctorsignup() {
       newError.emailred = false;
       newErrorDef.emailerr = "";
     }
-
-    // Validate password
     if (isEmpty(userData.password)) {
       newError.passwordred = true;
       newErrorDef.passworderr = "Password is required";
       isValid = false;
-    } else if (!isPasswordValid(userData.password)) {
-      newError.passwordred = true;
-      newErrorDef.passworderr = "Password must be at least 8 characters long";
-      isValid = false;
-    } else {
-      newError.passwordred = false;
-      newErrorDef.passworderr = "";
+    }else {
+      const passwordValidationResult = isPasswordValid(userData.password);
+      if (!passwordValidationResult.valid) {
+        newError.passwordred = true;
+        newErrorDef.passworderr = passwordValidationResult.message;
+        isValid = false;
+      } else {
+        newError.passwordred = false;
+        newErrorDef.passworderr = "";
+      }
     }
-
-    // Validate confirm password
     if (isEmpty(userData.confirmpassword)) {
       newError.confirmpasswordred = true;
       newErrorDef.confirmpassworderr = "Please confirm your password";
@@ -127,7 +122,6 @@ function Doctorsignup() {
       newErrorDef.confirmpassworderr = "";
     }
 
-    // Validate phone number
     if (isEmpty(userData.phone_number)) {
       newError.phone_number_red = true;
       newErrorDef.phone_number_err = "Phone number is required";
@@ -136,8 +130,6 @@ function Doctorsignup() {
       newError.phone_number_red = false;
       newErrorDef.phone_number_err = "";
     }
-
-    // Validate expertise
     if (isEmpty(userData.expertise)) {
       newError.expertise_red = true;
       newErrorDef.expertise_err = "Expertise is required";
@@ -146,8 +138,6 @@ function Doctorsignup() {
       newError.expertise_red = false;
       newErrorDef.expertise_err = "";
     }
-
-    // Validate experience years
     if (isEmpty(userData.experience_years)) {
       newError.experience_years_red = true;
       newErrorDef.experience_years_err = "Experience years are required";
@@ -156,8 +146,6 @@ function Doctorsignup() {
       newError.experience_years_red = false;
       newErrorDef.experience_years_err = "";
     }
-
-    // Validate working hospital
     if (isEmpty(userData.working_Hospital)) {
       newError.working_Hospital_red = true;
       newErrorDef.working_Hospital_err = "Working hospital is required";
@@ -166,8 +154,6 @@ function Doctorsignup() {
       newError.working_Hospital_red = false;
       newErrorDef.working_Hospital_err = "";
     }
-
-    // Validate DOB
     if (isEmpty(userData.dob)) {
       newError.DOB_red = true;
       newErrorDef.DOB_err = "Date of birth is required";
@@ -176,8 +162,6 @@ function Doctorsignup() {
       newError.DOB_red = false;
       newErrorDef.DOB_err = "";
     }
-
-    // Validate gender
     if (isEmpty(userData.gender)) {
       newError.Gender_red = true;
       newErrorDef.Gender_err = "Gender is required";
@@ -186,8 +170,6 @@ function Doctorsignup() {
       newError.Gender_red = false;
       newErrorDef.Gender_err = "";
     }
-
-    // Validate working place contact
     if (isEmpty(userData.working_Hospital_contact)) {
       newError.working_Hospital_contact_red = true;
       newErrorDef.working_Hospital_contact_err =
@@ -197,8 +179,6 @@ function Doctorsignup() {
       newError.working_Hospital_contact_red = false;
       newErrorDef.working_Hospital_contact_err = "";
     }
-
-    // Validate medical license number
     if (isEmpty(userData.medical_license_no)) {
       newError.medical_license_no_red = true;
       newErrorDef.medical_license_no_err = "Medical license number is required";

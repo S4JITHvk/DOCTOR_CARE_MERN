@@ -89,11 +89,6 @@ function Userprofile() {
           setSelectedImage(null);
           setImageFile(null);
           toast.success("Profile Picture removed successfully.");
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
         } else {
           toast.error("Failed to update profile");
         }
