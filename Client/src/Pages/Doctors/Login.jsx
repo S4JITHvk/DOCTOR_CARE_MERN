@@ -71,7 +71,7 @@ function Login() {
         paddingBottom: '10rem'
       }}>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">DOCTOR CARE</h1>
+          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">MIND CARE</h1>
           <h2 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login as a Doctor!.</h2>
         </div>
         

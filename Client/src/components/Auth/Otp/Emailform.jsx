@@ -41,7 +41,7 @@ function EmailForm() {
       }}
     >
       <div className="bg-white p-8 rounded-md shadow-lg">
-        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">DOCTOR CARE</h1>
+        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">MIND CARE</h1>
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Enter Your Email</h2>
         {errorMessage && <p className="mt-4 text-red-500 text-center">{errorMessage}</p>}
         <form className="space-y-4" onSubmit={handleSubmit}>

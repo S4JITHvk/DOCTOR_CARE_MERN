@@ -54,7 +54,7 @@ function Changepass() {
       
       <div className="col-span-4 sm:col-span-9 flex justify-center" >
         <div className="bg-white shadow rounded-lg p-6 w-full max-w-xl">
-          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">DOCTOR CARE</h1>
+          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">MIND CARE</h1>
           <h2 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">RESET PASSWORD</h2>
         
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

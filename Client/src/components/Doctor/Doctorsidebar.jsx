@@ -33,7 +33,7 @@ function Doctorsidebar() {
           <h1 className="text-xl font-bold text-center mt-2 sm:mt-4">Dr. {doctorData.doctor.name}</h1>
           <p className="text-gray-700 text-center">{doctorData.doctor.expertise}</p>
         </div>
-        <hr className="my-5 border-t border-gray-300" />
+        <hr className="border-t border-gray-300" />
         <div className="flex flex-col">
           <ul>
             <li className="mb-2">
@@ -45,8 +45,8 @@ function Doctorsidebar() {
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                <Link to="/doctor" className="block">
-                  Patients
+                <Link to="/doctor/Slotupdate" className="block">
+                  Slot Update
                 </Link>
               </div>
             </li>

@@ -16,5 +16,8 @@ Router.post('/resend-otp',otpController.resend_otp)
 Router.get('/fetchuser',userController.fetchData)
 Router.post('/editprofile',upload.single('profilePic'),userController. edit_profile )
 Router.post('/deleteprofilepic',userController.delete_propic)
+Router.get('/doctorList',userController.get_doctors)
+Router.get('/doctorBookings/:doctorId',userController.get_bookinglist)
+Router.post('/booking',userController.place_booking)
 Router.get('/logout',userController.logout)
 module.exports = Router

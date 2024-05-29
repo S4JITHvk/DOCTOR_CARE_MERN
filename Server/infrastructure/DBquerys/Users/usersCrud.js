@@ -1,5 +1,6 @@
 const User = require("../../../entities/User/usermodel");
-
+const Doctor=require("../../../entities/Doctor/Doctormodel")
+const Booking=require("../../../entities/Booking/Bookingmodel")
 const findbyid = async (id) => {
   try {
     const data = await User.findOne({_id:id});
@@ -61,6 +62,34 @@ const createUser = async (userData) => {
       throw new Error('Error saving user');
     }
   };
+  const get_doctorslist = async (query,page, limit) => {
+    try {
+      const doctors = await Doctor.find(query)
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+      const count = await Doctor.countDocuments(query);
+      return { doctors, totalPages: Math.ceil(count / limit), currentPage: page };
+    } catch (err) {
+      throw new Error("Error getting list.");
+    }
+};
+const get_bookinglistQuery=async(id)=>{
+  try{
+  const data=await Booking.find({doctorId:id})
+  console.log(data,"==>data")
+  return data
+  } catch (err) {
+    throw new Error("Error getting list.");
+  }
+}
+const placeBooking = async (data) => {
+  try {
+    await new Booking(data).save();
+  } catch (err) {
+    throw new Error("Error placing booking.");
+  }
+};
   
 module.exports = {
   findbyid,
@@ -69,5 +98,8 @@ module.exports = {
   Updatepassword,
   profileUpdate,
   deletepro,
-  saveUser
+  saveUser,
+  get_doctorslist,
+  get_bookinglistQuery,
+  placeBooking
 };

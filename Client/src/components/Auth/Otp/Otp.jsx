@@ -83,7 +83,7 @@ function Otp() {
   
   const handleResend = async () => {
     const {state}=location
-    setTimer(60);
+    setTimer(20);
     setResendEnabled(false);
     try {
       const response = await Api.post('/resend-otp', { email:state.email },{withCredentials:true});
@@ -111,7 +111,7 @@ function Otp() {
     >
       <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-white p-8 rounded-md shadow-lg">
-        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">DOCTOR CARE</h1>
+        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">MIND CARE</h1>
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Enter OTP</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           {errorMessage && <div className="text-red-500 text-xs mb-4 ml-5">{errorMessage}</div>}

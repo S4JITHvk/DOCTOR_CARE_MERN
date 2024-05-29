@@ -246,6 +246,65 @@ const delete_propic=async(req,res)=>{
         console.log(e.message)
     }
 }
+const get_doctors = async (req, res) => {
+    const { page, limit, experience, gender, search } = req.query;
+    
+    try {
+      let query = {is_verified:true,is_banned:false};
+      if (experience) {
+        query.experience_years = experience;
+      }
+      if (gender) {
+        query.gender = gender;
+      }
+      if (search) {
+        query.name = { $regex: search, $options: 'i' };
+      }
+  
+      const result = await Query.get_doctorslist(query, parseInt(page), parseInt(limit));
+      if (result) {
+        res.status(200).json({ Doctors: result.doctors, totalPages: result.totalPages, currentPage: result.currentPage });
+      } else {
+        res.status(400).json({ message: "Error Fetching Doctors" });
+      }
+    } catch (e) {
+      console.log(e.message);
+      res.status(500).json({ message: "Server Error" });
+    }
+  };
+  const get_bookinglist=async(req,res)=>{
+    try{
+        const doctorid = req.params.doctorId;
+       const List= await Query.get_bookinglistQuery(doctorid)
+       if(List){
+        return res.status(200).json(List)
+       }else{
+        return res.status(404).json({message:"No list"})
+       }
+
+    }catch(e){
+        console.log(e.message)
+    }
+  }
+  const place_booking = async (req, res) => {
+    try {
+        console.log(req.body,"req.body")
+      const { doctorId, userId, date, shift } = req.body;
+      const updatedData = {
+        doctorId: doctorId,
+        userId: userId,
+        date: date,
+        shift: shift,
+      };
+      await Query.placeBooking(updatedData);
+      return res.status(200).json({ message: "Booking placed successfully." });
+    } catch (e) {
+      console.error(e.message,"==here");
+      return res.status(500).json({ message: "Internal server error." });
+    }
+  };
+  
+  
 module.exports={
     userSignup,
     userLogin,
@@ -255,6 +314,9 @@ module.exports={
     googleAuth,
     logout ,
     edit_profile ,
-    delete_propic
+    delete_propic,
+    get_doctors,
+    get_bookinglist,
+    place_booking
    
 }

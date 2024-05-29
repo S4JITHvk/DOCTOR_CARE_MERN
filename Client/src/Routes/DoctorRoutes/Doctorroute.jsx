@@ -13,6 +13,7 @@ const Doctorslogin = lazy(() => import('../../Pages/Doctors/Login'));
 const Dashboard = lazy(() => import('../../Pages/Doctors/Dashboard'));
 const Profile=lazy(()=>import('../../components/Doctor/DoctorProfile'))
 const Newpass=lazy(()=>import("../../components/Doctor/Docchangepass"))
+const Slotcomp=lazy(()=>import("../../components/Doctor/Docslotupdate"))
 function Doctorroute() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,6 +27,7 @@ function Doctorroute() {
           <Route path="/" element={  <Doctorlayout> <Dashboard /> </Doctorlayout> }/>
           <Route path="/Profile" element={<Doctorlayout><Profile/></Doctorlayout>} />
           <Route path="/Newpassword" element={<Doctorlayout><Newpass/></Doctorlayout>}/>
+          <Route path="/Slotupdate" element={<Doctorlayout><Slotcomp/></Doctorlayout>}/>
         </Route>
         <Route element={<DoctorAuth />}>
           <Route path="/signup" element={<Doctorsignup />} />

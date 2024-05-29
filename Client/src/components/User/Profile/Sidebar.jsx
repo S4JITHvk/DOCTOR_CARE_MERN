@@ -21,7 +21,7 @@ function Sidebar() {
       <div className="bg-white shadow rounded-lg p-6">
         <div className="flex flex-col items-center">
           <h1 className="text-xl font-bold">
-            Doctor <span className="text-red-500">Care</span>
+            Mind <span className="text-red-500">Care</span>
           </h1>
           <img
               className="h-24 w-24 rounded-full mt-4"

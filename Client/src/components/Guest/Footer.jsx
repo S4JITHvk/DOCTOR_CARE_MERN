@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="container">
           <div className="mb-10 w-full items-center justify-center flex flex-col">
             <h1 className="mb-6 inline-block text-white max-w-[160px]">
-              Doctor Care
+              Mind Care
             </h1>
             <h1 className="mb-8 max-w-[400px] text-white text-center">
               "Small acts, when multiplied by millions of people, can transform
@@ -61,7 +61,7 @@ export default function Footer() {
                     to={""}
                       className="text-gray-1 hover:underline"
                     >
-                      DoctorCare
+                      MindCare
                     </Link>
                   </h1>
                 </div>

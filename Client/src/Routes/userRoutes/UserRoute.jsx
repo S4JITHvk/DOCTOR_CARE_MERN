@@ -6,7 +6,7 @@ const Signup = lazy(() => import("../../Pages/Users/Signup"));
 const Otp= lazy(() => import("../../components/Auth/Otp/Otp"));
 const Email = lazy(() => import("../../components/Auth/Otp/Emailform"));
 const ResetPass = lazy(() => import("../../components/Auth/Otp/Newpass"));
-const Doctor=lazy(()=>import("../../components/Home/Doctors"))
+const Doctor=lazy(()=>import("../../components/User/Doctorlist"))
 const Guest=lazy(()=>import("../../Pages/Users/Guest"))
 const Header=lazy(()=>import("../../components/Home/Header"))
 const Footer=lazy(()=>import("../../components/Home/Footer"))

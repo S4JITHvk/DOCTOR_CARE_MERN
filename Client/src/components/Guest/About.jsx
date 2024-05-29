@@ -12,11 +12,11 @@ export default function AboutUs() {
             <div className="w-full px-4 lg:w-1/2">
               <div className="mb-12 max-w-[540px] lg:mb-0">
                 <h2 className="mb-5 text-3xl font-bold leading-tight text-text text-white sm:text-[40px] sm:leading-[1.2]">
-                  Why Doctor Care
+                  Why Mind Care
                 </h2>
                 <p className="mb-10 text-text leading-relaxed text-body-color text-white">
                  
-                 "Doctor Care" is a revolutionary doctor consulting application designed to provide support and assistance to individuals navigating challenging mental health issues such as depression, suicidal thoughts, and social anxiety. Our platform connects users with qualified healthcare professionals who specialize in mental health care, offering a safe and confidential space for consultations. Whether you're seeking guidance, therapy, or simply someone to listen, Doctor Care is here to help you on your journey towards healing and well-being.
+                 "Mind Care" is a revolutionary doctor consulting application designed to provide support and assistance to individuals navigating challenging mental health issues such as depression, suicidal thoughts, and social anxiety. Our platform connects users with qualified healthcare professionals who specialize in mental health care, offering a safe and confidential space for consultations. Whether you're seeking guidance, therapy, or simply someone to listen, Doctor Care is here to help you on your journey towards healing and well-being.
                   <br />
                   <br />
                   Our vision at Doctor Care is to create a world where mental health support is accessible to all, without stigma or barriers. We envision a future where individuals can easily connect with empathetic professionals and resources, empowering them to prioritize their mental well-being and live fulfilling lives

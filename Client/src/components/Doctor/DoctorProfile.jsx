@@ -145,7 +145,7 @@ function DoctorProfile() {
 
 
   return (
-    <div className="col-span-4 sm:col-span-9 flex justify-center py-8">
+    <div className="col-span-4 sm:col-span-9 flex justify-center ">
       <div className="bg-white shadow rounded-lg px-8 py-10 w-full max-w-6xl">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col items-center justify-center mb-6">

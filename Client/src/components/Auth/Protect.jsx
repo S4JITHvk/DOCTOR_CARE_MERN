@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default function Protect({ role }) {
   const user = useSelector((state) => state.user);
   const token = Cookies.get("token");
-  const isAuth = token && user?.user && user.user?.role === role || false;
+  const isAuth = token && user?.user && user.user?.role === role && user.user?.is_banned!==true || false;
   return <>{isAuth ? <Outlet /> : <Navigate to="/" />}</>;
 }
 
