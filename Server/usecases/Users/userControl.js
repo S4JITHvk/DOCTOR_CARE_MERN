@@ -281,7 +281,6 @@ const get_doctors = async (req, res) => {
        }else{
         return res.status(404).json({message:"No list"})
        }
-
     }catch(e){
         console.log(e.message)
     }
@@ -299,11 +298,24 @@ const get_doctors = async (req, res) => {
       await Query.placeBooking(updatedData);
       return res.status(200).json({ message: "Booking placed successfully." });
     } catch (e) {
-      console.error(e.message,"==here");
+      console.error(e.message);
       return res.status(500).json({ message: "Internal server error." });
     }
   };
-  
+  const check_slot = async (req, res) => {
+    try {
+      const { doctorId, date, shift } = req.body;
+      const response = await Query.check_shift(doctorId, date, shift);
+      if (response) {
+        res.status(409).json({ message: "Slot not available" }); 
+      } else {
+        res.status(200).json({ message: "Slot available" });
+      }
+    } catch (e) {
+      console.error("Error checking slot availability:", e.message);
+      res.status(500).json({ message: "Error checking slot availability" });
+    }
+  }
   
 module.exports={
     userSignup,
@@ -317,6 +329,7 @@ module.exports={
     delete_propic,
     get_doctors,
     get_bookinglist,
-    place_booking
-   
+    place_booking,
+    check_slot
+     
 }

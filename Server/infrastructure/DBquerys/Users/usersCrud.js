@@ -74,13 +74,25 @@ const createUser = async (userData) => {
       throw new Error("Error getting list.");
     }
 };
-const get_bookinglistQuery=async(id)=>{
-  try{
-  const data=await Booking.find({doctorId:id})
-  console.log(data,"==>data")
-  return data
+const get_bookinglistQuery = async (id) => {
+  try {
+    const currentDate = new Date();
+    const data = await Booking.find({ doctorId: id, date: { $gte: currentDate } });
+    return data;
   } catch (err) {
     throw new Error("Error getting list.");
+  }
+};
+const check_shift=async(id,date,shift)=>{
+  try{
+    const result=await Booking.find({doctorId:id,date:date,shift:shift})
+    if(result.length===0){
+      return false
+    }else{
+      return true
+    }
+  }catch(e){
+    throw new Error("error getting list")
   }
 }
 const placeBooking = async (data) => {
@@ -101,5 +113,6 @@ module.exports = {
   saveUser,
   get_doctorslist,
   get_bookinglistQuery,
-  placeBooking
+  placeBooking,
+  check_shift
 };

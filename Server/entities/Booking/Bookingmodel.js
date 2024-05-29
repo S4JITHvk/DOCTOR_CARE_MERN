@@ -21,7 +21,7 @@ const bookingSchema = new mongoose.Schema({
   },
    status: {
     type: String,
-    default: 'Booked' 
+    default: 'inactive' 
   }
 },{ timestamps: true });
 
