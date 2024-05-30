@@ -18,7 +18,8 @@ Router.post('/editprofile',upload.single('profilePic'),userController. edit_prof
 Router.post('/deleteprofilepic',userController.delete_propic)
 Router.get('/doctorList',userController.get_doctors)
 Router.get('/doctorBookings/:doctorId',userController.get_bookinglist)
-Router.get('/check-slot',userController.check_slot)
+Router.post('/check-slot',userController.check_slot)
 Router.post('/booking',userController.place_booking)
+Router.post('/payment-checkout-session',userController.make_payment)
 Router.get('/logout',userController.logout)
 module.exports = Router

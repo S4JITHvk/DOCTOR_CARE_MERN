@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import Api from "../../API/DoctorCareApi"
-import {loadStripe} from '@stripe/stripe-js';
-import {
-  PaymentElement,
-  Elements,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
+import { useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux"
+import Api from "../../../API/DoctorCareApi"
+import { loadStripe } from '@stripe/stripe-js';
+import {addAppointment} from "../../../ReduxStore/features/appointmentSlice"
+const stripePromise = loadStripe('pk_test_51PLmMyKj3ZW2TL11Wyt4ze8kj2I1yk3a6PKrYHdRq9sfwloK1RjFhClqDUEKGxwB8Cv3Sc78itTbjUdjHfOrVn8W009leKwMga');
 function PaymentProcess() {
+  const User=useSelector((state)=>state.user)
+  const dispatch=useDispatch()
   const location = useLocation();
   const { selectedDoctor, selectedDate, selectedShift } = location.state;
   const [showModal, setShowModal] = useState(false);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
-
+  const appointments = useSelector((state) => state.appointments?.appointments);
 
   const renderFacilities = () => {
     return (
@@ -31,21 +30,31 @@ function PaymentProcess() {
   };
   const handleProceed = async() => {
    try{
-    const response = await Api.get("/check-slot", {
-        doctorId: selectedDoctor.id,
-        date: selectedDate,
+    const existingAppointment = appointments?.find(appointment => appointment?.doctorId === selectedDoctor._id && appointment?.date === selectedDate && appointment?.shift === selectedShift);
+    if (existingAppointment) {
+      alert("The slot is already booked. Please select another slot.");
+      return;
+    }
+    const data = {
+        doctorId: selectedDoctor._id,
+        userId:User.user._id,
+        date: selectedDate.toISOString(),
         shift: selectedShift,
-      });
-      if (response.status===200) {
-        console.log("Slot is available, proceed with payment");
+      } 
+      await dispatch(addAppointment(data))
         if(selectedPaymentOption==='online'){
-
+          const sessionResponse = await Api.post('/payment-checkout-session', {
+            doctorId: selectedDoctor._id,
+            userId: User.user._id,
+            date: selectedDate,
+            shift: selectedShift,
+          }); 
+          const sessionId = sessionResponse.data.session.url;
+          const stripe = await stripePromise;
+          window.location.href=sessionId
         }else{
             console.log("redirecting to wallet")
         }
-      } else {
-        setError("Selected slot is not available. Please choose a different time.");
-      }
    }catch(e){
     console.log(e.message)
    }

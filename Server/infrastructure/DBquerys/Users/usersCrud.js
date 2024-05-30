@@ -83,18 +83,26 @@ const get_bookinglistQuery = async (id) => {
     throw new Error("Error getting list.");
   }
 };
-const check_shift=async(id,date,shift)=>{
-  try{
-    const result=await Booking.find({doctorId:id,date:date,shift:shift})
-    if(result.length===0){
-      return false
-    }else{
-      return true
+const check_shift = async (docId,userId, date, shift) => {
+  try {
+    const result = await Booking.find({ doctorId: docId, date: date, shift: shift });
+    if (result.length === 0) {
+      const tempBooking ={
+        doctorId: docId,
+        userId:userId,
+        date: date,
+        shift: shift
+      }
+      await new Booking(tempBooking).save();
+      return false; 
+    } else {
+      return true; 
     }
-  }catch(e){
-    throw new Error("error getting list")
+  } catch (e) {
+    throw new Error("Error checking or creating booking: " + e.message);
   }
-}
+};
+
 const placeBooking = async (data) => {
   try {
     await new Booking(data).save();

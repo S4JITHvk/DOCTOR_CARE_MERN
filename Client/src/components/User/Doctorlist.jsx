@@ -86,29 +86,29 @@ function DoctorList() {
     setSelectedShift(shift);
   };
 
-  const handleBook = async () => {
-    try {
-      if (!selectedDoctor || !selectedShift || !selectedDate) {
-        console.error("Doctor, shift, or date is missing.");
-        toast.error("Please select a shift and date.");
-        return;
-      }
-      const bookingData = {
-        userId: User.user._id,
-        doctorId: selectedDoctor._id,
-        date: selectedDate,
-        shift: selectedShift,
-      };
-      const response = await Api.post("/booking", bookingData);
-      console.log("Booking successful:", response.data);
-      if (response.data) {
-        toast.success("Successfully Booked.");
-      }
-      handleModalClose();
-    } catch (error) {
-      console.error("Error booking slot:", error);
-    }
-  };
+  // const handleBook = async () => {
+  //   try {
+  //     if (!selectedDoctor || !selectedShift || !selectedDate) {
+  //       console.error("Doctor, shift, or date is missing.");
+  //       toast.error("Please select a shift and date.");
+  //       return;
+  //     }
+  //     const bookingData = {
+  //       userId: User.user._id,
+  //       doctorId: selectedDoctor._id,
+  //       date: selectedDate,
+  //       shift: selectedShift,
+  //     };
+  //     const response = await Api.post("/booking", bookingData);
+  //     console.log("Booking successful:", response.data);
+  //     if (response.data) {
+  //       toast.success("Successfully Booked.");
+  //     }
+  //     handleModalClose();
+  //   } catch (error) {
+  //     console.error("Error booking slot:", error);
+  //   }
+  // };
 
   const handleDateChange = (date) => {
     setSelectedDate(new Date(date));

@@ -21,7 +21,12 @@ const bookingSchema = new mongoose.Schema({
   },
    status: {
     type: String,
-    default: 'inactive' 
+    default: 'Active' 
+  },
+   payment: {
+    type: String, 
+    required: true,
+    default: 'pending' 
   }
 },{ timestamps: true });
 

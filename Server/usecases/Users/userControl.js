@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const Query=require("../../infrastructure/DBquerys/Users/usersCrud")
 const DocQuery=require("../../infrastructure/DBquerys/Doctor/DocQuery")
 const {sendOTP}=require('./otpControl')
@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const {hashdata, comparedata}=require('../../util/Bcrypthash')
 const path = require('path');
 const fs = require('fs')
+const stripeSecretKey = process.env.STRIPE_SECRETKEY;
+const stripe = require('stripe')(stripeSecretKey);
 const userSignup = async (req, res) => {
     try {
         const { email, password, name } = req.body;
@@ -294,6 +296,7 @@ const get_doctors = async (req, res) => {
         userId: userId,
         date: date,
         shift: shift,
+        payment:"online"
       };
       await Query.placeBooking(updatedData);
       return res.status(200).json({ message: "Booking placed successfully." });
@@ -304,8 +307,8 @@ const get_doctors = async (req, res) => {
   };
   const check_slot = async (req, res) => {
     try {
-      const { doctorId, date, shift } = req.body;
-      const response = await Query.check_shift(doctorId, date, shift);
+      const { doctorId,userId, date, shift } = req.body;
+      const response = await Query.check_shift(doctorId,userId, date, shift);
       if (response) {
         res.status(409).json({ message: "Slot not available" }); 
       } else {
@@ -316,7 +319,37 @@ const get_doctors = async (req, res) => {
       res.status(500).json({ message: "Error checking slot availability" });
     }
   }
-  
+  const make_payment = async (req, res) => {
+    try {
+      const { doctorId, userId, date, shift } = req.body;
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [{
+          price_data: {
+            currency: 'inr',
+            product_data: {
+              name: 'Appointment Payment',
+            },
+            unit_amount: 49900, 
+          },
+          quantity: 1,
+        }],
+        metadata: {
+          doctorId,
+          userId,
+          date,
+          shift,
+        },
+        mode: 'payment',
+        success_url: 'http://localhost:5173/payment-success',
+        cancel_url: 'http://localhost:5173/payment-cancel',
+      });
+      res.json({session:session});
+    } catch (e) {
+      console.error("Error checking slot availability:", e.message);
+      res.status(500).json({ message: "Error occurred" });
+    }
+  };
 module.exports={
     userSignup,
     userLogin,
@@ -330,6 +363,6 @@ module.exports={
     get_doctors,
     get_bookinglist,
     place_booking,
-    check_slot
-     
+    check_slot,
+    make_payment    
 }
