@@ -9,7 +9,7 @@ const Doctorlayout = ({ children }) => {
     {Doctor.doctor.is_verified && <Doctorhead />}
       <div className="flex flex-1 overflow-hidden">
         {Doctor.doctor.is_verified && (
-          <div className="flex-none w-64 bg-gray-100 dark:bg-gray-800">
+          <div className="flex-none w-64 bg-gray-300">
             <Doctorsider />
           </div>
         )}

@@ -30,7 +30,7 @@ function PaymentProcess() {
   };
   const handleProceed = async() => {
    try{
-    const existingAppointment = appointments?.find(appointment => appointment?.doctorId === selectedDoctor._id && appointment?.date === selectedDate && appointment?.shift === selectedShift);
+    const existingAppointment = appointments?.find(appointment => appointment?.userId ===User.user._id);
     if (existingAppointment) {
       alert("The slot is already booked. Please select another slot.");
       return;

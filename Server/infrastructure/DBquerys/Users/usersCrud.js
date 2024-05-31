@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 const User = require("../../../entities/User/usermodel");
 const Doctor=require("../../../entities/Doctor/Doctormodel")
 const Booking=require("../../../entities/Booking/Bookingmodel")
@@ -110,6 +112,45 @@ const placeBooking = async (data) => {
     throw new Error("Error placing booking.");
   }
 };
+const yourappointments = async (userId) => {
+  try {
+    const appointments = await Booking.aggregate([
+      {
+        $match: { userId: new ObjectId(userId) }
+      },
+      {
+        $lookup: {
+          from: 'doctors', 
+          localField: 'doctorId',
+          foreignField: '_id',
+          as: 'doctorInfo'
+        }
+      },
+      {
+        $unwind: '$doctorInfo' 
+      },
+      {
+        $project: {
+          _id: 1,
+          date: 1,
+          shift: 1,
+          status: 1,
+          'doctorName': '$doctorInfo.name',
+          'expertise': '$doctorInfo.expertise',
+          'experience': '$doctorInfo.experience_years',
+          'gender': '$doctorInfo.gender'
+        }
+      },
+      {
+        $sort: { date: -1 } 
+      }
+    ]);
+    return appointments;
+  } catch (err) {
+    console.log(err.message)
+  }
+};
+
   
 module.exports = {
   findbyid,
@@ -122,5 +163,6 @@ module.exports = {
   get_doctorslist,
   get_bookinglistQuery,
   placeBooking,
-  check_shift
+  check_shift,
+  yourappointments
 };

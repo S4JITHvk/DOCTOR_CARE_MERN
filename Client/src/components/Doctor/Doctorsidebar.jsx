@@ -19,8 +19,8 @@ function Doctorsidebar() {
   };
 
   return (
-    <div className="col-span-4 sm:col-span-3">
-      <div className="bg-gray-300 shadow p-4 sm:p-10">
+    <div className="col-span-4 sm:col-span-3 bg-gray-300">
+      <div className="bg-gray-300 p-4 sm:p-10">
         <div className="flex flex-col items-center">
           <img
             className="h-24 w-24 rounded-full mt-1"
@@ -43,13 +43,13 @@ function Doctorsidebar() {
                 </Link>
               </div>
             </li>
-            <li className="mb-2">
+            {/* <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <Link to="/doctor/Slotupdate" className="block">
                   Slot Update
                 </Link>
               </div>
-            </li>
+            </li> */}
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <Link to="/doctor" className="block">

@@ -289,7 +289,6 @@ const get_doctors = async (req, res) => {
   }
   const place_booking = async (req, res) => {
     try {
-        console.log(req.body,"req.body")
       const { doctorId, userId, date, shift } = req.body;
       const updatedData = {
         doctorId: doctorId,
@@ -350,6 +349,18 @@ const get_doctors = async (req, res) => {
       res.status(500).json({ message: "Error occurred" });
     }
   };
+
+  const your_appointments=async(req,res)=>{
+    try {
+      const userId = req.params.userid;
+      console.log(userId,"==>userid")
+      const appointments = await Query.yourappointments(userId);
+      console.log(appointments,"==>")
+      res.status(200).json(appointments);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
 module.exports={
     userSignup,
     userLogin,
@@ -364,5 +375,6 @@ module.exports={
     get_bookinglist,
     place_booking,
     check_slot,
-    make_payment    
+    make_payment ,
+    your_appointments   
 }

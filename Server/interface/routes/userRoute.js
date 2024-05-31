@@ -21,5 +21,6 @@ Router.get('/doctorBookings/:doctorId',userController.get_bookinglist)
 Router.post('/check-slot',userController.check_slot)
 Router.post('/booking',userController.place_booking)
 Router.post('/payment-checkout-session',userController.make_payment)
+Router.get('/your-appointments/:userid',userController.your_appointments)
 Router.get('/logout',userController.logout)
 module.exports = Router

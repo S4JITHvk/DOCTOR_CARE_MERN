@@ -10,6 +10,7 @@ export default function Footer() {
       >
         <div className="container">
           <div className="mb-10 w-full items-center justify-center flex flex-col">
+          <img src="/assets/mindcare.jpg" alt="Logo" className="h-8 w-8 rounded-full" />
             <h1 className="mb-6 inline-block text-white max-w-[160px]">
               Mind Care
             </h1>

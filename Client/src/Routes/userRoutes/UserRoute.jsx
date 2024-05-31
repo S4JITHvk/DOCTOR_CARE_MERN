@@ -14,6 +14,8 @@ const Profile=lazy(()=>import("../../Pages/Users/Profile"))
 const Newpass=lazy(()=>import("../../components/User/Profile/Changepass"))
 const Paymentpage=lazy(()=>import("../../components/User/Payment/Payment"))
 const Paymentsuccess=lazy(()=>import("../../components/User/Payment/Success"))
+const Paymentfailure=lazy(()=>import("../../components/User/Payment/Failure"))
+const Myappointments=lazy(()=>import("../../components/User/YourAppointments/Appointments"))
 import Authenticate from "../../components/Auth/Authenticate";
 import Protect from "../../components/Auth/Protect";
 import Loader from "../../components/Loader/Loader";
@@ -36,8 +38,10 @@ function UserRoute() {
       <Route path="/Doctors" element={<><Header /><Doctor/> <Footer/></>}/>
       <Route path="/Profile" element={<><Header /><Profile/> <Footer/></>}/>
       <Route path="/Newpassword" element={<><Header /><Newpass/><Footer/></>}/>
+      <Route path="/Yourappointments" element={<><Header /><Myappointments/><Footer/></>}/>
       <Route path="/Payment_process" element={<><Header /><Paymentpage/><Footer/></>}/>
       <Route path="/payment-success" element={<><Header /><Paymentsuccess/><Footer/></>}/>
+      <Route path="/payment-cancel" element={<><Header /><Paymentfailure/><Footer/></>}/>
     </Route>
   </Routes>
 </Suspense>

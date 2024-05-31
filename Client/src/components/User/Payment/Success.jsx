@@ -9,7 +9,7 @@ function Success() {
   const User = useSelector((state) => state.user);
   const userId = User.user?._id;
   const dispatch = useDispatch();
-
+console.log(appointments,"==>appointments")
   useEffect(() => {
     const handleBooking = async () => {
       if (userId && appointments.appointments.length > 0) {
