@@ -152,10 +152,43 @@ const delete_propic=async(req,res)=>{
       console.log(e.message)
   }
 }
+const your_bookings = async (req, res) => {
+  try {
+    const { date, doctorId } = req.params;
+    console.log(req.params,"==>")
+    if (!date || !doctorId) {
+      return res.status(400).json({ message: 'Date and doctorId are required' });
+    }
+    
+    const appointments = await DocQuery.yourbookings(date, doctorId);
+    
+    if (appointments.length === 0) {
+      console.log("here")
+      return res.status(404).json({ message: 'No appointments found' });
+    }
+    
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+const cancel_booking = async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+    await DocQuery.cancelbooking(bookingId);
+    res.status(200).json({ message: 'Appointment canceled successfully' });
+  } catch (e) {
+    console.log(e.message);
+    res.status(400).json({ message: e.message });
+  }
+};
 module.exports = {
   Doctor_signup,
   Doctor_login,
   fetch_doctor,
   edit_profile ,
-  delete_propic
+  delete_propic,
+  your_bookings,
+  cancel_booking
 };

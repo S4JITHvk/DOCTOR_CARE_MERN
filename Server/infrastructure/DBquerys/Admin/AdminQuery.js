@@ -30,13 +30,7 @@ const DoctorList=async()=>{
         console.log(e.message)
     }
 }
-const userBan=async(id)=>{
-    try{
 
-    }catch(e){
-        console.log(e.message)
-    }
-}
 
 
 module.exports={

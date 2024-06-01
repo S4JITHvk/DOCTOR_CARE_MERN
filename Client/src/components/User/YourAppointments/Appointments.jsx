@@ -119,11 +119,11 @@ function Appointments() {
                 <table className="min-w-full bg-white border border-gray-300">
                   <thead>
                     <tr>
-                      <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Doctor Name</th>
+                      <th className="py-2 px-3 bg-gray-200 text-gray-600 font-semibold border-b">Doctor Name</th>
                       <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Expertise</th>
                       <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Experience</th>
                       <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Gender</th>
-                      <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Booking Date</th>
+                      <th className="py-2 px-3 bg-gray-200 text-gray-600 font-semibold border-b">Booking Date</th>
                       <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Status</th>
                       <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Time</th>
                       <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold border-b">Actions</th>
@@ -132,7 +132,7 @@ function Appointments() {
                   <tbody>
                     {currentAppointments.map((appointment) => (
                       <tr key={appointment._id} className="border-b">
-                        <td className="py-2 px-4">DR {appointment.doctorName}</td>
+                        <td className="py-2 px-3">DR {appointment.doctorName}</td>
                         <td className="py-2 px-4">{appointment.expertise}</td>
                         <td className="py-2 px-4">{appointment.experience}-Years</td>
                         <td className="py-2 px-4">{appointment.gender}</td>

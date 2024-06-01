@@ -196,12 +196,12 @@ function DoctorList() {
                 </p>
                 <p className="text-gray-500">GENDER : {doctor.gender}</p>
                 <div className="flex justify-between mt-4">
-                  <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                  <button className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
                     Reviews
                   </button>
                   <button
                     onClick={() => handleBookSlot(doctor)}
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                   >
                     Book Slot
                   </button>

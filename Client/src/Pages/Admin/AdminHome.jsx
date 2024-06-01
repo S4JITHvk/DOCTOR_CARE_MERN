@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
-import {clearUser} from "../../ReduxStore/features/userSlice"
-import profilePlaceholder from '/assets/admin.png'
-function sidebar() {
+import { clearUser } from "../../ReduxStore/features/userSlice";
+import profilePlaceholder from "/assets/admin.png";
+
+function Sidebar() {
   const dispatch = useDispatch();
+
   const logout = () => {
     try {
       dispatch(clearUser());
@@ -15,17 +17,18 @@ function sidebar() {
       console.log(err);
     }
   };
+
   return (
     <div className="col-span-4 sm:col-span-3">
-      <div className="bg-gray-900  h-screen p-10">
+      <div className="bg-gray-900 h-screen p-10">
         <div className="flex flex-col items-center">
           <img
-              className="h-24 w-24 rounded-full mt-1 bg-white"
-              src={ profilePlaceholder}
-              alt="Profile"
-            />
+            className="h-24 w-24 rounded-full mt-1 bg-white"
+            src={profilePlaceholder}
+            alt="Profile"
+          />
           <h1 className="text-xl font-bold text-white">ADMIN</h1>
-          <p className="text-gray-700 "></p>
+          <p className="text-gray-700"></p>
         </div>
         <hr className="my-6 border-t border-gray-300" />
         <div className="flex flex-col">
@@ -33,41 +36,48 @@ function sidebar() {
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <Link to="/admin" className="block">
-                  Dashboard
+                  DASHBOARD
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <Link to="/admin/userList" className="block">
-                  Users
+                 PATIENTS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <Link to="/admin/doctors" className="block">
-                  Doctors
+                  DOCTORS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <Link to="/admin/approvals" className="block">
-                  Approvals
+                  APPROVALS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <Link to="/admin/appointments" className="block">
-                  Appointments
+                  BOOKINGS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                <button onClick={logout}>Logout</button>
+                <Link to="/admin/cancelled-bookings" className="block">
+                  CANCELLED BOOKINGS
+                </Link>
+              </div>
+            </li>
+            <li className="mb-2">
+              <div className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+                <button onClick={logout}>LOG-OUT</button>
               </div>
             </li>
           </ul>
@@ -77,4 +87,4 @@ function sidebar() {
   );
 }
 
-export default sidebar;
+export default Sidebar;

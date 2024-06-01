@@ -16,6 +16,9 @@ const appointmentsSlice = createSlice({
     removeAppointment(state, action) {
       state.appointments = state.appointments.filter(appointment => appointment.userid !== action.payload.userid);
     },
+    // clearit(state){
+    //   state.appointments=[]
+    // }
   },
 });
 

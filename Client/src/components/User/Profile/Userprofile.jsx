@@ -100,16 +100,16 @@ function Userprofile() {
 
   return (
     <div className="col-span-4 sm:col-span-9 flex justify-center">
-      <div className="bg-white shadow rounded-lg p-6 w-full max-w-xl">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center justify-center mb-4">
+          <div className="flex flex-col items-center justify-center mb-6">
             <img
               src={selectedImage ? selectedImage : "/assets/user.png"}
-              className="w-32 h-32 bg-gray-300 rounded-full mb-4"
+              className="w-32 h-32 bg-gray-300 rounded-full mb-4 border-4 border-gray-200 object-cover"
               alt="Profile"
             />
-            <div className="flex items-center justify-center mb-4">
-              <label htmlFor="file-upload" className="cursor-pointer">
+            <div className="flex items-center justify-center mb-4 space-x-4">
+              <label htmlFor="file-upload" className="cursor-pointer text-blue-500 hover:text-blue-700">
                 <FiUpload className="text-2xl" />
                 <input
                   id="file-upload"
@@ -120,8 +120,12 @@ function Userprofile() {
                 />
               </label>
               {selectedImage && selectedImage !== "/assets/user.png" && (
-                <button type="button" onClick={handleDeleteImage} className="ml-4">
-                  <FiTrash className="text-2xl text-red-500" />
+                <button
+                  type="button"
+                  onClick={handleDeleteImage}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <FiTrash className="text-2xl" />
                 </button>
               )}
             </div>
@@ -152,12 +156,12 @@ function Userprofile() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+              className={`bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white font-bold py-2 px-8 rounded-full focus:outline-none focus:shadow-outline transform transition-transform duration-300 ${
                 !isChanged && 'opacity-50 cursor-not-allowed'
               }`}
               disabled={!isChanged}
             >
-              Save
+              Save Profile
             </button>
           </div>
         </form>

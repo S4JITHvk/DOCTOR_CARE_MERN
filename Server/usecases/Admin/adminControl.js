@@ -84,9 +84,9 @@ const banDoctor= async (req, res) => {
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
- 
     doctor.is_banned = !doctor.is_banned;
     await DocQuery.Docupdate(doctor);
+    await DocQuery.ban_cancel_booking( doctor._id)
     return res.status(200).json({ message: doctor.is_banned ? "Doctor banned successfully" : "Doctor unbanned successfully" });
   } catch (err) {
     console.log(err.message);

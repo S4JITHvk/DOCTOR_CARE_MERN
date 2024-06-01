@@ -52,7 +52,7 @@ function Doctorsidebar() {
             </li> */}
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                <Link to="/doctor" className="block">
+                <Link to="/doctor/Yourbookings" className="block">
                   Appointments
                 </Link>
               </div>
@@ -72,7 +72,7 @@ function Doctorsidebar() {
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
                 <button onClick={logout}>Logout</button>
               </div>
             </li>

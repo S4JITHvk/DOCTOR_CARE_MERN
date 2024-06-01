@@ -3,10 +3,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearUser } from "../../ReduxStore/features/userSlice";
-import Api from "../../API/DoctorCareApi";
 import { useNavigate, Link } from 'react-router-dom';
 import profilePlaceholder from '/assets/user.png'; 
-
+import Cookies from "js-cookie";
 const navigation = [
   { name: 'Home', href: '/home', current: true },
   { name: 'Doctors', href: '/Doctors', current: false },
@@ -19,17 +18,14 @@ function classNames(...classes) {
 }
 
 function Header() {
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const logout = async () => {
+  const logout = () => {
     try {
-      let response = await Api.get('/logout');
-      if (response.status === 200) {
-        dispatch(clearUser());
-        navigate('/login');
-      }
+      dispatch(clearUser());
+      Cookies.remove("token");
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }

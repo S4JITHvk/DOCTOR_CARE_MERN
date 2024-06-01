@@ -7,6 +7,7 @@ import  { Toaster } from "react-hot-toast";
 import Doctorroute from './Routes/DoctorRoutes/Doctorroute';
 import AdminRoutes from './Routes/AdminRoutes/AdminRoute';
 import fetchUser  from './Services/usersFetch';
+import {clearUser} from "./ReduxStore/features/userSlice"
 function App() {
   const dispatch=useDispatch()
   useEffect(() => {

@@ -1,6 +1,6 @@
 const Doctor=require("../../../entities/Doctor/Doctormodel")
-
-
+const Booking=require("../../../entities/Booking/Bookingmodel")
+const User=require("../../../entities/User/usermodel")
 
 const docfindbyId=async(id)=>{
   try{
@@ -74,6 +74,46 @@ await Doctor.updateOne({_id:id},{$unset:data})
     console.log(e.message)
   }
 }
+const yourbookings = async (date, doctorId) => {
+  try {
+    const inputDate = new Date(date);
+    const isoDateString = inputDate.toISOString().split('T')[0];
+    const data = await Booking.find({ doctorId: doctorId, date: isoDateString })
+      .populate('userId')
+      .exec();
+    return data;
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    throw error;
+  }
+}
+const cancelbooking=async(id)=>{
+  try{
+   await Booking.findByIdAndUpdate({_id:id},{$set:{status:"Cancelled"}})
+   return
+  }catch(e){
+    console.log(e.message)
+  }
+}
+const ban_cancel_booking = async (docId) => {
+  try {
+    const currentDate = new Date().toISOString().split('T')[0]; 
+    const bookings = await Booking.find({
+      doctorId: docId,
+      date: { $gte: currentDate }, 
+    });
+    await Promise.all(
+      bookings.map(async (booking) => {
+        booking.status = "Cancelled";
+        await booking.save();
+      })
+    );
+
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 
 module.exports={
  docfindbyId,
@@ -83,5 +123,8 @@ module.exports={
  Doctorsave,
  Docupdate,
  profileUpdate,
- deletepro
+ deletepro,
+ yourbookings,
+ cancelbooking,
+ ban_cancel_booking
 }

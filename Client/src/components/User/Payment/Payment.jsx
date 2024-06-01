@@ -38,7 +38,7 @@ function PaymentProcess() {
     const data = {
         doctorId: selectedDoctor._id,
         userId:User.user._id,
-        date: selectedDate.toISOString(),
+        date: selectedDate.toISOString().split('T')[0],
         shift: selectedShift,
       } 
       await dispatch(addAppointment(data))
