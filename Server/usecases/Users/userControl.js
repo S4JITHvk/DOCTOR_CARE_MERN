@@ -328,6 +328,7 @@ const get_doctors = async (req, res) => {
             currency: 'inr',
             product_data: {
               name: 'Appointment Payment',
+              images: ['http://localhost:3000/assets/mindcare.jpg'],
             },
             unit_amount: 49900, 
           },
