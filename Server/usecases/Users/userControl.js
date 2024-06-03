@@ -318,6 +318,7 @@ const get_doctors = async (req, res) => {
       res.status(500).json({ message: "Error checking slot availability" });
     }
   }
+  
   const make_payment = async (req, res) => {
     try {
       const { doctorId, userId, date, shift } = req.body;
@@ -354,9 +355,7 @@ const get_doctors = async (req, res) => {
   const your_appointments=async(req,res)=>{
     try {
       const userId = req.params.userid;
-      console.log(userId,"==>userid")
       const appointments = await Query.yourappointments(userId);
-      console.log(appointments,"==>")
       res.status(200).json(appointments);
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -377,5 +376,5 @@ module.exports={
     place_booking,
     check_slot,
     make_payment ,
-    your_appointments   
+    your_appointments ,
 }

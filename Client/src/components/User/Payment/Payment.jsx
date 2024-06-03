@@ -13,7 +13,7 @@ function PaymentProcess() {
   const location = useLocation();
   const { selectedDoctor, selectedDate, selectedShift } = location.state;
   const [showModal, setShowModal] = useState(false);
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("online");
   const appointments = useSelector((state) => state.appointments?.appointments);
 
   const renderFacilities = () => {
@@ -54,11 +54,10 @@ function PaymentProcess() {
         const sessionResponse = await Api.post('/payment-checkout-session', {
           doctorId: selectedDoctor._id,
           userId: User.user._id,
-          date: selectedDate,
+          date: selectedDate.toISOString().split('T')[0],
           shift: selectedShift,
         });
         const sessionId = sessionResponse.data.session.url;
-        const stripe = await stripePromise;
         window.location.href = sessionId;
       } else {
         console.log("redirecting to wallet");
@@ -128,17 +127,7 @@ function PaymentProcess() {
         <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Select Payment Option</h2>
-            <div>
-              <label className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  value="wallet"
-                  checked={selectedPaymentOption === "wallet"}
-                  onChange={() => handlePaymentOptionSelect("wallet")}
-                />
-                Pay from Wallet
-              </label>
-            </div>
+           
             <div>
               <label className="flex items-center space-x-2">
                 <input

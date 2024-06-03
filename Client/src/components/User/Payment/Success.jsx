@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Api from "../../../API/DoctorCareApi";
 import { removeAppointment } from "../../../ReduxStore/features/appointmentSlice";
 
 function Success() {
@@ -9,17 +8,13 @@ function Success() {
   const User = useSelector((state) => state.user);
   const userId = User.user?._id;
   const dispatch = useDispatch();
-console.log(appointments,"==>appointments")
   useEffect(() => {
     const handleBooking = async () => {
       if (userId && appointments.appointments.length > 0) {
         const userAppointment = appointments.appointments.find(appointment => appointment.userId === userId);
         if (userAppointment) {
           try {
-            const response = await Api.post('/booking', userAppointment);
-            if (response.status === 200) {
               dispatch(removeAppointment({ appointments, userAppointment }));
-            }
           } catch (error) {
             console.error('Error making API request:', error);
           }

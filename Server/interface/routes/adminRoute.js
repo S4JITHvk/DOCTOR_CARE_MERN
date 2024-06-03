@@ -8,4 +8,5 @@ Router.get('/doctorlist',Auth,adminControl.doctorlist)
 Router.put('/banUser/:userid',Auth,adminControl.userBan)
 Router.put('/doctorverify/:doctorid',Auth,adminControl.verifyDoctor)
 Router.put('/banDoctor/:id',Auth,adminControl.banDoctor)
+Router.get('/bookingList',Auth,adminControl.bookingList)
 module.exports=Router

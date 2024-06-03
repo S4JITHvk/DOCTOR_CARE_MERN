@@ -65,7 +65,7 @@ function UsersList() {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg m-4">
-      <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Users List</h1>
+      <h1 className="text-3xl font-bold mb-4">Users List</h1>
 
       <div className="flex items-center justify-between flex-wrap bg-white dark:bg-gray-900 p-2 rounded-lg">
         <label htmlFor="table-search" className="sr-only">Search</label>

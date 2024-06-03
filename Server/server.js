@@ -9,6 +9,8 @@ const connect = require("./infrastructure/config/mongodb");
 const userRoute=require("./interface/routes/userRoute")
 const adminRoute=require("./interface/routes/adminRoute")
 const doctorRoute=require("./interface/routes/doctorRoute")
+const webhookRoute=require("./interface/routes/webhooks")
+app.use('/webhook',webhookRoute)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')));

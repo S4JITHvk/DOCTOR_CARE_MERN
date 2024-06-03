@@ -1,6 +1,6 @@
 const User=require("../../../entities/User/usermodel")
 const Doctor=require("../../../entities/Doctor/Doctormodel")
-
+const Booking=require("../../../entities/Booking/Bookingmodel")
 
 const UserList=async()=>{
     try{
@@ -30,11 +30,28 @@ const DoctorList=async()=>{
         console.log(e.message)
     }
 }
+const Booking_list=async(query,skip,limit)=>{
+    try{
+        const bookings = await Booking.find(query)
+        .skip(skip)
+        .limit(limit)
+        .sort({ date: 1 })
+        .populate('doctorId')
+        .populate('userId');
+        console.log(bookings,"==>")
+      const totalBookings = await Booking.countDocuments(query);
+      const totalPages = Math.ceil(totalBookings / limit);
 
+      return {bookings,totalPages}
+    }catch(e){
+        console.log(e.message)
+    }
+}
 
 
 module.exports={
     UserList,
     Approvals,
-    DoctorList
+    DoctorList,
+    Booking_list
 }

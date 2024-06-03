@@ -93,6 +93,25 @@ const banDoctor= async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 }
+const bookingList=async (req, res) => {
+  try {
+    const { page = 1, date, doctorName } = req.query;
+  const limit = 10; 
+  const skip = (page - 1) * limit;
+
+  const query = {};
+  if (date) {
+    query.date = new Date(date);
+  }
+  if (doctorName) {
+    query['doctor.name'] = { $regex: doctorName, $options: 'i' }; 
+  }
+    const {bookings,totalPages}=await AdminQuery.Booking_list(query,skip,limit)
+    res.json({ bookings, totalPages });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching bookings' });
+  }
+}
 
 module.exports = {
   usersFetch,
@@ -100,5 +119,6 @@ module.exports = {
   doctorlist,
   userBan,
   verifyDoctor,
-  banDoctor
+  banDoctor,
+  bookingList
 };
