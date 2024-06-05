@@ -60,6 +60,36 @@ function DoctorsList() {
       console.log(err.message);
     }
   };
+  const handleDelete = async (id) => {
+    try {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            const response = await Api.put(`/admin/deleteDoctor/${id}`);
+            if (response.status === 200) {
+                fetchData();
+                toast.success(response.data.message);
+                Swal.fire(
+                    'Deleted!',
+                    'The Doctor has been deleted.',
+                    'success'
+                );
+            } else {
+                console.log('Failed to delete doctor');
+            }
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
+}
 
   if (isLoading) {
     return <><h1>Fetching Doctors...</h1></>;
@@ -97,6 +127,7 @@ function DoctorsList() {
             <th scope="col" className="px-4 py-2">Expertise</th>
             <th scope="col" className="px-4 py-2">Gender</th>
             <th scope="col" className="px-4 py-2">Ban/Unban</th>
+            <th scope="col" className="px-4 py-2">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -116,6 +147,15 @@ function DoctorsList() {
                   style={{ width: '80px' }} 
                 >
                   {item.is_banned ? 'Unblock' : 'Block'}
+                </button>
+              </td>
+              <td className="px-4 py-2">
+                <button
+                  className={`py-1 px-3 rounded bg-blue-500 text-white`}
+                  onClick={() => handleDelete(item._id)}
+                  style={{ width: '80px' }} 
+                >
+                  Delete
                 </button>
               </td>
             </tr>

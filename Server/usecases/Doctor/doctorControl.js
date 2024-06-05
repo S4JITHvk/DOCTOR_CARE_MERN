@@ -48,7 +48,11 @@ const Doctor_login = async (req, res) => {
     if (!doctorExist) {
       res.status(404).json({ message: " Not found please Register!" });
       return;
-    } else if (doctorExist.is_banned) {
+    } else if (doctorExist.is_Deleted) {
+      res.status(403).json({ message: " Internal server issue!" });
+      return;
+    }
+    else if (doctorExist.is_banned) {
       res.status(403).json({ message: " UnAuthorized!" });
       return;
     } else if (!doctorExist.is_registered) {

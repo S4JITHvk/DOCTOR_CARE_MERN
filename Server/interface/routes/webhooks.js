@@ -1,4 +1,5 @@
 const express=require('express')
+require('dotenv').config();
 const Router = express.Router()
 const stripeSecretKey = process.env.STRIPE_SECRETKEY;
 const stripe = require('stripe')(stripeSecretKey);
@@ -6,7 +7,7 @@ const Query=require("../../infrastructure/DBquerys/Users/usersCrud")
 
 Router.post('/',express.raw({ type: 'application/json' }),async (req, res) => {
     const sig = req.headers['stripe-signature'];
-    const endpointSecret = "whsec_f5361d4e4925ebee64059e202946d5900aac11f63fa181ef90b674afb1b189c0";
+    const endpointSecret = process.env.WEBHOOK_ENDPOINT;
 
     let event;
     try {

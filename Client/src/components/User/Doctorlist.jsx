@@ -140,6 +140,7 @@ function DoctorList() {
               className="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-300"
             >
               <option value="">All</option>
+              <option value="2">2 years</option>
               <option value="5">5 years</option>
               <option value="8">8 years</option>
               <option value="10">10 years</option>

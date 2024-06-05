@@ -44,6 +44,36 @@ function UsersList() {
       console.log(err.message);
     }
   };
+  const handleDelete = async (userid) => {
+    try {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+
+        if (result.isConfirmed) {
+            const response = await Api.put(`/admin/deleteUser/${userid}`);
+            if (response.status === 200) {
+                fetchData();
+                toast.success(response.data.message);
+                Swal.fire(
+                    'Deleted!',
+                    'The user has been deleted.',
+                    'success'
+                );
+            } else {
+                console.log('Failed to delete user');
+            }
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
+}
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -96,6 +126,7 @@ function UsersList() {
             <th scope="col" className="px-4 py-2">Status</th>
             <th scope="col" className="px-4 py-2">Role</th>
             <th scope="col" className="px-4 py-2">Ban/Unban</th>
+            <th scope="col" className="px-4 py-2">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -114,6 +145,15 @@ function UsersList() {
                   style={{ width: '80px' }} 
                 >
                   {user.is_banned ? 'Unblock' : 'Block'}
+                </button>
+              </td>
+              <td className="px-4 py-2">
+                <button
+                  className={`py-1 px-3 rounded bg-blue-500 text-white`}
+                  onClick={() => handleDelete(user._id)}
+                  style={{ width: '80px' }} 
+                >
+                  Delete
                 </button>
               </td>
             </tr>

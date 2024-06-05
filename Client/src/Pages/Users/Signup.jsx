@@ -1,15 +1,16 @@
-import React, { useState,useEffect } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   isEmpty,
   isPasswordValid,
   isEmailValid,
   passwordcheck,
 } from "../../helpers/validation";
-import Api from "../../API/DoctorCareApi"
-
+import Api from "../../API/DoctorCareApi";
+import { jwtDecode } from "jwt-decode";
+import { GoogleLogin } from "@react-oauth/google";
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -26,30 +27,31 @@ function Signup() {
     confirmpassworderr: "",
   });
   useEffect(() => {
-    const hasError = Object.values(error).some(err => err) || 
-                     Object.values(errordef).some(err => err);
+    const hasError =
+      Object.values(error).some((err) => err) ||
+      Object.values(errordef).some((err) => err);
     if (hasError) {
-        const timer = setTimeout(() => {
-            setError({
-                emailred: false,
-                namered: false,
-                passwordred: false,
-                confirmpasswordred: false,
-            });
-            seterrordef({
-                emailerr: "",
-                nameerr: "",
-                passworderr: "",
-                confirmpassworderr: "",
-            });
-        }, 3000);
-        return () => clearTimeout(timer);
+      const timer = setTimeout(() => {
+        setError({
+          emailred: false,
+          namered: false,
+          passwordred: false,
+          confirmpasswordred: false,
+        });
+        seterrordef({
+          emailerr: "",
+          nameerr: "",
+          passworderr: "",
+          confirmpassworderr: "",
+        });
+      }, 3000);
+      return () => clearTimeout(timer);
     }
-}, [error, errordef]);
+  }, [error, errordef]);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
-    password: "", 
+    password: "",
     confirmpassword: "",
   });
 
@@ -59,7 +61,21 @@ function Signup() {
       [event.target.name]: event.target.value,
     });
   };
-
+  const googleAuth = async (data) => {
+    const { email, name } = data;
+    try {
+      const response = await Api.post("/google-login", { email, name });
+      if (response.status === 200) {
+        const { token } = response.data;
+        document.cookie = `token=${token}`;
+        window.location.reload();
+      }
+    } catch (error) {
+      const { status, data } = error.response;
+      if (status) setErrorMessage(data.message);
+      toast.error(data.message);
+    }
+  };
   const handleSignup = async (e) => {
     e.preventDefault();
     let errors = {
@@ -79,7 +95,7 @@ function Signup() {
     if (isEmpty(userData.email)) {
       errors.emailred = true;
       errorMessages.emailerr = "Email can't be empty";
-    } else if (!isEmailValid(userData.email)) { 
+    } else if (!isEmailValid(userData.email)) {
       errors.emailred = true;
       errorMessages.emailerr = "Enter a valid email";
     }
@@ -90,8 +106,8 @@ function Signup() {
     if (isEmpty(userData.password)) {
       errors.passwordred = true;
       errorMessages.passworderr = "Password can't be empty";
-    }else{
-    const passwordValidationResult = isPasswordValid(userData.password);
+    } else {
+      const passwordValidationResult = isPasswordValid(userData.password);
       if (!passwordValidationResult.valid) {
         errors.passwordred = true;
         errorMessages.passworderr = passwordValidationResult.message;
@@ -122,8 +138,8 @@ function Signup() {
           withCredentials: true,
         });
         if (response.data.message === "OTP sent") {
-          toast.success("Enter otp send to your mail")
-          navigate('/otp',{ state: { email:userData.email } });
+          toast.success("Enter otp send to your mail");
+          navigate("/otp", { state: { email: userData.email } });
         } else if (response.data.message === "Email exists!") {
           toast.error("Email already exists!");
           setError((previous) => ({
@@ -141,12 +157,12 @@ function Signup() {
     } catch (error) {
       console.error("Error in catch block:", error);
       if (error.response && error.response.data) {
-        console.error("Error registering user:", error.response.data.message); 
+        console.error("Error registering user:", error.response.data.message);
       } else {
-        console.error("Error registering user:", error.message); 
+        console.error("Error registering user:", error.message);
       }
     }
-  }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -192,9 +208,9 @@ function Signup() {
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
-                  {error.namered && (
-              <div className="text-red-500 mt-1">{errordef.nameerr}</div>
-            )}
+                {error.namered && (
+                  <div className="text-red-500 mt-1">{errordef.nameerr}</div>
+                )}
               </div>
             </div>
             <div>
@@ -210,14 +226,13 @@ function Signup() {
                   name="email"
                   type="email"
                   autoComplete="email"
-       
                   value={userData.email}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
-                 {error.emailred && (
-              <div className="text-red-500 mt-1">{errordef.emailerr}</div>
-            )}
+                {error.emailred && (
+                  <div className="text-red-500 mt-1">{errordef.emailerr}</div>
+                )}
               </div>
             </div>
 
@@ -234,7 +249,6 @@ function Signup() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   autoComplete="new-password"
-         
                   value={userData.password}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -248,8 +262,8 @@ function Signup() {
                 </button>
               </div>
               {error.passwordred && (
-              <div className="text-red-500 mt-1">{errordef.passworderr}</div>
-            )}
+                <div className="text-red-500 mt-1">{errordef.passworderr}</div>
+              )}
             </div>
 
             <div>
@@ -265,7 +279,6 @@ function Signup() {
                   name="confirmpassword"
                   type={showPassword ? "text" : "password"}
                   autoComplete="new-password"
-              
                   value={userData.confirmpassword}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -279,10 +292,10 @@ function Signup() {
                 </button>
               </div>
               {error.confirmpasswordred && (
-              <div className="text-red-500 mt-1">
-                {errordef.confirmpassworderr}
-              </div>
-            )}
+                <div className="text-red-500 mt-1">
+                  {errordef.confirmpassworderr}
+                </div>
+              )}
             </div>
 
             <div>
@@ -294,13 +307,26 @@ function Signup() {
               </button>
             </div>
           </form>
-
+          <div className="flex flex-col items-center">
+            <p className="text-center text-sm text-gray-500">OR</p>
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                const decoded = jwtDecode(credentialResponse.credential);
+                googleAuth(decoded);
+              }}
+              onError={() => {
+                console.log("singup Failed");
+              }}
+            />
+          </div>
           <p className="mt-8 text-center text-sm text-gray-500">
             Already have an account?{" "}
-            <Link to="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-  Sign in
-</Link>
-
+            <Link
+              to="/login"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Sign in
+            </Link>
           </p>
         </div>
       </div>

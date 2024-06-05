@@ -70,7 +70,7 @@ function Sidebar() {
             </li>
             <li className="mb-2">
               <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                <Link to="/admin/cancelled-bookings" className="block">
+                <Link to="/admin/cancelled_bookings" className="block">
                   CANCELLED BOOKINGS
                 </Link>
               </div>

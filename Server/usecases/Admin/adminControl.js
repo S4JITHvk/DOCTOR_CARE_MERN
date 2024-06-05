@@ -43,13 +43,9 @@ const doctorlist = async (req, res) => {
 
 const userBan = async (req, res) => {
   try {
-    console.log("ban user");
     const userid = req.params.userid;
-    console.log(userid, "userid==>");
-    
     const user = await UserQuery.findbyid(userid);
     if (!user) {
-      console.log("no user");
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -62,6 +58,21 @@ const userBan = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+const userDelete=async(req,res)=>{
+  try{
+    const userid = req.params.userid;
+    const user = await UserQuery.findbyid(userid);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.is_Deleted =true;
+    await UserQuery.saveUser(user);
+    return res.status(200).json({ message: "User deleted Successfully"});
+  }catch(e){
+    console.log(err.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
 const verifyDoctor = async (req, res) => {
   try {
     const doctorid = req.params.doctorid;
@@ -93,26 +104,52 @@ const banDoctor= async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 }
-const bookingList=async (req, res) => {
+const deleteDoctor=async (req, res) => {
+  try {
+    const doctorid = req.params.id;
+    const doctor = await DocQuery.docfindbyId(doctorid);
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+    doctor.is_Deleted= true;
+    await DocQuery.Docupdate(doctor);
+    await DocQuery.ban_cancel_booking( doctor._id)
+    return res.status(200).json({ message: "Doctor deleted Successfully!"});
+  } catch (err) {
+    console.log(err.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+const bookingList = async (req, res) => {
   try {
     const { page = 1, date, doctorName } = req.query;
-  const limit = 10; 
-  const skip = (page - 1) * limit;
+    const limit = 10;
+    const skip = (page - 1) * limit;
 
-  const query = {};
-  if (date) {
-    query.date = new Date(date);
-  }
-  if (doctorName) {
-    query['doctor.name'] = { $regex: doctorName, $options: 'i' }; 
-  }
-    const {bookings,totalPages}=await AdminQuery.Booking_list(query,skip,limit)
+    const match = {};
+    if (date) {
+      match.date = new Date(date);
+    }
+    if (doctorName) {
+      match['doctorId.name'] = { $regex: doctorName, $options: 'i' };
+    }
+    const { bookings, totalPages } = await AdminQuery.Booking_list(match, skip, limit);
     res.json({ bookings, totalPages });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching bookings' });
   }
-}
-
+};
+const cancelledBooking = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+    const { cancelledBookings, totalPages }= await AdminQuery.cancelled_booking(skip, limit);
+    res.json({ cancelledBookings, totalPages });
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).send('Server Error');
+  }
+};
 module.exports = {
   usersFetch,
   approvals,
@@ -120,5 +157,8 @@ module.exports = {
   userBan,
   verifyDoctor,
   banDoctor,
-  bookingList
+  bookingList,
+  cancelledBooking,
+  userDelete,
+  deleteDoctor
 };

@@ -9,7 +9,7 @@ const AppointmentsList = lazy(() => import("../../components/Admin/BookingList")
 import Siderbar from "../../Pages/Admin/AdminHome"
 import Adminhead from "../../components/Admin/Adminhead"
 const AdminDash = lazy(() => import("../../components/Admin/AdminDash"));
-
+const Cancelled_booking=lazy(()=>import("../../components/Admin/CancelBookings"))
 function AdminRoutes() {
   return (
     <>
@@ -30,7 +30,8 @@ function AdminRoutes() {
                 <Route path="/userList" element={<UsersList />} />
                 <Route path="/doctors" element={<DoctorsList />} />
                 <Route path="/approvals" element={<ApprovalsList />} />
-                <Route path="/appointments" element={<AppointmentsList />} />           
+                <Route path="/appointments" element={<AppointmentsList />} /> 
+                <Route path="/cancelled_bookings" element={<Cancelled_booking />} />           
               </Routes>
             </Suspense>
           </div>
