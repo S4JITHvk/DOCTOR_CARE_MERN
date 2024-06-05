@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Api from '../../API/DoctorCareApi';
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-
+import Swal from 'sweetalert2';
 function CancelBookings() {
   const [cancelledBookings, setCancelledBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,15 +39,36 @@ function CancelBookings() {
   };
 
   const handleDoneClick = (bookingId) => {
-    // Implement the logic for marking the booking as done
-    console.log(`Booking ${bookingId} marked as done.`);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, mark as done!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Api.post('/admin/booking_refund', { bookingId })
+          .then(response => {
+            console.log(`Booking ${bookingId} marked as done.`, response);
+            Swal.fire(
+              'Done!',
+              'Booking has been marked as done.',
+              'success'
+            );
+          })
+          .catch(error => {
+            console.error('There was an error!', error);
+            Swal.fire(
+              'Error!',
+              'There was an issue marking the booking as done.',
+              'error'
+            );
+          });
+      }
+    });
   };
-
-  const handleViewClick = (bookingId) => {
-    // Implement the logic for viewing booking details
-    console.log(`Viewing details for booking ${bookingId}.`);
-  };
-
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
@@ -61,8 +82,9 @@ function CancelBookings() {
             <thead>
               <tr>
               
-                <th className="py-2 px-4 border-b">Booking Date</th>
+                
                 <th className="py-2 px-4 border-b">Doctor</th>
+                <th className="py-2 px-4 border-b">Booking Date</th>
                 <th className="py-2 px-4 border-b">Patient</th>
                 <th className="py-2 px-4 border-b">Status</th>
                 <th className="py-2 px-4 border-b">Amount</th>
@@ -74,8 +96,8 @@ function CancelBookings() {
             <tbody>
               {cancelledBookings.map(booking => (
                 <tr key={booking._id}>
-                  <td className="py-2 px-4 border-b">{new Date(booking.date).toISOString().split('T')[0]}</td>
                   <td className="py-2 px-4 border-b">{booking.doctorDetails.name}</td>
+                  <td className="py-2 px-4 border-b">{new Date(booking.date).toISOString().split('T')[0]}</td>
                   <td className="py-2 px-4 border-b">{booking.userDetails.name}</td>
                   <td className="py-2 px-4 border-b">{booking.status}</td>
                   <td className="py-2 px-4 border-b">$499</td>
@@ -87,13 +109,7 @@ function CancelBookings() {
                         onClick={() => handleDoneClick(booking._id)} 
                         className="px-2 py-1 bg-green-500 hover:bg-green-700 text-white rounded"
                       >
-                        Done
-                      </button>
-                      <button 
-                        onClick={() => handleViewClick(booking._id)} 
-                        className="px-2 py-1 bg-blue-500 hover:bg-blue-700 text-white rounded"
-                      >
-                        View
+                        Refund
                       </button>
                     </div>
                   </td>

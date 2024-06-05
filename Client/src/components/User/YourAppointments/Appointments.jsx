@@ -15,7 +15,7 @@ function Appointments() {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const appointmentsPerPage = 8
-
+console.log(selectedAppointment,"==.")
   const User = useSelector((state) => state.user);
   const userid = User.user._id;
 

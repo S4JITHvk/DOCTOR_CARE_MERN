@@ -87,7 +87,7 @@ const Booking_list = async (match, skip, limit) => {
 const cancelled_booking = async (skip, limit) => {
   try {
     const cancelledBookings = await Booking.aggregate([
-      { $match: { status: 'Cancelled' } },
+      { $match: { status: 'Cancelled', payment: { status: { $ne: "Refunded" } } } },
       { $sort: { date: 1 } },
       { $skip: parseInt(skip) },
       { $limit: parseInt(limit) },

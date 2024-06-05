@@ -12,4 +12,5 @@ Router.put('/banDoctor/:id',Auth,adminControl.banDoctor)
 Router.put('/deleteDoctor/:id',Auth,adminControl.deleteDoctor)
 Router.get('/bookingList',Auth,adminControl.bookingList)
 Router.get('/cancelled-bookings',Auth,adminControl.cancelledBooking)
+Router.post('/booking_refund',Auth,adminControl.refundBooking)
 module.exports=Router

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { clearUser } from "../../../ReduxStore/features/userSlice";
@@ -8,6 +8,8 @@ import profilePlaceholder from '/assets/user.png';
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const logout = () => {
     try {
       dispatch(clearUser());
@@ -16,6 +18,12 @@ function Sidebar() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const getLinkClass = (path) => {
+    return location.pathname === path 
+      ? "block bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center" 
+      : "block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center"
   };
 
   return (
@@ -37,27 +45,27 @@ function Sidebar() {
         <div className="flex flex-col">
           <ul>
             <li className="mb-3">
-              <Link to="/profile" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center">
+              <Link to="/profile" className={getLinkClass("/profile")}>
                 Profile
               </Link>
             </li>
             <li className="mb-3">
-              <Link to="/favorite-doctors" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center">
+              <Link to="/favorite-doctors" className={getLinkClass("/favorite-doctors")}>
                 Favorite Doctors
               </Link>
             </li>
             <li className="mb-3">
-              <Link to="/Yourappointments" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center">
+              <Link to="/Yourappointments" className={getLinkClass("/Yourappointments")}>
                 Appointments
               </Link>
             </li>
             <li className="mb-3">
-              <Link to="/notifications" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center">
+              <Link to="/notifications" className={getLinkClass("/notifications")}>
                 Notifications
               </Link>
             </li>
             <li className="mb-3">
-              <Link to="/Newpassword" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center">
+              <Link to="/Newpassword" className={getLinkClass("/Newpassword")}>
                 Change Password
               </Link>
             </li>

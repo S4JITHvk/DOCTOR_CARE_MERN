@@ -2,6 +2,8 @@
 const AdminQuery=require("../../infrastructure/DBquerys/Admin/AdminQuery")
 const UserQuery=require("../../infrastructure/DBquerys/Users/usersCrud")
 const DocQuery=require("../../infrastructure/DBquerys/Doctor/DocQuery")
+const stripeSecretKey = process.env.STRIPE_SECRETKEY;
+const stripe = require('stripe')(stripeSecretKey);
 const usersFetch = async (req, res) => {
   try {
     const fetchedata = await AdminQuery.UserList()
@@ -150,6 +152,23 @@ const cancelledBooking = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+const refundBooking=async(req,res)=>{
+  try{
+    const bookingid=req.body.bookingId 
+    const data=await UserQuery.Bookingfindbyid(bookingid)
+    const chargeId=data.payment.chargeId
+    const amount=data.payment.amount
+    const refund = await stripe.refunds.create({
+      charge: chargeId,
+      amount: amount,
+    });
+    data.payment.status="Refunded"
+    await UserQuery.saveBooking(data)
+    res.status(200).json({message:"successfully refunded"})
+  }catch(e){
+    console.log(e.message)
+  }
+}
 module.exports = {
   usersFetch,
   approvals,
@@ -160,5 +179,6 @@ module.exports = {
   bookingList,
   cancelledBooking,
   userDelete,
-  deleteDoctor
+  deleteDoctor,
+  refundBooking
 };

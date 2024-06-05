@@ -24,6 +24,10 @@ const bookingSchema = new mongoose.Schema({
     default: 'Active' 
   },
   payment: {
+    chargeId: {
+      type: String,
+      default: null
+    },
     paymentId: {
       type: String,
       default: null

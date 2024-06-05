@@ -16,10 +16,15 @@ const Viewdetails = ({ show, onClose, appointment, formatDate }) => {
             &times;
           </button>
         </div>
+        {appointment.payment?.status === "Refunded" ?(
+            <div className="text-center text-gray-700">
+              Your payment of ₹499 has been refunded. Please check your account.
+            </div>
+          ):(
         <div className="mt-6 space-y-4">
           {appointment.status === "Cancelled" ? (
             <div className="text-center text-gray-700">
-              Your appointment with Dr. {appointment.doctorName} on {formatDate(appointment.date)} at {appointment.shift} has been cancelled due to some emergency. Your amount of ₹499 will be credited to your account back with in 7working days after admin verification.
+              Your appointment with Dr. {appointment.doctorName} on {formatDate(appointment.date)} at {appointment.shift} has been cancelled due to some emergency. Your amount of ₹499 will be credited to your Acoount back with in 7working days after admin verification.
             </div>
           ) : (
             <>
@@ -67,7 +72,9 @@ const Viewdetails = ({ show, onClose, appointment, formatDate }) => {
               </div>
             </>
           )}
+         
         </div>
+          )}
         <div className="mt-6 text-right">
           <button
             onClick={onClose}

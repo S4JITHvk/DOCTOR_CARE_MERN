@@ -135,6 +135,7 @@ const yourappointments = async (userId) => {
           date: 1,
           shift: 1,
           status: 1,
+          payment:1,
           'doctorName': '$doctorInfo.name',
           'expertise': '$doctorInfo.expertise',
           'experience': '$doctorInfo.experience_years',
@@ -150,7 +151,21 @@ const yourappointments = async (userId) => {
     console.log(err.message)
   }
 };
-
+const Bookingfindbyid=async(id)=>{
+  try{
+    const data=await Booking.findById(id)
+      return data
+  }catch(e){
+    console.log(e.message)
+  }
+}
+const saveBooking = async (booking) => {
+  try {
+    await booking.save();
+  } catch (err) {
+    throw new Error('Error saving user');
+  }
+};
   
 module.exports = {
   findbyid,
@@ -164,5 +179,7 @@ module.exports = {
   get_bookinglistQuery,
   placeBooking,
   check_shift,
-  yourappointments
+  yourappointments,
+  Bookingfindbyid,
+  saveBooking
 };
