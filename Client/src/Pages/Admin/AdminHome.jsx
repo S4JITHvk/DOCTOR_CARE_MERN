@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { clearUser } from "../../ReduxStore/features/userSlice";
@@ -7,7 +7,8 @@ import profilePlaceholder from "/assets/admin.png";
 
 function Sidebar() {
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  
   const logout = () => {
     try {
       dispatch(clearUser());
@@ -16,6 +17,12 @@ function Sidebar() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const getLinkClass = (path) => {
+    return location.pathname === path 
+      ? "bg-blue-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out" 
+      : "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out";
   };
 
   return (
@@ -34,42 +41,42 @@ function Sidebar() {
         <div className="flex flex-col">
           <ul>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/admin")}>
                 <Link to="/admin" className="block">
                   DASHBOARD
                 </Link>
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/admin/userList")}>
                 <Link to="/admin/userList" className="block">
                  PATIENTS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/admin/doctors")}>
                 <Link to="/admin/doctors" className="block">
                   DOCTORS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/admin/approvals")}>
                 <Link to="/admin/approvals" className="block">
                   APPROVALS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/admin/appointments")}>
                 <Link to="/admin/appointments" className="block">
                   BOOKINGS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/admin/cancelled_bookings")}>
                 <Link to="/admin/cancelled_bookings" className="block">
                   CANCELLED BOOKINGS
                 </Link>

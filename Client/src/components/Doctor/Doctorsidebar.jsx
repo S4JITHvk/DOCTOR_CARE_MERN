@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { clearDoctor } from "../../ReduxStore/features/doctorSlice";
@@ -8,6 +8,8 @@ import profilePlaceholder from '/assets/doctor.jpg';
 function Doctorsidebar() {
   const doctorData = useSelector((state) => state.doctor);
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const logout = () => {
     try {
       dispatch(clearDoctor());
@@ -16,6 +18,12 @@ function Doctorsidebar() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const getLinkClass = (path) => {
+    return location.pathname === path 
+      ? "bg-blue-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out" 
+      : "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out";
   };
 
   return (
@@ -37,35 +45,28 @@ function Doctorsidebar() {
         <div className="flex flex-col">
           <ul>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/doctor")}>
                 <Link to="/doctor" className="block">
                   Dashboard
                 </Link>
               </div>
             </li>
-            {/* <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                <Link to="/doctor/Slotupdate" className="block">
-                  Slot Update
-                </Link>
-              </div>
-            </li> */}
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/doctor/Yourbookings")}>
                 <Link to="/doctor/Yourbookings" className="block">
                   Appointments
                 </Link>
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/doctor/notifications")}>
                 <Link to="/doctor/notifications" className="block">
                   Notifications
                 </Link>
               </div>
             </li>
             <li className="mb-2">
-              <div className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
+              <div className={getLinkClass("/doctor/Newpassword")}>
                 <Link to="/doctor/Newpassword" className="block">
                   Change Password
                 </Link>
