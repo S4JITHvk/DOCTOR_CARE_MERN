@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 const DEFAULT_SHIFTS = {
     '9am-10am': 9,
-    '11am-12pm': 11,
+    '11am-12pm':11,
     '2pm-3pm': 14, 
     '5pm-6pm': 17, 
     '8pm-9pm': 20, 

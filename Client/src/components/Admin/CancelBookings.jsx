@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Api from '../../API/DoctorCareApi';
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import Swal from 'sweetalert2';
+
 function CancelBookings() {
   const [cancelledBookings, setCancelledBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,20 +10,21 @@ function CancelBookings() {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
 
-  useEffect(() => {
-    const fetchCancelledBookings = async () => {
-      try {
-        const response = await Api.get(`/admin/cancelled-bookings?page=${page}&limit=${limit}`);
-        console.log(response.data,"==>")
-        setCancelledBookings(response.data.cancelledBookings);
-        setTotalPages(response.data.totalPages);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching cancelled bookings:', error);
-        setLoading(false);
-      }
-    };
+  const [refundInitiated, setRefundInitiated] = useState({});
 
+  const fetchCancelledBookings = async () => {
+    try {
+      const response = await Api.get(`/admin/cancelled-bookings?page=${page}&limit=${limit}`);
+      setCancelledBookings(response.data.cancelledBookings);
+      setTotalPages(response.data.totalPages);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching cancelled bookings:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchCancelledBookings();
   }, [page]);
 
@@ -51,7 +53,11 @@ function CancelBookings() {
       if (result.isConfirmed) {
         Api.post('/admin/booking_refund', { bookingId })
           .then(response => {
-            console.log(`Booking ${bookingId} marked as done.`, response);
+            fetchCancelledBookings()
+            setRefundInitiated(prevState => ({
+              ...prevState,
+              [bookingId]: true 
+            }));
             Swal.fire(
               'Done!',
               'Booking has been marked as done.',
@@ -69,6 +75,7 @@ function CancelBookings() {
       }
     });
   };
+
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
@@ -81,8 +88,6 @@ function CancelBookings() {
           <table className="min-w-full bg-white border border-gray-200">
             <thead>
               <tr>
-              
-                
                 <th className="py-2 px-4 border-b">Doctor</th>
                 <th className="py-2 px-4 border-b">Booking Date</th>
                 <th className="py-2 px-4 border-b">Patient</th>
@@ -107,7 +112,8 @@ function CancelBookings() {
                     <div className="flex space-x-2">
                       <button 
                         onClick={() => handleDoneClick(booking._id)} 
-                        className="px-2 py-1 bg-green-500 hover:bg-green-700 text-white rounded"
+                        disabled={refundInitiated[booking._id]} // Disable if refund initiated
+                        className={`px-2 py-1 ${refundInitiated[booking._id] ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-700'} text-white rounded`}
                       >
                         Refund
                       </button>

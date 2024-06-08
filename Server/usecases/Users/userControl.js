@@ -305,9 +305,10 @@ const get_doctors = async (req, res) => {
 const get_bookinglist = async (req, res) => {
   try {
     const doctorid = req.params.doctorId;
-    const List = await Query.get_bookinglistQuery(doctorid);
+    const {List,Slots} = await Query.get_bookinglistQuery(doctorid);
+    console.log(List,Slots,"in controller")
     if (List) {
-      return res.status(200).json(List);
+      return res.status(200).json({List,Slots});
     } else {
       return res.status(404).json({ message: "No list" });
     }

@@ -1,7 +1,7 @@
 const Doctor=require("../../../entities/Doctor/Doctormodel")
 const Booking=require("../../../entities/Booking/Bookingmodel")
 const User=require("../../../entities/User/usermodel")
-
+const Slot=require("../../../entities/Doctor/Slotmodel")
 const docfindbyId=async(id)=>{
   try{
 const data=await Doctor.findById(id)
@@ -113,7 +113,19 @@ const ban_cancel_booking = async (docId) => {
     console.log(e.message);
   }
 };
+const slotUpdate=async(doctorId,date,shifts)=>{
+  try{
+    const slot=new Slot({
+      doctorId:doctorId,
+      date:date,
+      shifts:shifts
+    })
+    await slot.save()
+  }catch(e){
+    console.log(e.message)
+  }
 
+}
 
 module.exports={
  docfindbyId,
@@ -126,5 +138,6 @@ module.exports={
  deletepro,
  yourbookings,
  cancelbooking,
- ban_cancel_booking
+ ban_cancel_booking,
+ slotUpdate
 }

@@ -3,6 +3,7 @@ const { ObjectId } = mongoose.Types;
 const User = require("../../../entities/User/usermodel");
 const Doctor=require("../../../entities/Doctor/Doctormodel")
 const Booking=require("../../../entities/Booking/Bookingmodel")
+const Slot=require("../../../entities/Doctor/Slotmodel")
 const findbyid = async (id) => {
   try {
     const data = await User.findOne({_id:id});
@@ -76,34 +77,18 @@ const createUser = async (userData) => {
       throw new Error("Error getting list.");
     }
 };
+///////
 const get_bookinglistQuery = async (id) => {
   try {
     const currentDate = new Date();
-    const data = await Booking.find({ doctorId: id, date: { $gte: currentDate } });
-    return data;
+    const List = await Booking.find({ doctorId: id, date: { $gte: currentDate } });
+    const Slots=await Slot.find({doctorId:id, date: { $gte: currentDate }})
+    return {List,Slots};
   } catch (err) {
     throw new Error("Error getting list.");
   }
 };
-const check_shift = async (docId,userId, date, shift) => {
-  try {
-    const result = await Booking.find({ doctorId: docId, date: date, shift: shift });
-    if (result.length === 0) {
-      const tempBooking ={
-        doctorId: docId,
-        userId:userId,
-        date: date,
-        shift: shift
-      }
-      await new Booking(tempBooking).save();
-      return false; 
-    } else {
-      return true; 
-    }
-  } catch (e) {
-    throw new Error("Error checking or creating booking: " + e.message);
-  }
-};
+// ;/////////
 
 const placeBooking = async (data) => {
   try {
@@ -178,7 +163,6 @@ module.exports = {
   get_doctorslist,
   get_bookinglistQuery,
   placeBooking,
-  check_shift,
   yourappointments,
   Bookingfindbyid,
   saveBooking

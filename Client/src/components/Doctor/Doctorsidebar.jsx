@@ -59,6 +59,13 @@ function Doctorsidebar() {
               </div>
             </li>
             <li className="mb-2">
+              <div className={getLinkClass("/doctor/Yourslots")}>
+                <Link to="/doctor/Yourslots" className="block">
+                  Slot Update
+                </Link>
+              </div>
+            </li>
+            <li className="mb-2">
               <div className={getLinkClass("/doctor/notifications")}>
                 <Link to="/doctor/notifications" className="block">
                   Notifications

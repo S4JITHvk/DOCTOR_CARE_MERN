@@ -37,7 +37,7 @@ const DoctorList=async()=>{
 }
 const Booking_list = async (match, skip, limit) => {
   try {
-    const filteredMatch = { ...match, status: { $ne: 'Cancelled' } };
+    const filteredMatch = { ...match, 'payment.status': { $ne: 'Paid' } };
     
     const bookings = await Booking.aggregate([
       { $match: filteredMatch },
@@ -87,7 +87,12 @@ const Booking_list = async (match, skip, limit) => {
 const cancelled_booking = async (skip, limit) => {
   try {
     const cancelledBookings = await Booking.aggregate([
-      { $match: { status: 'Cancelled', payment: { status: { $ne: "Refunded" } } } },
+      {
+        $match: {
+          status: 'Cancelled',
+          'payment.status': 'Paid' 
+        }
+      },
       { $sort: { date: 1 } },
       { $skip: parseInt(skip) },
       { $limit: parseInt(limit) },
@@ -111,15 +116,20 @@ const cancelled_booking = async (skip, limit) => {
       { $unwind: '$userDetails' }
     ]);
 
-    const totalBookings = await Booking.countDocuments({ status: 'Cancelled' });
-    const totalPages = Math.ceil(totalBookings / limit);
+    console.log(cancelledBookings, "booking");
 
+    const totalBookings = await Booking.countDocuments({
+      status: 'Cancelled',
+      'payment.status': 'Paid' 
+    });
+    const totalPages = Math.ceil(totalBookings / limit);
     return { cancelledBookings, totalPages };
   } catch (error) {
     console.error('Error fetching cancelled bookings:', error);
     throw new Error('Server Error');
   }
 };
+
 
 
 

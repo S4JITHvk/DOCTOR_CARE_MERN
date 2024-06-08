@@ -29,6 +29,7 @@ function DoctorList() {
   getDate.setDate(getDate.getDate() + 1);
   const [selectedDate, setSelectedDate] = useState(getDate);
   const [doctorBookings, setDoctorBookings] = useState([]);
+  const [doctorSlots, setDoctorSlots] = useState([]);
   const shifts = ["9am-10am", "11am-12pm", "2pm-3pm", "5pm-6pm", "8pm-9pm"];
 
   useEffect(() => {
@@ -56,11 +57,13 @@ function DoctorList() {
   const getDoctorBookings = async (doctorId) => {
     try {
       const response = await Api.get(`/doctorBookings/${doctorId}`);
-      const formattedBookings = response.data.map((booking) => ({
+      console.log(response.data, "==>");
+      const formattedBookings = response.data.List.map((booking) => ({
         ...booking,
         date: new Date(booking.date),
       }));
       setDoctorBookings(formattedBookings);
+      setDoctorSlots(response.data.Slots);
     } catch (error) {
       console.error("Error fetching doctor bookings:", error);
     }
@@ -86,30 +89,6 @@ function DoctorList() {
     setSelectedShift(shift);
   };
 
-  // const handleBook = async () => {
-  //   try {
-  //     if (!selectedDoctor || !selectedShift || !selectedDate) {
-  //       console.error("Doctor, shift, or date is missing.");
-  //       toast.error("Please select a shift and date.");
-  //       return;
-  //     }
-  //     const bookingData = {
-  //       userId: User.user._id,
-  //       doctorId: selectedDoctor._id,
-  //       date: selectedDate,
-  //       shift: selectedShift,
-  //     };
-  //     const response = await Api.post("/booking", bookingData);
-  //     console.log("Booking successful:", response.data);
-  //     if (response.data) {
-  //       toast.success("Successfully Booked.");
-  //     }
-  //     handleModalClose();
-  //   } catch (error) {
-  //     console.error("Error booking slot:", error);
-  //   }
-  // };
-
   const handleDateChange = (date) => {
     setSelectedDate(new Date(date));
     setSelectedShift("");
@@ -124,6 +103,20 @@ function DoctorList() {
         doctor.name.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   });
+
+  const isSlotUnavailable = (shift, selectedDate) => {
+    const isBooked = doctorBookings.some(
+      (booking) =>
+        new Date(booking.date).toDateString() === selectedDate.toDateString() &&
+        booking.shift === shift
+    );
+    const isInSlots = doctorSlots.some(
+      (slot) =>
+        new Date(slot.date).toDateString() === selectedDate.toDateString() &&
+        slot.shifts.includes(shift)
+    );
+    return isBooked || isInSlots;
+  };
 
   return (
     <div className="flex">
@@ -294,29 +287,15 @@ function DoctorList() {
                     key={shift}
                     onClick={() => handleShiftSelect(shift)}
                     className={`p-2 border rounded ${
-                      doctorBookings.some(
-                        (booking) =>
-                          new Date(booking.date).toDateString() ===
-                            selectedDate.toDateString() &&
-                          booking.shift === shift
-                      )
+                      isSlotUnavailable(shift, selectedDate)
                         ? "border-red-500 text-red-500 cursor-not-allowed"
                         : selectedShift === shift
                         ? "border-green-500 text-green-500"
                         : "border-green-500"
                     }`}
-                    disabled={doctorBookings.some(
-                      (booking) =>
-                        new Date(booking.date).toDateString() ===
-                          selectedDate.toDateString() && booking.shift === shift
-                    )}
+                    disabled={isSlotUnavailable(shift, selectedDate)}
                     title={
-                      doctorBookings.some(
-                        (booking) =>
-                          new Date(booking.date).toDateString() ===
-                            selectedDate.toDateString() &&
-                          booking.shift === shift
-                      )
+                      isSlotUnavailable(shift, selectedDate)
                         ? "Slot not available"
                         : "Slot available"
                     }
@@ -336,11 +315,11 @@ function DoctorList() {
               {selectedShift ? (
                 <Link
                   to="/Payment_process"
-                state={{ 
-                      selectedDoctor,
-                      selectedDate,
-                      selectedShift,
-                    }}
+                  state={{
+                    selectedDoctor,
+                    selectedDate,
+                    selectedShift,
+                  }}
                 >
                   <button
                     onClick={handleModalClose}

@@ -53,6 +53,19 @@ function BookingList() {
     setIsModalOpen(false);
     setSelectedBooking(null);
   };
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Active':
+        return 'text-blue-500'; 
+      case 'Completed':
+        return 'text-green-500'; 
+      case 'Cancelled':
+        return 'text-red-500'; 
+      default:
+        return ''; 
+    }
+  };
+  
 
   return (
     <div className="container mx-auto p-4">
@@ -103,6 +116,9 @@ function BookingList() {
                   Patient Email
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                  Cancelled
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                   Shift
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
@@ -114,31 +130,35 @@ function BookingList() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {bookings.map((booking) => (
-                <tr key={booking._id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {booking.doctorId.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {booking.doctorId.medical_license_no}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.userId.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.userId.email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.shift}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {new Date(booking.date).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      onClick={() => viewBooking(booking._id)}
-                      className="bg-green-500 text-white hover:bg-green-700 focus:outline-none px-2 py-1 rounded-md"
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {bookings.map((booking) => (
+    <tr key={booking._id}>
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+        {booking.doctorId.name}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        {booking.doctorId.medical_license_no}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.userId.name}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.userId.email}</td>
+      <td className={`px-6 py-4 whitespace-nowrap text-sm ${getStatusColor(booking.status)}`}>
+        {booking.status}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.shift}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+        {new Date(booking.date).toLocaleDateString()}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+        <button
+          onClick={() => viewBooking(booking._id)}
+          className="bg-green-500 text-white hover:bg-green-700 focus:outline-none px-2 py-1 rounded-md"
+        >
+          View
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
           </table>
         </div>
       )}
@@ -161,36 +181,51 @@ function BookingList() {
       </div>
 
       <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Booking Details"
-        className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50"
-        overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-50"
-      >
-        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto">
-          {selectedBooking && (
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Booking Details</h2>
-              <p><strong>Doctor Name:</strong> {selectedBooking.doctorId.name}</p>
-              <p><strong>Doctor License No:</strong> {selectedBooking.doctorId.medical_license_no}</p>
-              <p><strong>Doctor Gender:</strong> {selectedBooking.doctorId.gender}</p>
-              <p><strong>Doctor Expertise in:</strong> {selectedBooking.doctorId.expertise}</p>
-              <p><strong>Doctor Working Experience:</strong> {selectedBooking.doctorId.experience_years} years</p>
-              <p><strong>Patient Name:</strong> {selectedBooking.userId.name}</p>
-              <p><strong>Patient Email:</strong> {selectedBooking.userId.email}</p>
-              <p><strong>Scheduled Date:</strong> {new Date(selectedBooking.date).toLocaleDateString()}</p>
-              <p><strong>Time:</strong> {selectedBooking.shift}</p>
-             
-              <button
-                onClick={closeModal}
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md focus:outline-none"
-              >
-                Close
-              </button>
-            </div>
-          )}
+  isOpen={isModalOpen}
+  onRequestClose={closeModal}
+  contentLabel="Booking Details"
+  className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50"
+  overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-50"
+>
+  <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto">
+    {selectedBooking && (
+      <div>
+        <h2 className="text-3xl font-bold mb-6 text-center">
+          {selectedBooking.status === 'Active' ? 'Active Booking Details' : selectedBooking.status === 'Completed' ? 'Completed Booking Details' : 'Cancelled Booking Details'}
+        </h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <p className="text-lg font-semibold">Doctor Details:</p>
+            <p><strong>Name:</strong> {selectedBooking.doctorId.name}</p>
+            <p><strong>License No:</strong> {selectedBooking.doctorId.medical_license_no}</p>
+            <p><strong>Gender:</strong> {selectedBooking.doctorId.gender}</p>
+            <p><strong>Expertise:</strong> {selectedBooking.doctorId.expertise}</p>
+            <p><strong>Experience:</strong> {selectedBooking.doctorId.experience_years} years</p>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">Patient Details:</p>
+            <p><strong>Name:</strong> {selectedBooking.userId.name}</p>
+            <p><strong>Email:</strong> {selectedBooking.userId.email}</p>
+            <p><strong>Status:</strong> {selectedBooking.payment.status}</p>
+          </div>
         </div>
-      </Modal>
+        <p className="text-lg font-semibold mt-6">Booking Information:</p>
+        <p><strong>Scheduled Date:</strong> {new Date(selectedBooking.date).toLocaleDateString()}</p>
+        <p><strong>Status:</strong> {selectedBooking.status}</p>
+        <p><strong>Time:</strong> {selectedBooking.shift}</p>
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={closeModal}
+            className="bg-red-500 text-white px-6 py-2 rounded-md focus:outline-none"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+</Modal>
+
     </div>
   );
 }

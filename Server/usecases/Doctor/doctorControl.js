@@ -187,6 +187,16 @@ const cancel_booking = async (req, res) => {
     res.status(400).json({ message: e.message });
   }
 };
+const slot_update=async(req,res)=>{
+  try{
+    console.log(req.body)
+    const {doctorId,date,slots}=req.body
+    await DocQuery.slotUpdate(doctorId,date,slots)
+    return res.status(200).json({ message: 'Slot locked successfully' });
+  }catch(e){
+    console.log(e.message)
+  }
+}
 module.exports = {
   Doctor_signup,
   Doctor_login,
@@ -194,5 +204,6 @@ module.exports = {
   edit_profile ,
   delete_propic,
   your_bookings,
-  cancel_booking
+  cancel_booking,
+  slot_update
 };
