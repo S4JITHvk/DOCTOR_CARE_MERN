@@ -180,7 +180,7 @@ function Signup() {
           paddingBottom: "9rem",
         }}
       >
-        <Toaster position="top-center" reverseOrder={false} />
+
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h1 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
             MIND CARE

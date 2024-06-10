@@ -36,7 +36,7 @@ function Doctorsidebar() {
             alt="Profile"
           />
           <button className="h-6 w-32 rounded bg-blue-500 text-white font-semibold mt-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300 ease-in-out">
-            <Link to="/doctor/Profile">View Profile</Link>
+            <Link to="/doctor/Profile">VIEW PROFILE</Link>
           </button>
           <h1 className="text-xl font-bold text-center mt-2 sm:mt-4">Dr. {doctorData.doctor.name}</h1>
           <p className="text-gray-700 text-center">{doctorData.doctor.expertise}</p>
@@ -47,41 +47,42 @@ function Doctorsidebar() {
             <li className="mb-2">
               <div className={getLinkClass("/doctor")}>
                 <Link to="/doctor" className="block">
-                  Dashboard
+                  DASHBOARD
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/doctor/Yourbookings")}>
                 <Link to="/doctor/Yourbookings" className="block">
-                  Appointments
+                  APPOINTMENTS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/doctor/Yourslots")}>
                 <Link to="/doctor/Yourslots" className="block">
-                  Slot Update
+                  SLOT UPDATE
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/doctor/notifications")}>
                 <Link to="/doctor/notifications" className="block">
-                  Notifications
+                  NOTIFICATIONS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/doctor/Newpassword")}>
                 <Link to="/doctor/Newpassword" className="block">
-                  Change Password
+                  CHANGE
+                  PASSWORD
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out">
-                <button onClick={logout}>Logout</button>
+                <button onClick={logout}>LOGOUT</button>
               </div>
             </li>
           </ul>

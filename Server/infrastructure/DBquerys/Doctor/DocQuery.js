@@ -78,10 +78,11 @@ const yourbookings = async (date, doctorId) => {
   try {
     const inputDate = new Date(date);
     const isoDateString = inputDate.toISOString().split('T')[0];
-    const data = await Booking.find({ doctorId: doctorId, date: isoDateString })
+    const appointments = await Booking.find({ doctorId: doctorId, date: isoDateString })
       .populate('userId')
       .exec();
-    return data;
+    const Slots=await Slot.find({doctorId:doctorId,date: isoDateString })
+    return {appointments,Slots}
   } catch (error) {
     console.error('Error fetching appointments:', error);
     throw error;

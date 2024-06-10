@@ -11,6 +11,7 @@ import {clearUser} from "./ReduxStore/features/userSlice"
 function App() {
   const dispatch=useDispatch()
   useEffect(() => {
+    // dispatch(clearUser())
     fetchUser(dispatch); 
   }, [dispatch]);
 

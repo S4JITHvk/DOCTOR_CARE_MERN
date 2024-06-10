@@ -143,6 +143,7 @@ const newpass_reset = async (req, res) => {
 const fetchData = async (req, res) => {
   try {
     const token = req.cookies.token;
+    console.log(token,"==>")
     if (!token) {
       return res.status(401).json({ error: "Unauthorized1" });
     }

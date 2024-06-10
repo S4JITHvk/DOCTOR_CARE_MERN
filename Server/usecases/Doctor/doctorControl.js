@@ -159,19 +159,13 @@ const delete_propic=async(req,res)=>{
 const your_bookings = async (req, res) => {
   try {
     const { date, doctorId } = req.params;
-    console.log(req.params,"==>")
     if (!date || !doctorId) {
       return res.status(400).json({ message: 'Date and doctorId are required' });
     }
     
-    const appointments = await DocQuery.yourbookings(date, doctorId);
-    
-    if (appointments.length === 0) {
-      console.log("here")
-      return res.status(404).json({ message: 'No appointments found' });
-    }
-    
-    res.status(200).json(appointments);
+    const {appointments,Slots} = await DocQuery.yourbookings(date, doctorId);
+  
+    res.status(200).json({appointments,Slots});
   } catch (error) {
     console.error('Error fetching appointments:', error);
     res.status(500).json({ message: 'Server error' });

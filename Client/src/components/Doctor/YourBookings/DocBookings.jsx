@@ -28,7 +28,11 @@ function DocBookings() {
       const doctorId = doctorData.doctor._id;
       const response = await Api.get(`/doctor/appointments/${date.toISOString().split('T')[0]}/${doctorId}`);
       if (response.status === 200) {
-        setAppointments(response.data);
+        if(response.data.appointments.length===0){
+          toast.error("No appointments found");
+          setAppointments([]);
+        }
+        setAppointments(response.data.appointments);
       } else {
         toast.error(response.data.message);
         setAppointments([]);
