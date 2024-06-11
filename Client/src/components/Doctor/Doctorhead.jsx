@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaComments, FaUser } from 'react-icons/fa'; // Added FaUser icon
 
 function Doctorhead() {
   return (
@@ -9,6 +11,14 @@ function Doctorhead() {
           <h1 className="text-3xl font-bold tracking-tight text-black ml-2">
             Mind <span className='text-red-600'>Care</span>
           </h1>
+        </div>
+        <div className="flex items-center "> 
+          <Link to="/doctor/Profile" className="mr-4"> 
+            <FaUser className="text-4xl text-black hover:text-red-600" /> 
+          </Link>
+          <Link to="/doctor/Communicate">
+            <FaComments className="text-4xl text-black hover:text-red-600" /> 
+          </Link>
         </div>
       </div>
     </header>
