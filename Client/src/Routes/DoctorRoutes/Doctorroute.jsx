@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch ,useSelector} from 'react-redux';
 import Loader from '../../components/Loader/Loader';
 import Authprotect from '../../components/Auth/Authprotect';
 import DoctorAuth from '../../components/Auth/DoctorAuth';
@@ -17,9 +17,12 @@ const Bookingcomp=lazy(()=>import("../../components/Doctor/YourBookings/DocBooki
 const Yourslot=lazy(()=>import("../../components/Doctor/Slot_manage/slotManage"))
 const Chat=lazy(()=>import("../../components/Doctor/Communication/Chat"))
 function Doctorroute() {
+  const Doctor=useSelector((state)=>state.doctor)
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchDoctor(dispatch);
+    if(!Doctor.doctor){
+      fetchDoctor(dispatch);
+    }  
   }, [dispatch]);
 
   return (

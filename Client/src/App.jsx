@@ -9,10 +9,13 @@ import AdminRoutes from './Routes/AdminRoutes/AdminRoute';
 import fetchUser  from './Services/usersFetch';
 import {clearUser} from "./ReduxStore/features/userSlice"
 function App() {
+  const User=useSelector((state)=>state.user)
   const dispatch=useDispatch()
   useEffect(() => {
     // dispatch(clearUser())
-    fetchUser(dispatch); 
+    if(!User.user){
+      fetchUser(dispatch); 
+    }
   }, [dispatch]);
 
   return (

@@ -40,8 +40,10 @@
     "react-router-dom": "^6.23.1",
     "react-tooltip": "^5.26.4",
     "redux-persist": "^6.0.0",
+    "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.11",
-    "sweetalert2": "^11.11.0"
+    "sweetalert2": "^11.11.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

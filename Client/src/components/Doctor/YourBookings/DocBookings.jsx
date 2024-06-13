@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector } from 'react-redux';
-
+import {Link } from "react-router-dom"
 const DEFAULT_SHIFTS = {
     '9am-10am': 9,
     '11am-12pm':11,
@@ -18,7 +18,7 @@ function DocBookings() {
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const doctorData = useSelector((state) => state.doctor);
-
+  console.log(appointments,"==>")
   useEffect(() => {
     fetchAppointments(selectedDate);
   }, [selectedDate]);
@@ -144,10 +144,12 @@ function DocBookings() {
                     ) : (
                       <>
                         <button
-                          onClick={() => handleIntake(appointment._id)}
                           className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
                         >
-                          Intake
+                          <Link  to="/Communicate" 
+                            state={{ action:'doctor',data: appointment }} 
+                            >Intake</Link>
+                          
                         </button>
                         <button
                           onClick={() => handleCancel(appointment._id)}
