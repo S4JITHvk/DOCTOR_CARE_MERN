@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const DocQuery = require("../../infrastructure/DBquerys/Doctor/DocQuery");
+const BookingQuery = require("../../infrastructure/DBquerys/Users/usersCrud")
 const { comparedata } = require("../../util/Bcrypthash");
 const { sendOTP } = require("../Users/otpControl");
 const path = require('path');
@@ -183,12 +184,24 @@ const cancel_booking = async (req, res) => {
 };
 const slot_update=async(req,res)=>{
   try{
-    console.log(req.body)
     const {doctorId,date,slots}=req.body
     await DocQuery.slotUpdate(doctorId,date,slots)
     return res.status(200).json({ message: 'Slot locked successfully' });
   }catch(e){
     console.log(e.message)
+  }
+}
+const update_booking=async(req,res)=>{
+  try{
+    const {bookingId}=req.params
+   const Booking=await BookingQuery.Bookingfindbyid(bookingId)
+   if(Booking){
+    Booking.status="Completed"
+    await BookingQuery.saveBooking(Booking)
+    return res.status(200).json({message:"Booking updated succesfully"})
+   }
+  }catch(e){
+    console.log("error caught in updatebooking:",e.message)
   }
 }
 module.exports = {
@@ -199,5 +212,6 @@ module.exports = {
   delete_propic,
   your_bookings,
   cancel_booking,
-  slot_update
+  slot_update,
+  update_booking
 };

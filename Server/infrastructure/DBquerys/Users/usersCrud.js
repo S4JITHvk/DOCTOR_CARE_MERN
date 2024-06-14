@@ -77,7 +77,7 @@ const createUser = async (userData) => {
       throw new Error("Error getting list.");
     }
 };
-///////
+
 const get_bookinglistQuery = async (id) => {
   try {
     const currentDate = new Date();
@@ -88,7 +88,7 @@ const get_bookinglistQuery = async (id) => {
     throw new Error("Error getting list.");
   }
 };
-// ;/////////
+
 
 const placeBooking = async (data) => {
   try {

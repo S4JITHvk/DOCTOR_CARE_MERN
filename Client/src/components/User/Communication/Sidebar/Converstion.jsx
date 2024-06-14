@@ -17,7 +17,7 @@ function Conversation({ conversation, lastIdx }) {
       >
         <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div >
-            <img src={conversation?.profile} alt="user avatar" className={`w-8 rounded-full border-2 ${
+            <img src={conversation?.profile || "/assets/doc.png"} alt="user avatar" className={`w-8 rounded-full border-2 ${
               isOnline ? "border-green-500" : ""
             }`} />
           </div>

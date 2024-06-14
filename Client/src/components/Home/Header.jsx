@@ -11,6 +11,7 @@ const navigation = [
   { name: 'Home', href: '/home', current: true },
   { name: 'Doctors', href: '/Doctors', current: false },
   { name: 'About us', href: '', current: false },
+  { name: 'Messages', href: '/Communicate', current: false },
 ];
 
 function classNames(...classes) {
@@ -75,9 +76,9 @@ function Header() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <Link to="/Communicate" className='mr-2'>
+              {/* <Link to="/Communicate" className='mr-2'>
                    <FaComments className="text-3xl text-white hover:text-red-600" /> 
-                </Link>
+                </Link> */}
                 <button
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

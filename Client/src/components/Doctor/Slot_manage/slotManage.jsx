@@ -51,6 +51,7 @@ function SlotManage() {
       if (response.status === 200) {
         alert('Slots locked successfully');
         setDoctorUpdatedSlots((prev) => [...prev, ...selectedSlots]);
+        setSelectedSlots([])
       } else {
         alert('Failed to book slots');
       }
@@ -75,14 +76,7 @@ function SlotManage() {
       console.error('Error fetching appointments:', error);
     }
   };
-  // const handledeselect=()=>{
-  //   try{
 
-
-  //   }catch(e){
-
-  //   }
-  // }
 
   useEffect(() => {
     fetchAppointments(selectedDate);
@@ -93,7 +87,7 @@ function SlotManage() {
       <h1 className="text-2xl font-bold mb-4">Manage Slots</h1>
       <div className="mb-4">
     <h1 className='font-bold mt-5'>SELECT DATE</h1>
-        <DatePicker
+        <DatePicker       
                 selected={selectedDate}
                 onChange={handleDateChange}
                 minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}

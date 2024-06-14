@@ -22,7 +22,7 @@ function MessageContainer() {
           <div className="flex items-center justify-between p-4 bg-blue-700 text-white">
             <div className="flex items-center">
               <img
-                src={selectedConversation?.profile || "/assets/doctor.jpg"}
+                src={selectedConversation?.profile || "/assets/doc.png"}
                 alt={selectedConversation?.name}
                 className="w-12 h-12 rounded-full mr-4"
               />

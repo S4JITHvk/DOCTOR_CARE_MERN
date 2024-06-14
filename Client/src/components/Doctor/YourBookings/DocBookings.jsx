@@ -18,7 +18,7 @@ function DocBookings() {
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const doctorData = useSelector((state) => state.doctor);
-  console.log(appointments,"==>")
+
   useEffect(() => {
     fetchAppointments(selectedDate);
   }, [selectedDate]);
@@ -70,20 +70,20 @@ function DocBookings() {
     }
   };
 
-  const handleIntake = async (id) => {
-    try {
-      const response = await Api.post(`/appointments/${id}/intake`);
-      if (response.status === 200) {
-        toast.success("Appointment intake started");
-        fetchAppointments(selectedDate);
-      } else {
-        toast.error("Failed to start intake");
-      }
-    } catch (error) {
-      console.error('Error starting intake:', error);
-      toast.error('Error starting intake');
-    }
-  };
+  // const handleIntake = async (id) => {
+  //   try {
+  //     const response = await Api.post(`/appointments/${id}/intake`);
+  //     if (response.status === 200) {
+  //       toast.success("Appointment intake started");
+  //       fetchAppointments(selectedDate);
+  //     } else {
+  //       toast.error("Failed to start intake");
+  //     }
+  //   } catch (error) {
+  //     console.error('Error starting intake:', error);
+  //     toast.error('Error starting intake');
+  //   }
+  // };
 
   const canCancel = (date, shift) => {
     const currentTime = new Date();
@@ -137,29 +137,36 @@ function DocBookings() {
                   <td className="py-2 px-6 border-b">{appointment.status}</td>
                   <td className="py-2 px-6 border-b">{appointment.shift}</td>
                   <td className="py-2 px-6 border-b">
-                    {appointment.status === 'Cancelled' ? (
-                      <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded cursor-not-allowed" disabled>
-                        Cancelled
-                      </button>
-                    ) : (
-                      <>
-                        <button
-                          className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                        >
-                          <Link  to="/doctor/Communicate" 
-                            state={{data: appointment }} 
-                            >Intake</Link>
-                          
-                        </button>
-                        <button
-                          onClick={() => handleCancel(appointment._id)}
-                          className={`px-4 py-2 rounded ${canCancel(appointment.date, appointment.shift) ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-700 cursor-not-allowed'}`}
-                          disabled={!canCancel(appointment.date, appointment.shift)}
-                        >
-                          Cancel
-                        </button>
-                      </>
-                    )}
+                  {
+  appointment.status === 'Cancelled' ? (
+    <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded cursor-not-allowed" disabled>
+      Cancelled
+    </button>
+  ) : appointment.status === 'Completed' ? (
+    <button className="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed" disabled>
+      Completed
+    </button>
+  ) : (
+    <>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+      >
+        <Link  to="/doctor/Communicate" 
+          state={{data: appointment }} 
+          >Intake</Link>
+        
+      </button>
+      <button
+        onClick={() => handleCancel(appointment._id)}
+        className={`px-4 py-2 rounded ${canCancel(appointment.date, appointment.shift) ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-700 cursor-not-allowed'}`}
+        disabled={!canCancel(appointment.date, appointment.shift)}
+      >
+        Cancel
+      </button>
+    </>
+  )
+}
+
                   </td>
                 </tr>
               ))
