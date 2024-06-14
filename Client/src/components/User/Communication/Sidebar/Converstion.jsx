@@ -1,7 +1,7 @@
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
 
-function Conversation({ conversation, lastIdx}) {
+function Conversation({ conversation, lastIdx }) {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   const isSelected = selectedConversation?._id === conversation._id;
@@ -15,11 +15,14 @@ function Conversation({ conversation, lastIdx}) {
         }`}
         onClick={() => setSelectedConversation(conversation)}
       >
-        <div className={`avatar ${ isOnline ? "online" : ""}`}>
-          <div className="w-12 rounded-full">
-            <img src={conversation?.profile} alt="user avatar" />
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
+          <div >
+            <img src={conversation?.profile} alt="user avatar" className={`w-8 rounded-full border-2 ${
+              isOnline ? "border-green-500" : ""
+            }`} />
           </div>
         </div>
+
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-semibold">(DR) {conversation?.name}</p>
@@ -33,5 +36,3 @@ function Conversation({ conversation, lastIdx}) {
 }
 
 export default Conversation;
-
-

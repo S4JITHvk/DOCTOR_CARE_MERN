@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import DatePicker from "react-datepicker"; 
+import "react-datepicker/dist/react-datepicker.css";
 import Api from '../../../API/DoctorCareApi';
 import { useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 
 function SlotManage() {
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const getDate = new Date();
+  getDate.setDate(getDate.getDate() + 1);
+  const [selectedDate, setSelectedDate] = useState(getDate.toISOString().split('T')[0]);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [deselectedSlots, setdedelectedSlots] = useState([]);
   const [bookedSlots, setBookedSlots] = useState([]);
@@ -88,12 +92,14 @@ function SlotManage() {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Manage Slots</h1>
       <div className="mb-4">
-        <Calendar
-          onChange={handleDateChange}
-          value={new Date(selectedDate)}
-          minDate={new Date()}
-          className="rounded border"
-        />
+    <h1 className='font-bold mt-5'>SELECT DATE</h1>
+        <DatePicker
+                selected={selectedDate}
+                onChange={handleDateChange}
+                minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
+                maxDate={new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)}
+                className="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-300"
+              />
       </div>
       <div className="mb-4">
         <h2 className="text-xl font-semibold mb-2">Available Slots</h2>

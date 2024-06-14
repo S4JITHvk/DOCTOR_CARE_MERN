@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
+import { useSocketContext } from "../../../../Socket/Context/SocketContext";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
@@ -7,7 +8,8 @@ import { useSelector } from "react-redux";
 
 function MessageContainer() {
   const { selectedConversation, setSelectedConversation } = useConversation();
-
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(selectedConversation?._id);
   useEffect(() => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
@@ -20,7 +22,7 @@ function MessageContainer() {
           <div className="flex items-center justify-between p-4 bg-blue-700 text-white">
             <div className="flex items-center">
               <img
-                src={selectedConversation?.profile || "/assets/user.png"}
+                src={selectedConversation?.profile || "/assets/doctor.jpg"}
                 alt={selectedConversation?.name}
                 className="w-12 h-12 rounded-full mr-4"
               />
@@ -28,7 +30,7 @@ function MessageContainer() {
                 <h3 className="text-lg font-semibold">
                   DR {selectedConversation?.name}
                 </h3>
-                <span className="text-sm text-gray-300">Online</span>
+                <span className="text-sm text-gray-300">{isOnline?"Online":""}</span>
               </div>
             </div>
           </div>

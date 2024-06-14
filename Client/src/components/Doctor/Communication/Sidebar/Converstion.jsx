@@ -16,9 +16,11 @@ function Conversation({ conversation, lastIdx}) {
         onClick={() => setSelectedConversation(conversation)}
       >
         <div className={`avatar ${ isOnline ? "online" : ""}`}>
-          <div className="w-12 rounded-full">
-            <img src={conversation?.profile || "/assets/user.png"} alt="user avatar" />
-          </div>
+          
+        <div className={`w-12 rounded-full ${isOnline ? "border-green-500" : ""}`}>
+  <img src={conversation?.profile || "/assets/user.png"} alt="user avatar" />
+</div>
+
         </div>
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">

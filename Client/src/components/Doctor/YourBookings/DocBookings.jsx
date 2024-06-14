@@ -146,8 +146,8 @@ function DocBookings() {
                         <button
                           className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
                         >
-                          <Link  to="/Communicate" 
-                            state={{ action:'doctor',data: appointment }} 
+                          <Link  to="/doctor/Communicate" 
+                            state={{data: appointment }} 
                             >Intake</Link>
                           
                         </button>
