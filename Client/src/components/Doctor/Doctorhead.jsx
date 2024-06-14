@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaComments, FaUser } from 'react-icons/fa'; // Added FaUser icon
+import { FaComments, FaUser } from 'react-icons/fa'; 
 
 function Doctorhead() {
   return (

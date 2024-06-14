@@ -7,20 +7,19 @@ const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
 
-  const user = useSelector((state) => state.user.user);
-  const doctor = useSelector((state) => state.doctor.doctor);
+  const user = useSelector((state) => state.user);
+  const doctor = useSelector((state) => state.doctor);
 
   useEffect(() => {
     const getConversations = async () => {
-      if (!user && !doctor) return; 
+      if (!user?.user && !doctor?.doctor) return; 
 
       setLoading(true);
       try {
-        const id = user?._id || doctor?._id;
-        const action = user ? "fetchDoctorForUsers" : "fetchUsersForDoctor";
-
-        const response = await Api.get('/message/conversations', { id, action });
-
+        const id =user.user?._id || doctor.doctor?._id;
+        const action = user.user ? "fetchDoctorForUsers" : "fetchUsersForDoctor";
+         console.log(id,action)
+         const response = await Api.get('/message/conversations', { params: { id, action } });
         setConversations(response.data);
       } catch (error) {
         toast.error(error.message);
@@ -30,7 +29,7 @@ const useGetConversations = () => {
     };
 
     getConversations();
-  }, [user, doctor]);
+  }, [user.user, doctor.doctor]);
 
   return { loading, conversations };
 };

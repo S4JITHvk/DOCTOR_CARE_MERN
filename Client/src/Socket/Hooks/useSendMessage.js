@@ -1,34 +1,30 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setMessages } from "../../ReduxStore/features/conversationSlice";
+import { useSelector } from "react-redux";
 import { useSocketContext } from "../Context/SocketContext";
+import { useConversation } from "../zustand/useConversation";
 import toast from "react-hot-toast";
 import Api from "../../API/DoctorCareApi";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
   const { socket } = useSocketContext();
-  const dispatch = useDispatch();
-  const messages = useSelector(state => state.conversation.messages);
-  const selectedConversation = useSelector(state => state.conversation.selectedConversation);
+  const { messages, setMessages, selectedConversation } = useConversation();
   const user = useSelector(state => state.user);
   const doctor = useSelector(state => state.doctor);
-
+  console.log(user,doctor,"==>")
   const sendMessage = async (messageContent) => {
     setLoading(true);
     try {
       let idToSend;
-      if (user) {
+      if (user.user) {
         idToSend = user.user?._id;
-      } else if (doctor) {
+      } else if (doctor.doctor) {
         idToSend = doctor.doctor?._id;
       }
-
-      const response = await Api.post(`/messages/send/${selectedConversation._id}`, { message: messageContent, id: idToSend });
+     console.log(idToSend,"idto send")
+      const response = await Api.post(`/message/send/${selectedConversation._id}/${idToSend}`,{ message: messageContent});
       const data = response.data;
-      dispatch(setMessages([...messages, data]));
-
-      socket.emit("sendMessage", data);
+      setMessages([...messages, data])
 
     } catch (error) {
       toast.error(error.message);
