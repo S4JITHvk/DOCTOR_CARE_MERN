@@ -14,7 +14,7 @@ export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]); 
-
+  
   useEffect(() => {
     const userId = User?.user?._id || Doctor?.doctor?._id;
 

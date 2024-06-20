@@ -15,7 +15,6 @@ function MessageInput() {
 
 
   useEffect(() => {
-    console.log(message,"here===>")
     if (message) {
       startTyping();
     } else {
