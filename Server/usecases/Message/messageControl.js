@@ -48,7 +48,6 @@ const getMessages = async (req, res) => {
     }
 
     const messages = conversation.messages;
-    console.log(messages, "message");
     res.status(200).json(messages);
   } catch (error) {
     console.log("Error in getMessages controller: ", error.message);
@@ -72,8 +71,10 @@ const getdatas = async (req, res) => {
   }
 };
 
+
 module.exports = {
   sendMessage,
   getMessages,
   getdatas,
+
 };

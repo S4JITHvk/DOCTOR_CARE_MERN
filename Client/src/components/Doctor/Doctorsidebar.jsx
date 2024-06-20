@@ -75,8 +75,7 @@ function Doctorsidebar() {
             <li className="mb-2">
               <div className={getLinkClass("/doctor/Newpassword")}>
                 <Link to="/doctor/Newpassword" className="block">
-                  CHANGE
-                  PASSWORD
+                  EDIT PASSWORD
                 </Link>
               </div>
             </li>

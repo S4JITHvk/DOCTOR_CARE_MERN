@@ -3,15 +3,16 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearUser } from "../../ReduxStore/features/userSlice";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { FaComments, FaUser } from 'react-icons/fa';
-import profilePlaceholder from '/assets/user.png'; 
+import profilePlaceholder from '/assets/user.png';
 import Cookies from "js-cookie";
+
 const navigation = [
-  { name: 'Home', href: '/home', current: true },
-  { name: 'Doctors', href: '/Doctors', current: false },
-  { name: 'About us', href: '', current: false },
-  { name: 'Messages', href: '/Communicate', current: false },
+  { name: 'Home', href: '/home' },
+  { name: 'Doctors', href: '/Doctors' },
+  { name: 'About us', href: '' },
+  { name: 'Messages', href: '/Communicate' },
 ];
 
 function classNames(...classes) {
@@ -21,6 +22,7 @@ function classNames(...classes) {
 function Header() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const location = useLocation(); // Get the current location
 
   const logout = () => {
     try {
@@ -52,7 +54,7 @@ function Header() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                <img src="/assets/mindcare.jpg" alt="Logo" className="h-8 w-8 rounded-full" /> 
+                  <img src="/assets/mindcare.jpg" alt="Logo" className="h-8 w-8 rounded-full" />
                   <h1>
                     <span style={{ color: 'white' }}>Mind</span> <span style={{ color: 'red' }}>Care</span>
                   </h1>
@@ -62,12 +64,12 @@ function Header() {
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
-                        to={item.href} 
+                        to={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={location.pathname === item.href ? 'page' : undefined}
                       >
                         {item.name}
                       </Link>
@@ -76,9 +78,6 @@ function Header() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              {/* <Link to="/Communicate" className='mr-2'>
-                   <FaComments className="text-3xl text-white hover:text-red-600" /> 
-                </Link> */}
                 <button
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -93,7 +92,7 @@ function Header() {
                   <div>
                     <Menu.Button className="relative flex items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>                     
+                      <span className="sr-only">Open user menu</span>
                       <h2 className="ml-2 text-white">{user.user?.name}</h2>
                       <img
                         className="h-8 w-8 rounded-full ml-2"
@@ -122,16 +121,6 @@ function Header() {
                           </Link>
                         )}
                       </Menu.Item>
-                      {/* <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/settings"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </Link>
-                        )}
-                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <Link
@@ -155,13 +144,13 @@ function Header() {
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as={Link} // Use Link for Disclosure.Button as well
+                  as={Link}
                   to={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={location.pathname === item.href ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>

@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
+import {Link} from "react-router-dom"
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useSelector } from "react-redux";
+import { FaVideo } from "react-icons/fa";
 
 function MessageContainer() {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -33,7 +35,15 @@ function MessageContainer() {
                 <span className="text-sm text-gray-300">{isOnline?"Online":""}</span>
               </div>
             </div>
+            <Link
+                   to={"/Video_chat"}
+                  className="px-4 py-2 bg-blue-500 mt-5 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out transform hover:scale-105 flex items-center gap-1"
+                >
+                  <FaVideo className="text-white" />
+                  Video Call
+                </Link>
           </div>
+         
           <Messages />
           <MessageInput />
         </>

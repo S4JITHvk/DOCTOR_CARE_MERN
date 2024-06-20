@@ -6,6 +6,7 @@ const multer = require('multer');
 const storage = require("../../util/multerConfig");
 const upload = multer({ storage: storage });
 
+
 Router.post('/usersignup',userController.userSignup)
 Router.post('/google-login',userController.googleAuth)
 Router.post('/otp-verify',otpController.verifyOtp)

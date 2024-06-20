@@ -16,6 +16,7 @@ const Paymentpage=lazy(()=>import("../../components/User/Payment/Payment"))
 const Paymentsuccess=lazy(()=>import("../../components/User/Payment/Success"))
 const Paymentfailure=lazy(()=>import("../../components/User/Payment/Failure"))
 const Myappointments=lazy(()=>import("../../components/User/YourAppointments/Appointments"))
+const Video=lazy(()=>import("../../components/User/Communication/VideoCall/Videomodal"))
 const Chat=lazy(()=>import("../../components/User/Communication/Chat"))
 import Authenticate from "../../components/Auth/Authenticate";
 import Protect from "../../components/Auth/Protect";
@@ -44,6 +45,7 @@ function UserRoute() {
       <Route path="/payment-success" element={<><Header /><Paymentsuccess/><Footer/></>}/>
       <Route path="/payment-cancel" element={<><Header /><Paymentfailure/><Footer/></>}/>
       <Route path="/Communicate" element={<><Header /><Chat/></>}/>
+      <Route path="/Video_chat" element={<><Header /><Video/></>}/>
     </Route>
   </Routes>
 </Suspense>

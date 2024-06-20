@@ -7,7 +7,7 @@ import Authprotect from '../../components/Auth/Authprotect';
 import DoctorAuth from '../../components/Auth/DoctorAuth';
 import Doctorlayout from '../../Pages/Doctors/Doctorlayout'; 
 import fetchDoctor from "../../Services/Doctorfetch"
-
+import {clearDoctor} from "../../ReduxStore/features/doctorSlice"
 const Doctorsignup = lazy(() => import('../../Pages/Doctors/Doctorsignup'));
 const Doctorslogin = lazy(() => import('../../Pages/Doctors/Login'));
 const Dashboard = lazy(() => import('../../Pages/Doctors/Dashboard'));
@@ -16,10 +16,12 @@ const Newpass=lazy(()=>import("../../components/Doctor/Docchangepass"))
 const Bookingcomp=lazy(()=>import("../../components/Doctor/YourBookings/DocBookings"))
 const Yourslot=lazy(()=>import("../../components/Doctor/Slot_manage/slotManage"))
 const Chat=lazy(()=>import("../../components/Doctor/Communication/Chat"))
+const Video=lazy(()=>import("../../components/Doctor/Communication/VideoCall/Videomodal"))
 function Doctorroute() {
   const Doctor=useSelector((state)=>state.doctor)
   const dispatch = useDispatch();
   useEffect(() => {
+    // dispatch(clearDoctor())
     if(!Doctor.doctor){
       fetchDoctor(dispatch);
     }  
@@ -35,6 +37,7 @@ function Doctorroute() {
           <Route path="/Yourbookings" element={<Doctorlayout><Bookingcomp/></Doctorlayout>}/>
           <Route path="/Yourslots" element={<Doctorlayout><Yourslot/></Doctorlayout>}/>
           <Route path="/Communicate" element={<Doctorlayout><Chat/></Doctorlayout>}/>
+          <Route path="/Video_chat" element={<Doctorlayout><Video/></Doctorlayout>}/>
         </Route>
         <Route element={<DoctorAuth />}>
           <Route path="/signup" element={<Doctorsignup />} />

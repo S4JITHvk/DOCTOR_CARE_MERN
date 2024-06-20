@@ -5,9 +5,9 @@ const User=require("../../../entities/User/usermodel")
 
 const getDoctorsForUser = async (userId) => {
     try {
-      const bookings = await Booking.find({userId : userId,status: { $ne: 'Cancelled' }});
+      const bookings = await Booking.find({userId : userId,status: { $ne: 'Cancelled' }}) 
       const doctorIds = bookings.map(booking => booking.doctorId);
-      const doctors = await Doctor.find({ _id: { $in: doctorIds } });
+      const doctors = await Doctor.find({ _id: { $in: doctorIds } }).sort({ _id: -1 });
       return doctors;
     } catch (error) {
       console.error('Error fetching doctors for user:', error);
@@ -18,7 +18,7 @@ const getDoctorsForUser = async (userId) => {
     try {
       const bookings = await Booking.find({ doctorId:doctorId,status: { $ne: 'Cancelled' }});
       const userIds = bookings.map(booking => booking.userId);
-      const users = await User.find({ _id: { $in: userIds } });
+      const users = await User.find({ _id: { $in: userIds } }).sort({ _id: -1 });
       return users;
     } catch (error) {
       console.error('Error fetching users for doctor:', error);

@@ -11,7 +11,6 @@ const useSendMessage = () => {
   const { messages, setMessages, selectedConversation } = useConversation();
   const user = useSelector(state => state.user);
   const doctor = useSelector(state => state.doctor);
-  console.log(user,doctor,"==>")
   const sendMessage = async (messageContent) => {
     setLoading(true);
     try {
