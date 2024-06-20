@@ -12,14 +12,11 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-
 function MessageContainer({ bookingId }) {
   const navigate = useNavigate();
   const { selectedConversation, setSelectedConversation } = useConversation();
-  const { onlineUsers } = useSocketContext();
+  const { onlineUsers, typingUsers} = useSocketContext();
   const isOnline = onlineUsers.includes(selectedConversation?._id);
-
-
   const handleConsultationCompleted = async () => {
     try {
       const confirmed = await Swal.fire({
@@ -46,8 +43,6 @@ function MessageContainer({ bookingId }) {
       alert("Failed to mark consultation as completed");
     }
   };
-
-
   useEffect(() => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
@@ -70,8 +65,13 @@ function MessageContainer({ bookingId }) {
                   {selectedConversation?.name}
                 </h3>
                 <span className="text-sm text-gray-300">
-                  {isOnline ? "Online" : ""}
-                </span>
+                {typingUsers.some((user) => user?.userId === selectedConversation?._id)
+                  ? "Typing..."
+                  : isOnline
+                  ? "Online"
+                  : ""}
+              </span>
+              
               </div>
             </div>
             {bookingId && (
@@ -86,7 +86,7 @@ function MessageContainer({ bookingId }) {
                   </button>
                 </div>
                 <Link
-                   to={"/doctor/Video_chat"}
+                  to={"/doctor/Video_chat"}
                   className="px-4 py-2 bg-blue-500 mt-5 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out transform hover:scale-105 flex items-center gap-1"
                 >
                   <FaVideo className="text-white" />
@@ -97,7 +97,6 @@ function MessageContainer({ bookingId }) {
           </div>
           <Messages />
           <MessageInput />
-        
         </>
       )}
     </div>

@@ -10,7 +10,7 @@ import { FaVideo } from "react-icons/fa";
 
 function MessageContainer() {
   const { selectedConversation, setSelectedConversation } = useConversation();
-  const { onlineUsers } = useSocketContext();
+  const { onlineUsers, typingUsers, startTyping, stopTyping } = useSocketContext();
   const isOnline = onlineUsers.includes(selectedConversation?._id);
   useEffect(() => {
     return () => setSelectedConversation(null);
@@ -32,7 +32,14 @@ function MessageContainer() {
                 <h3 className="text-lg font-semibold">
                   DR {selectedConversation?.name}
                 </h3>
-                <span className="text-sm text-gray-300">{isOnline?"Online":""}</span>
+                <span className="text-sm text-gray-300">
+                {typingUsers.some((user) => user?.userId === selectedConversation?._id)
+                  ? "Typing..."
+                  : isOnline
+                  ? "Online"
+                  : ""}
+              </span>
+              
               </div>
             </div>
             <Link

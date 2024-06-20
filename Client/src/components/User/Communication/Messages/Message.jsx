@@ -10,11 +10,19 @@ function Message({ message }) {
   const bubbleColor = fromMe ? "bg-blue-500" : "bg-gray-700";
 
   const formattedTime = format(new Date(message.createdAt), 'p'); 
+  const isVoiceMessage = message.messageType === 'voice';
 
   return (
     <div className={`flex ${chatClassName} mb-4 mt-2`}>
       <div className={`relative max-w-xs px-4 py-2 text-white rounded-lg ${bubbleColor}`}>
-        {message.message}
+        {isVoiceMessage ? (
+          <audio controls>
+            <source src={message.message} type="audio/webm" />
+            Your browser does not support the audio element.
+          </audio>
+        ) : (
+          <p>{message.message}</p>
+        )}
         <div className="text-xs text-black-400 mt-1">
           {formattedTime}
         </div>
@@ -24,3 +32,4 @@ function Message({ message }) {
 }
 
 export default Message;
+

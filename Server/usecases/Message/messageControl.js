@@ -6,6 +6,7 @@ const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
     let { id: receiverId, senderId } = req.params;
+
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
     });
@@ -15,11 +16,24 @@ const sendMessage = async (req, res) => {
         participants: [senderId, receiverId],
       });
     }
-    const newMessage = new Message({
-      senderId,
-      receiverId,
-      message,
-    });
+
+    let newMessage;
+    if (req.file) {
+      const path_image = process.env.VOICE_PATH + `voicemessages/${req.file.filename}`;
+      newMessage = new Message({
+        senderId,
+        receiverId,
+        messageType: 'voice',
+        message: path_image, 
+      });
+    } else {
+      newMessage = new Message({
+        senderId,
+        receiverId,
+        messageType: 'text',
+        message: message,
+      });
+    }
 
     if (newMessage) {
       conversation.messages.push(newMessage._id);

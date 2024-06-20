@@ -31,7 +31,7 @@ function Doctorsidebar() {
       <div className="bg-gray-300 p-4 sm:p-10">
         <div className="flex flex-col items-center">
           <img
-            className="h-24 w-24 rounded-full mt-1"
+            className="h-[110px] w-[120px] rounded-full mt-1"
             src={doctorData.doctor?.profile || profilePlaceholder}
             alt="Profile"
           />

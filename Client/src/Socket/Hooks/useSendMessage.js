@@ -11,19 +11,27 @@ const useSendMessage = () => {
   const { messages, setMessages, selectedConversation } = useConversation();
   const user = useSelector(state => state.user);
   const doctor = useSelector(state => state.doctor);
+  
   const sendMessage = async (messageContent) => {
     setLoading(true);
     try {
-      let idToSend;
-      if (user.user) {
-        idToSend = user.user?._id;
-      } else if (doctor.doctor) {
-        idToSend = doctor.doctor?._id;
+      let idToSend = user.user ? user.user._id : doctor.doctor ? doctor.doctor._id : null;
+      if (!idToSend) throw new Error("User ID not found");
+
+      const formData = new FormData();
+      if (typeof messageContent === 'string') {
+        formData.append('message', messageContent);
+      } else {
+        console.log('Sending voiceMessage:', messageContent);
+        formData.append('voiceMessage', messageContent, 'voiceMessage.webm');
       }
-     console.log(idToSend,"idto send")
-      const response = await Api.post(`/message/send/${selectedConversation._id}/${idToSend}`,{ message: messageContent});
+
+      const response = await Api.post(`/message/send/${selectedConversation._id}/${idToSend}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
       const data = response.data;
-      setMessages([...messages, data])
+      setMessages([...messages, data]);
 
     } catch (error) {
       toast.error(error.message);

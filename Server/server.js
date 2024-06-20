@@ -7,8 +7,6 @@ const morgan = require('morgan');
 const path = require('path');
 const connect = require("./infrastructure/config/mongodb");
 
-
-
 const userRoute = require("./interface/routes/userRoute");
 const adminRoute = require("./interface/routes/adminRoute");
 const doctorRoute = require("./interface/routes/doctorRoute");
