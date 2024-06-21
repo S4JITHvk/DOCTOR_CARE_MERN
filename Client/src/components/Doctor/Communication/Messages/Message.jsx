@@ -9,6 +9,15 @@ function Message({ message }) {
   const fromMe = message.senderId === authUser?._id;
   const chatClassName = fromMe ? 'justify-end' : 'justify-start';
   const bubbleColor = fromMe ? 'bg-blue-500' : 'bg-gray-700';
+  
+  const showThisMessage = (
+    message.senderId === selectedConversation._id ||  message.senderId ===authUser._id &&
+    message.receiverId === authUser._id ||   message.receiverId===selectedConversation._id 
+  );
+  console.log(showThisMessage,"==>")
+  if (!showThisMessage) {
+    return null;
+  }
   const formattedTime = format(new Date(message.createdAt), 'p');
   const isVoiceMessage = message.messageType === 'voice';
   const isImageMessage = message.messageType === 'image';

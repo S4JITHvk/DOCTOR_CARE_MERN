@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Api from "../../API/DoctorCareApi";
 import { isEmailValid, isEmpty } from "../../helpers/validation";
 import { jwtDecode } from "jwt-decode";
@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";
 
 function Login() {
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -36,7 +37,7 @@ function Login() {
       if (response.status === 200) {
         const { token } = response.data;
         document.cookie = `token=${token}`;
-        window.location.reload();
+        navigate("/home")
       }
     } catch (error) {
       const { status, data } = error.response;

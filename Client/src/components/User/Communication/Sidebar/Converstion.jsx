@@ -18,10 +18,10 @@ function Conversation({ conversation, lastIdx }) {
   };
 
   useEffect(() => {
-    if (conversation) {
-      markAsRead(User?._id, conversation._id);
+    if (selectedConversation) {
+      markAsRead(User?._id, selectedConversation?._id);
     }
-  }, [conversation]);
+  }, [selectedConversation]);
   return (
     <>
       <div

@@ -20,15 +20,16 @@ function classNames(...classes) {
 }
 
 function Header() {
+  const navigate=useNavigate()
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const location = useLocation(); // Get the current location
+  const location = useLocation(); 
 
   const logout = () => {
     try {
       dispatch(clearUser());
       Cookies.remove("token");
-      window.location.reload();
+      navigate('/login')
     } catch (err) {
       console.log(err);
     }

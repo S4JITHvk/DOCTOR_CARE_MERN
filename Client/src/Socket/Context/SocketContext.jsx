@@ -23,7 +23,6 @@ export const SocketContextProvider = ({ children }) => {
   const [unreadMessages, setUnreadMessages] = useState({});
   useEffect(() => {
     const userId = User?.user?._id || Doctor?.doctor?._id;
-
     if (userId) {
       const newSocket = io("http://localhost:3000", {
         query: { userId },
@@ -86,7 +85,6 @@ export const SocketContextProvider = ({ children }) => {
     },
     [socket]
   );
-
   const markAsRead = useCallback(
     (to, from) => {
       if (socket) {

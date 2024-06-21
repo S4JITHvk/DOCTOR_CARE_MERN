@@ -46,7 +46,6 @@ function MessageContainer({ bookingId }) {
   useEffect(() => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
-
   return (
     <div className="flex-1 flex flex-col">
       {!selectedConversation ? (

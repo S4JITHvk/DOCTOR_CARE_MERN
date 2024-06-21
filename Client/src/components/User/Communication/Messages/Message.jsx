@@ -5,6 +5,7 @@ import { format } from "date-fns";
 function Message({ message }) {
   const authUser = useSelector((state) => state.user.user);
   const { selectedConversation } = useConversation();
+
   const fromMe = message.senderId === authUser?._id;
   const chatClassName = fromMe ? "justify-end" : "justify-start";
   const bubbleColor = fromMe ? "bg-blue-500" : "bg-gray-700";
@@ -12,7 +13,14 @@ function Message({ message }) {
   const formattedTime = format(new Date(message.createdAt), "p");
   const isVoiceMessage = message.messageType === "voice";
   const isImageMessage = message.messageType === "image";
-
+ 
+  const showThisMessage = (
+    message.senderId === selectedConversation._id ||  message.senderId ===authUser._id &&
+    message.receiverId === authUser._id ||   message.receiverId===selectedConversation._id 
+  );
+  if (!showThisMessage) {
+    return null;
+  }
   return (
     <div className={`flex ${chatClassName} mb-4 mt-2`}>
       <div

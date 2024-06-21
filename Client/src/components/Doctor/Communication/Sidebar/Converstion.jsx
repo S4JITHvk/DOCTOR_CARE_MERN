@@ -1,7 +1,7 @@
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 function Conversation({ conversation, lastIdx }) {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { onlineUsers, unreadMessages, markAsRead } = useSocketContext();
@@ -18,11 +18,11 @@ function Conversation({ conversation, lastIdx }) {
   };
 
   useEffect(() => {
-    if (conversation) {
-      markAsRead(doctor._id, conversation._id);
+    if (selectedConversation ) {
+      console.log("calling")
+      markAsRead(doctor._id,selectedConversation._id );
     }
-  }, [conversation]);
-
+  }, [selectedConversation, doctor._id, markAsRead]);
   return (
     <>
       <div

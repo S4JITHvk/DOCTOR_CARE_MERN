@@ -1,11 +1,12 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { clearDoctor } from "../../ReduxStore/features/doctorSlice";
 import profilePlaceholder from '/assets/doctor.jpg';
 
 function Doctorsidebar() {
+  const navigate=useNavigate()
   const doctorData = useSelector((state) => state.doctor);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -14,7 +15,7 @@ function Doctorsidebar() {
     try {
       dispatch(clearDoctor());
       Cookies.remove("doctortoken");
-      window.location.reload();
+      navigate('/')
     } catch (err) {
       console.log(err);
     }
