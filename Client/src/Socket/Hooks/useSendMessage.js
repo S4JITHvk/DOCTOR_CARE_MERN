@@ -13,6 +13,8 @@ const useSendMessage = () => {
   const doctor = useSelector(state => state.doctor);
   
   const sendMessage = async (messageContent) => {
+    console.log(messageContent, "==>");
+    console.log(messageContent instanceof Blob, "==>", messageContent instanceof File);
     setLoading(true);
     try {
       let idToSend = user.user ? user.user._id : doctor.doctor ? doctor.doctor._id : null;
@@ -21,7 +23,10 @@ const useSendMessage = () => {
       const formData = new FormData();
       if (typeof messageContent === 'string') {
         formData.append('message', messageContent);
-      } else {
+      } else if (messageContent instanceof File) {
+        console.log('Sending image:', messageContent);
+        formData.append('image', messageContent);
+      } else if (messageContent instanceof Blob) {
         console.log('Sending voiceMessage:', messageContent);
         formData.append('voiceMessage', messageContent, 'voiceMessage.webm');
       }

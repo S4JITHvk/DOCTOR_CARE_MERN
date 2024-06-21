@@ -18,13 +18,21 @@ const sendMessage = async (req, res) => {
     }
 
     let newMessage;
-    if (req.file) {
-      const path_image = process.env.VOICE_PATH + `voicemessages/${req.file.filename}`;
+    if (req.files.voiceMessage) {
+      const voicePath = process.env.VOICE_PATH + `voicemessages/${req.files.voiceMessage[0].filename}`;
       newMessage = new Message({
         senderId,
         receiverId,
         messageType: 'voice',
-        message: path_image, 
+        message: voicePath,
+      });
+    } else if (req.files.image) {
+      const imagePath = process.env.IMAGE_PATH + `images/${req.files.image[0].filename}`;
+      newMessage = new Message({
+        senderId,
+        receiverId,
+        messageType: 'image',
+        message: imagePath,
       });
     } else {
       newMessage = new Message({
@@ -50,6 +58,7 @@ const sendMessage = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 const getMessages = async (req, res) => {
   try {

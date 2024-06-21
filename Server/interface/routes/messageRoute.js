@@ -6,6 +6,6 @@ const storage = require("../../util/voicemessageConfig");
 const upload = multer({ storage: storage });
 Router.get("/conversations",messageControl.getdatas)
 Router.post("/:id/:senderId",  messageControl.getMessages);
-Router.post("/send/:id/:senderId",upload.single('voiceMessage'), messageControl.sendMessage);
+Router.post("/send/:id/:senderId", upload.fields([{ name: 'voiceMessage', maxCount: 1 }, { name: 'image', maxCount: 1 }]), messageControl.sendMessage);
 
 module.exports = Router;

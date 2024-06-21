@@ -14,13 +14,13 @@ const messageSchema = new mongoose.Schema(
     },
     messageType: {
       type: String,
-      enum: ['text', 'voice'],
+      enum: ['text', 'voice', 'image'],
       required: true,
     },
     message: {
       type: String,
       required: function() {
-        return this.messageType === 'voice';
+        return this.messageType !== 'text';
       },
     },
   },

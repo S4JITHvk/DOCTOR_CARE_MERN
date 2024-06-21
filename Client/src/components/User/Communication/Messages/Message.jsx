@@ -11,6 +11,7 @@ function Message({ message }) {
 
   const formattedTime = format(new Date(message.createdAt), 'p'); 
   const isVoiceMessage = message.messageType === 'voice';
+  const isImageMessage = message.messageType === 'image';
 
   return (
     <div className={`flex ${chatClassName} mb-4 mt-2`}>
@@ -20,6 +21,8 @@ function Message({ message }) {
             <source src={message.message} type="audio/webm" />
             Your browser does not support the audio element.
           </audio>
+        ) : isImageMessage ? (
+          <img src={message.message} alt="Sent image" className="max-w-full h-auto rounded-lg" />
         ) : (
           <p>{message.message}</p>
         )}
@@ -32,4 +35,5 @@ function Message({ message }) {
 }
 
 export default Message;
+
 

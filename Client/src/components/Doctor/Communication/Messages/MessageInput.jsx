@@ -1,4 +1,4 @@
-import { BsSend, BsEmojiSmile, BsMic, BsStop } from "react-icons/bs";
+import { BsSend, BsEmojiSmile, BsMic, BsStop, BsImage } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import EmojiPicker from 'emoji-picker-react';
 import { ReactMic } from 'react-mic';
@@ -10,9 +10,9 @@ function MessageInput() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const { loading, sendMessage } = useSendMessage();
   const { startTyping, stopTyping } = useSocketContext(); 
-
 
   useEffect(() => {
     if (message) {
@@ -28,9 +28,15 @@ function MessageInput() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!message) return;
-    await sendMessage(message);
+    if (!message && !imageFile) return;
+    if (message) {
+      await sendMessage(message);
+    } else if (imageFile) {
+      console.log("here sening image file",imageFile)
+      await sendMessage(imageFile);
+    }
     setMessage("");
+    setImageFile(null);
   };
 
   const startRecording = () => setIsRecording(true);
@@ -45,6 +51,10 @@ function MessageInput() {
     setAudioBlob(null);
   };
 
+  const handleImageUpload = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
   return (
     <form className="px-4 my-3" onSubmit={handleSubmit}>
       <div className="w-full relative bg-white border-t">
@@ -57,11 +67,24 @@ function MessageInput() {
         />
         <button
           type="button"
-          className="absolute inset-y-0 end-20 flex items-center pe-3"
+          className="absolute inset-y-0 end-28 flex items-center pe-3"
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
         >
           <BsEmojiSmile />
         </button>
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          id="image-upload"
+          onChange={handleImageUpload}
+        />
+        <label
+          htmlFor="image-upload"
+          className="absolute inset-y-0 end-20 flex items-center pe-3 cursor-pointer"
+        >
+          <BsImage />
+        </label>
         <button
           type="button"
           className="absolute inset-y-0 end-10 flex items-center pe-3"
@@ -95,6 +118,17 @@ function MessageInput() {
             onClick={sendVoiceMessage}
           >
             Send Voice Message
+          </button>
+        </div>
+      )}
+      {imageFile && (
+        <div className="flex justify-end mt-2">
+          <button
+            type="button"
+            className="text-white bg-green-500 hover:bg-green-700 rounded-lg px-4 py-2"
+            onClick={handleSubmit}
+          >
+            Send Image
           </button>
         </div>
       )}
