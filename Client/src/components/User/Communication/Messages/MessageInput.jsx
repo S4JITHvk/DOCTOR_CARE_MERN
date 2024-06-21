@@ -1,10 +1,10 @@
 import { BsSend, BsEmojiSmile, BsMic, BsStop, BsImage } from "react-icons/bs";
 import { useState, useEffect } from "react";
-import EmojiPicker from 'emoji-picker-react';
-import { ReactMic } from 'react-mic';
+import EmojiPicker from "emoji-picker-react";
+import { ReactMic } from "react-mic";
 import useSendMessage from "../../../../Socket/Hooks/useSendMessage";
-import { useSocketContext } from "../../../../Socket/Context/SocketContext"; 
-
+import { useSocketContext } from "../../../../Socket/Context/SocketContext";
+import { useConversation } from "../../../../Socket/zustand/useConversation";
 function MessageInput() {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -12,7 +12,7 @@ function MessageInput() {
   const [audioBlob, setAudioBlob] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const { loading, sendMessage } = useSendMessage();
-  const { startTyping, stopTyping } = useSocketContext(); 
+  const { startTyping, stopTyping } = useSocketContext();
 
   useEffect(() => {
     if (message) {
@@ -32,7 +32,6 @@ function MessageInput() {
     if (message) {
       await sendMessage(message);
     } else if (imageFile) {
-      console.log("here sening image file",imageFile)
       await sendMessage(imageFile);
     }
     setMessage("");
@@ -96,7 +95,11 @@ function MessageInput() {
           type="submit"
           className="absolute inset-y-0 end-0 flex items-center pe-3"
         >
-          {loading ? (<div className="loading loading-spinner"></div>) : <BsSend />}
+          {loading ? (
+            <div className="loading loading-spinner"></div>
+          ) : (
+            <BsSend />
+          )}
         </button>
         {showEmojiPicker && (
           <div className="absolute bottom-10 right-0 z-50">

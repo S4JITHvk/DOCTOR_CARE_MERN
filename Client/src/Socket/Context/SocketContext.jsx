@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect, useContext ,useCallback} from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import io from "socket.io-client";
 import { useSelector } from "react-redux";
 
@@ -13,8 +19,8 @@ export const SocketContextProvider = ({ children }) => {
   const Doctor = useSelector((state) => state.doctor);
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [typingUsers, setTypingUsers] = useState([]); 
-  
+  const [typingUsers, setTypingUsers] = useState([]);
+  const [unreadMessages, setUnreadMessages] = useState({});
   useEffect(() => {
     const userId = User?.user?._id || Doctor?.doctor?._id;
 
@@ -43,6 +49,12 @@ export const SocketContextProvider = ({ children }) => {
           return prevTypingUsers.filter((u) => u._id !== user._id);
         });
       });
+      newSocket.on("newunreadMessage", ({ from, unreadCount }) => {
+        setUnreadMessages((prevUnreadMessages) => ({
+          ...prevUnreadMessages,
+          [from]: unreadCount,
+        }));
+      });
 
       return () => {
         newSocket.close();
@@ -66,8 +78,42 @@ export const SocketContextProvider = ({ children }) => {
     }
   }, [socket]);
 
+  const sendnewMessage = useCallback(
+    (to, from) => {
+      if (socket) {
+        socket.emit("sendnewMessage", { to, from });
+      }
+    },
+    [socket]
+  );
+
+  const markAsRead = useCallback(
+    (to, from) => {
+      if (socket) {
+        socket.emit("markAsRead", { from, to });
+        setUnreadMessages((prevUnreadMessages) => {
+          const newUnreadMessages = { ...prevUnreadMessages };
+          delete newUnreadMessages[from];
+          return newUnreadMessages;
+        });
+      }
+    },
+    [socket]
+  );
+
   return (
-    <SocketContext.Provider value={{ socket, onlineUsers, typingUsers, startTyping, stopTyping }}>
+    <SocketContext.Provider
+      value={{
+        socket,
+        onlineUsers,
+        typingUsers,
+        unreadMessages,
+        startTyping,
+        stopTyping,
+        sendnewMessage,
+        markAsRead,
+      }}
+    >
       {children}
     </SocketContext.Provider>
   );

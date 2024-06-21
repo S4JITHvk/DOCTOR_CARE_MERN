@@ -7,27 +7,23 @@ import Api from "../../API/DoctorCareApi";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
-  const { socket } = useSocketContext();
+  const {sendnewMessage } = useSocketContext();
   const { messages, setMessages, selectedConversation } = useConversation();
   const user = useSelector(state => state.user);
   const doctor = useSelector(state => state.doctor);
   
   const sendMessage = async (messageContent) => {
-    console.log(messageContent, "==>");
-    console.log(messageContent instanceof Blob, "==>", messageContent instanceof File);
     setLoading(true);
     try {
       let idToSend = user.user ? user.user._id : doctor.doctor ? doctor.doctor._id : null;
       if (!idToSend) throw new Error("User ID not found");
-
+      sendnewMessage(selectedConversation?._id,idToSend)
       const formData = new FormData();
       if (typeof messageContent === 'string') {
         formData.append('message', messageContent);
       } else if (messageContent instanceof File) {
-        console.log('Sending image:', messageContent);
         formData.append('image', messageContent);
       } else if (messageContent instanceof Blob) {
-        console.log('Sending voiceMessage:', messageContent);
         formData.append('voiceMessage', messageContent, 'voiceMessage.webm');
       }
 

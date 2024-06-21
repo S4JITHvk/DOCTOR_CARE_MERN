@@ -1,31 +1,56 @@
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
-
-function Conversation({ conversation, lastIdx}) {
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+function Conversation({ conversation, lastIdx }) {
   const { selectedConversation, setSelectedConversation } = useConversation();
+  const { onlineUsers, unreadMessages, markAsRead } = useSocketContext();
+  const doctor = useSelector((state) => state.doctor.doctor);
 
   const isSelected = selectedConversation?._id === conversation._id;
-  const { onlineUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(conversation._id);
+
+  const unreadCount = unreadMessages[conversation._id] || 0;
+  const hasUnreadMessages = unreadCount > 0;
+  const handleSelectUser = () => {
+    setSelectedConversation(conversation);
+    markAsRead(doctor._id, conversation._id);
+  };
+
+  useEffect(() => {
+    if (conversation) {
+      markAsRead(doctor._id, conversation._id);
+    }
+  }, [conversation]);
+
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-sky-500  p-2 py-2 cursor-pointer ${
+        className={`flex gap-2 items-center hover:bg-sky-500 p-2 py-2 cursor-pointer ${
           isSelected ? "bg-gray-500" : ""
         }`}
-        onClick={() => setSelectedConversation(conversation)}
+        onClick={handleSelectUser}
       >
-        <div className={`avatar ${ isOnline ? "online" : ""}`}>
-          
-        <div className={`w-12 rounded-full ${isOnline ? "border-green-500" : ""}`}>
-  <img src={conversation?.profile || "/assets/user.png"} alt="user avatar" />
-</div>
-
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
+          <div
+            className={`w-12 rounded-full ${
+              isOnline ? "border-green-500" : ""
+            }`}
+          >
+            <img
+              src={conversation?.profile || "/assets/user.png"}
+              alt="user avatar"
+            />
+          </div>
         </div>
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-semibold">{conversation?.name}</p>
-            <span className="text-xl">{}</span>
+            {hasUnreadMessages && (
+              <span className="text-green-500 font-bold text-sm">
+                Messages {unreadCount}
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -35,5 +60,3 @@ function Conversation({ conversation, lastIdx}) {
 }
 
 export default Conversation;
-
-

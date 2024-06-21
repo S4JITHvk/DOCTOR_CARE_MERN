@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import EmojiPicker from 'emoji-picker-react';
 import { ReactMic } from 'react-mic';
 import useSendMessage from "../../../../Socket/Hooks/useSendMessage";
-import { useSocketContext } from "../../../../Socket/Context/SocketContext"; 
-
+import { useSocketContext } from "../../../../Socket/Context/SocketContext";
+import { useConversation } from "../../../../Socket/zustand/useConversation";
 function MessageInput() {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -12,7 +12,7 @@ function MessageInput() {
   const [audioBlob, setAudioBlob] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const { loading, sendMessage } = useSendMessage();
-  const { startTyping, stopTyping } = useSocketContext(); 
+  const { startTyping, stopTyping } = useSocketContext();
 
   useEffect(() => {
     if (message) {
@@ -32,7 +32,6 @@ function MessageInput() {
     if (message) {
       await sendMessage(message);
     } else if (imageFile) {
-      console.log("here sening image file",imageFile)
       await sendMessage(imageFile);
     }
     setMessage("");
