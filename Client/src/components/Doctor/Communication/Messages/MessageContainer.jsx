@@ -73,7 +73,7 @@ function MessageContainer({ bookingId }) {
               
               </div>
             </div>
-            {bookingId && (
+            {bookingId._id && (
               <div className="flex items-center gap-2">
                 <div>
                   <p className="text-sm text-gray-300">Consulting over?</p>
@@ -86,6 +86,7 @@ function MessageContainer({ bookingId }) {
                 </div>
                 <Link
                   to={"/doctor/Video_chat"}
+                  state={bookingId.userId._id}
                   className="px-4 py-2 bg-blue-500 mt-5 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out transform hover:scale-105 flex items-center gap-1"
                 >
                   <FaVideo className="text-white" />

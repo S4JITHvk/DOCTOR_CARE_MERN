@@ -37,7 +37,7 @@ const DoctorList=async()=>{
 }
 const Booking_list = async (match, skip, limit) => {
   try {
-    const filteredMatch = { ...match, 'payment.status': { $ne: 'Paid' } };
+    const filteredMatch = { ...match };
     
     const bookings = await Booking.aggregate([
       { $match: filteredMatch },

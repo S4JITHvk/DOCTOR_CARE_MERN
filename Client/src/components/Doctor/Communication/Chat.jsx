@@ -17,7 +17,7 @@ function Chat() {
   return (
     <div className="flex h-[88vh] bg-gray-200">
       <Sidebar />
-      <MessageContainer bookingId={location.state?.data?._id} />
+      <MessageContainer bookingId={location.state?.data} />
     </div>
   );
 }

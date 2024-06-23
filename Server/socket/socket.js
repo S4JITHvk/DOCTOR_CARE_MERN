@@ -71,23 +71,17 @@ io.on("connection", (socket) => {
   });
 
   // video call
-  socket.emit("me", socket.id);
+ 
 
-  socket.on("disconnect", () => {
-    socket.broadcast.emit("callEnded");
+  socket.on("callingUser", ({ userId, personalLink }) => {
+    console.log({ userId, personalLink }, "==>");
+    const receiverSocketId = getReceiverSocketId(userId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("incomingCall", { personalLink });
+    }
   });
 
-  socket.on("callUser", (data) => {
-    io.to(data.userToCall).emit("callUser", {
-      signal: data.signalData,
-      from: data.from,
-      name: data.name,
-    });
-  });
-
-  socket.on("answerCall", (data) => {
-    io.to(data.to).emit("callAccepted", data.signal);
-  });
+ 
 });
 
 module.exports = { app, io, server, getReceiverSocketId };

@@ -37,7 +37,7 @@ function Login() {
       if (response.status === 200) {
         const { token } = response.data;
         document.cookie = `token=${token}`;
-        navigate("/home")
+        window.location.reload();
       }
     } catch (error) {
       const { status, data } = error.response;

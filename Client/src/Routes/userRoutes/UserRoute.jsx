@@ -19,6 +19,7 @@ const Myappointments=lazy(()=>import("../../components/User/YourAppointments/App
 const Video=lazy(()=>import("../../components/User/Communication/VideoCall/Videomodal"))
 const Chat=lazy(()=>import("../../components/User/Communication/Chat"))
 import Authenticate from "../../components/Auth/Authenticate";
+import RedirectToCall from "../../components/User/Communication/VideoCall/Videomodal";
 import Protect from "../../components/Auth/Protect";
 import Loader from "../../components/Loader/Loader";
 function UserRoute() { 
@@ -46,6 +47,7 @@ function UserRoute() {
       <Route path="/payment-cancel" element={<><Header /><Paymentfailure/><Footer/></>}/>
       <Route path="/Communicate" element={<><Header /><Chat/></>}/>
       <Route path="/Video_chat" element={<><Header /><Video/></>}/>
+      <Route path="/redirectToCall" element={<RedirectToCall />} />
     </Route>
   </Routes>
 </Suspense>

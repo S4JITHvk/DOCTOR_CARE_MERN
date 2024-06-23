@@ -16,7 +16,7 @@ const Newpass=lazy(()=>import("../../components/Doctor/Docchangepass"))
 const Bookingcomp=lazy(()=>import("../../components/Doctor/YourBookings/DocBookings"))
 const Yourslot=lazy(()=>import("../../components/Doctor/Slot_manage/slotManage"))
 const Chat=lazy(()=>import("../../components/Doctor/Communication/Chat"))
-const Video=lazy(()=>import("../../components/Doctor/Communication/VideoCall/Videomodal"))
+const Video=lazy(()=>import("../../components/Videocall/videocomp"))
 function Doctorroute() {
   const Doctor=useSelector((state)=>state.doctor)
   const dispatch = useDispatch();
