@@ -73,11 +73,11 @@ io.on("connection", (socket) => {
   // video call
  
 
-  socket.on("callingUser", ({ userId, personalLink }) => {
+  socket.on("callingUser", ({Caller, userId, personalLink }) => {
     console.log({ userId, personalLink }, "==>");
     const receiverSocketId = getReceiverSocketId(userId);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("incomingCall", { personalLink });
+      io.to(receiverSocketId).emit("incomingCall", { Caller,personalLink });
     }
   });
 

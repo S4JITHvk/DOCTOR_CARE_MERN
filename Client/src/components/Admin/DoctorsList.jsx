@@ -127,7 +127,7 @@ function DoctorsList() {
             <th scope="col" className="px-4 py-2">Expertise</th>
             <th scope="col" className="px-4 py-2">Gender</th>
             <th scope="col" className="px-4 py-2">Ban/Unban</th>
-            <th scope="col" className="px-4 py-2">Delete</th>
+            {/* <th scope="col" className="px-4 py-2">Delete</th> */}
           </tr>
         </thead>
         <tbody>
@@ -149,7 +149,7 @@ function DoctorsList() {
                   {item.is_banned ? 'Unblock' : 'Block'}
                 </button>
               </td>
-              <td className="px-4 py-2">
+              {/* <td className="px-4 py-2">
                 <button
                   className={`py-1 px-3 rounded bg-blue-500 text-white`}
                   onClick={() => handleDelete(item._id)}
@@ -157,7 +157,7 @@ function DoctorsList() {
                 >
                   Delete
                 </button>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>

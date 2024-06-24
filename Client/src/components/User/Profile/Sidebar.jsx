@@ -46,27 +46,27 @@ function Sidebar() {
           <ul>
             <li className="mb-3">
               <Link to="/profile" className={getLinkClass("/profile")}>
-                Profile
+                PROFILE
               </Link>
             </li>
             <li className="mb-3">
               <Link to="/favorite-doctors" className={getLinkClass("/favorite-doctors")}>
-                Favorite Doctors
+                FAVORITE DOCTORS
               </Link>
             </li>
             <li className="mb-3">
               <Link to="/Yourappointments" className={getLinkClass("/Yourappointments")}>
-                Appointments
+                APPOINTMENTS
               </Link>
             </li>
-            <li className="mb-3">
+            {/* <li className="mb-3">
               <Link to="/notifications" className={getLinkClass("/notifications")}>
                 Notifications
               </Link>
-            </li>
+            </li> */}
             <li className="mb-3">
               <Link to="/Newpassword" className={getLinkClass("/Newpassword")}>
-                Change Password
+                CHANGE PASSWORD
               </Link>
             </li>
             <li className="mb-3">
@@ -74,7 +74,7 @@ function Sidebar() {
                 onClick={logout}
                 className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
               >
-                Logout
+                LOGOUT
               </button>
             </li>
           </ul>

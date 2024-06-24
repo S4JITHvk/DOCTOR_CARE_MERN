@@ -126,7 +126,7 @@ function UsersList() {
             <th scope="col" className="px-4 py-2">Status</th>
             <th scope="col" className="px-4 py-2">Role</th>
             <th scope="col" className="px-4 py-2">Ban/Unban</th>
-            <th scope="col" className="px-4 py-2">Delete</th>
+            {/* <th scope="col" className="px-4 py-2">Delete</th> */}
           </tr>
         </thead>
         <tbody>
@@ -147,7 +147,7 @@ function UsersList() {
                   {user.is_banned ? 'Unblock' : 'Block'}
                 </button>
               </td>
-              <td className="px-4 py-2">
+              {/* <td className="px-4 py-2">
                 <button
                   className={`py-1 px-3 rounded bg-blue-500 text-white`}
                   onClick={() => handleDelete(user._id)}
@@ -155,7 +155,7 @@ function UsersList() {
                 >
                   Delete
                 </button>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>

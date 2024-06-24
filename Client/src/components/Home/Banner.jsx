@@ -37,7 +37,7 @@ export default function Example() {
         <div className="mx-auto max-w-2xl lg:text-center">
           <h1 className="text-base font-semibold leading-7 text-indigo-600">MIND CARE</h1>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Make your mind being fresh..
+            MAKE YOUR MIND BEING FRESH..
           </p>
           <p className="mt-6 text-lg leading-8 font-bold text-gray-600">
           Whether you suffer from daily depression or get bouts of depressed feelings, it's important to remember you're not alone in your mental health ,"Mind Care" is here to feel your pain and care for you.

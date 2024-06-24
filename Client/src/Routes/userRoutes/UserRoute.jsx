@@ -47,7 +47,7 @@ function UserRoute() {
       <Route path="/payment-cancel" element={<><Header /><Paymentfailure/><Footer/></>}/>
       <Route path="/Communicate" element={<><Header /><Chat/></>}/>
       <Route path="/Video_chat" element={<><Header /><Video/></>}/>
-      <Route path="/redirectToCall" element={<RedirectToCall />} />
+      <Route path="/redirectToCall" element={<><Header /><RedirectToCall /><Footer/></>} />
     </Route>
   </Routes>
 </Suspense>

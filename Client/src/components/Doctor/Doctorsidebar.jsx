@@ -36,9 +36,9 @@ function Doctorsidebar() {
             src={doctorData.doctor?.profile || profilePlaceholder}
             alt="Profile"
           />
-          {/* <button className="h-6 w-32 rounded bg-blue-500 text-white font-semibold mt-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300 ease-in-out">
+          <button className="h-6 w-32 rounded bg-blue-500 text-white font-semibold mt-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300 ease-in-out">
             <Link to="/doctor/Profile">VIEW PROFILE</Link>
-          </button> */}
+          </button>
           <h1 className="text-xl font-bold text-center mt-2 sm:mt-4">Dr. {doctorData.doctor.name}</h1>
           <p className="text-gray-700 text-center">{doctorData.doctor.expertise}</p>
         </div>
@@ -66,13 +66,13 @@ function Doctorsidebar() {
                 </Link>
               </div>
             </li>
-            <li className="mb-2">
+            {/* <li className="mb-2">
               <div className={getLinkClass("/doctor/notifications")}>
                 <Link to="/doctor/notifications" className="block">
                   NOTIFICATIONS
                 </Link>
               </div>
-            </li>
+            </li> */}
             <li className="mb-2">
               <div className={getLinkClass("/doctor/Newpassword")}>
                 <Link to="/doctor/Newpassword" className="block">

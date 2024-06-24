@@ -42,13 +42,6 @@ function MessageContainer() {
               
               </div>
             </div>
-            <Link
-                   to={"/Video_chat"}
-                  className="px-4 py-2 bg-blue-500 mt-5 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out transform hover:scale-105 flex items-center gap-1"
-                >
-                  <FaVideo className="text-white" />
-                  Video Call
-                </Link>
           </div>
          
           <Messages />

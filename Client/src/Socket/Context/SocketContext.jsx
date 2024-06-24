@@ -2,8 +2,9 @@ import { createContext, useState, useEffect, useContext, useCallback } from "rea
 import io from "socket.io-client";
 import { useSelector } from "react-redux";
 import toast from 'react-hot-toast';
-import { useNavigate} from "react-router-dom";
-
+import { useNavigate,Link} from "react-router-dom";
+import { BsFillPhoneLandscapeFill } from 'react-icons/bs';
+import { BiPhoneCall } from 'react-icons/bi';
 const SocketContext = createContext();
 
 export const useSocketContext = () => {
@@ -52,14 +53,17 @@ export const SocketContextProvider = ({ children }) => {
         }));
       });
 
-      newSocket.on("incomingCall", ({ personalLink }) => {
+      newSocket.on("incomingCall", ({ Caller, personalLink }) => {
         toast((t) => (
           <div className="p-4 bg-white rounded-lg shadow-md">
-            <p className="mb-2 text-lg font-semibold text-gray-800">Incoming Call</p>
+            <BiPhoneCall className='h-8 w-8 text-green-500' />
+            <p className="mb-2 text-lg font-semibold text-gray-800">Incoming Call from {Caller}</p>
             <div className="flex justify-between">
               <button
                 className="px-4 py-2 mr-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700"
-                
+                // onClick={() => {
+                //   toast.dismiss(t.id);
+                // }}
               >
                 <a href={personalLink}>join now</a>
               </button>
@@ -73,7 +77,7 @@ export const SocketContextProvider = ({ children }) => {
               </button>
             </div>
           </div>
-        ));
+        ), { duration: 10000 }); 
       });
       
       return () => {

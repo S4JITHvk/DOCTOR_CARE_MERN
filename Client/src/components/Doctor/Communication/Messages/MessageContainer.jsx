@@ -73,7 +73,7 @@ function MessageContainer({ bookingId }) {
               
               </div>
             </div>
-            {bookingId._id && (
+            {bookingId?.userId?._id===selectedConversation?._id && (
               <div className="flex items-center gap-2">
                 <div>
                   <p className="text-sm text-gray-300">Consulting over?</p>

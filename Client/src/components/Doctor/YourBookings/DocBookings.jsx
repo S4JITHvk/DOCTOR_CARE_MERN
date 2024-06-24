@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Api from "../../../API/DoctorCareApi";
-import toast from 'react-hot-toast';
-import Swal from 'sweetalert2';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useSelector } from 'react-redux';
-import {Link } from "react-router-dom"
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const DEFAULT_SHIFTS = {
-    '9am-10am': 9,
-    '11am-12pm':11,
-    '2pm-3pm': 14, 
-    '5pm-6pm': 17, 
-    '8pm-9pm': 20, 
-  };
-  
+  "9am-10am": 9,
+  "11am-12pm": 11,
+  "2pm-3pm": 14,
+  "5pm-6pm": 17,
+  "8pm-9pm": 20,
+};
+
 function DocBookings() {
   const [appointments, setAppointments] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -26,9 +26,11 @@ function DocBookings() {
   const fetchAppointments = async (date) => {
     try {
       const doctorId = doctorData.doctor._id;
-      const response = await Api.get(`/doctor/appointments/${date.toISOString().split('T')[0]}/${doctorId}`);
+      const response = await Api.get(
+        `/doctor/appointments/${date.toISOString().split("T")[0]}/${doctorId}`
+      );
       if (response.status === 200) {
-        if(response.data.appointments.length===0){
+        if (response.data.appointments.length === 0) {
           toast.error("No appointments found");
           setAppointments([]);
         }
@@ -52,7 +54,7 @@ function DocBookings() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, cancel it!"
+        confirmButtonText: "Yes, cancel it!",
       });
 
       if (result.isConfirmed) {
@@ -65,8 +67,8 @@ function DocBookings() {
         }
       }
     } catch (error) {
-      console.error('Error cancelling appointment:', error);
-      toast.error('Error cancelling appointment');
+      console.error("Error cancelling appointment:", error);
+      toast.error("Error cancelling appointment");
     }
   };
 
@@ -95,9 +97,9 @@ function DocBookings() {
     shiftTime.setHours(shiftHour, 0, 0, 0);
 
     if (appointmentDate.toDateString() === currentTime.toDateString()) {
-      return shiftTime - currentTime > 60 * 60 * 1000; 
+      return shiftTime - currentTime > 60 * 60 * 1000;
     }
-    return true; 
+    return true;
   };
 
   return (
@@ -105,7 +107,7 @@ function DocBookings() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Appointments</h1>
         <div className="flex items-center space-x-2">
-          <p className='font-bold'>Filter by date - </p>
+          <p className="font-bold">Filter by date - </p>
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
@@ -131,48 +133,65 @@ function DocBookings() {
             {appointments.length > 0 ? (
               appointments.map((appointment) => (
                 <tr key={appointment._id}>
-                  <td className="py-2 px-6 border-b">{appointment.userId.name}</td>
-                  <td className="py-2 px-6 border-b">{appointment.userId.email}</td>
-                  <td className="py-2 px-6 border-b">{new Date(appointment.date).toLocaleDateString()}</td>
+                  <td className="py-2 px-6 border-b">
+                    {appointment.userId.name}
+                  </td>
+                  <td className="py-2 px-6 border-b">
+                    {appointment.userId.email}
+                  </td>
+                  <td className="py-2 px-6 border-b">
+                    {new Date(appointment.date).toLocaleDateString()}
+                  </td>
                   <td className="py-2 px-6 border-b">{appointment.status}</td>
                   <td className="py-2 px-6 border-b">{appointment.shift}</td>
                   <td className="py-2 px-6 border-b">
-                  {
-  appointment.status === 'Cancelled' ? (
-    <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded cursor-not-allowed" disabled>
-      Cancelled
-    </button>
-  ) : appointment.status === 'Completed' ? (
-    <button className="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed" disabled>
-      Completed
-    </button>
-  ) : (
-    <>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-      >
-        <Link  to="/doctor/Communicate" 
-          state={{data: appointment }} 
-          >Intake</Link>
-        
-      </button>
-      <button
-        onClick={() => handleCancel(appointment._id)}
-        className={`px-4 py-2 rounded ${canCancel(appointment.date, appointment.shift) ? 'bg-red-500 text-white' : 'bg-gray-300 text-gray-700 cursor-not-allowed'}`}
-        disabled={!canCancel(appointment.date, appointment.shift)}
-      >
-        Cancel
-      </button>
-    </>
-  )
-}
-
+                    {appointment.status === "Cancelled" ? (
+                      <button
+                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded cursor-not-allowed"
+                        disabled
+                      >
+                        Cancelled
+                      </button>
+                    ) : appointment.status === "Completed" ? (
+                      <button
+                        className="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed"
+                        disabled
+                      >
+                        Completed
+                      </button>
+                    ) : (
+                      <>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2 w-[100px]">
+                          <Link
+                            to="/doctor/Communicate"
+                            state={{ data: appointment }}
+                          >
+                            Intake
+                          </Link>
+                        </button>
+                        <button
+                          onClick={() => handleCancel(appointment._id)}
+                          className={`px-4 py-2 rounded w-[100px] ${
+                            canCancel(appointment.date, appointment.shift)
+                              ? "bg-red-500 text-white"
+                              : "bg-gray-300 text-gray-700 cursor-not-allowed"
+                          }`}
+                          disabled={
+                            !canCancel(appointment.date, appointment.shift)
+                          }
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="text-center py-4">No appointments found</td>
+                <td colSpan="6" className="text-center py-4">
+                  No appointments found
+                </td>
               </tr>
             )}
           </tbody>
