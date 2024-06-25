@@ -20,6 +20,7 @@ const userSocketMap = {};
 const unreadMessages = {};
 io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
+  console.log(userId,"userConnected")
   if (userId != "undefined") userSocketMap[userId] = socket.id;
 
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
@@ -74,14 +75,20 @@ io.on("connection", (socket) => {
  
 
   socket.on("callingUser", ({Caller, userId, personalLink }) => {
-    console.log({ userId, personalLink }, "==>");
     const receiverSocketId = getReceiverSocketId(userId);
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("incomingCall", { Caller,personalLink });
     }
   });
 
- 
+  socket.on("onRejected", ({ Caller }) => {
+    console.log(Caller,"call REJECTED")
+    const receiverSocketId = getReceiverSocketId(Caller._id);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("callRejected");
+    }
+  });
+  
 });
 
 module.exports = { app, io, server, getReceiverSocketId };

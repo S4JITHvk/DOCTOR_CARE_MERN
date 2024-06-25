@@ -31,9 +31,9 @@ export default function App() {
   const { socket } = useSocketContext();
   const [calling,setCalling]=useState(0)
   const location = useLocation();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate(); 
   const userId = location.state;
-  const Caller = Doctor?.name;
+  const Caller = Doctor
   const roomID = getUrlParams().get('roomID') || randomID(5);
 
   React.useEffect(() => {
@@ -65,8 +65,6 @@ export default function App() {
     };
 
     const personalLink = `${window.location.protocol}//${window.location.host}/redirectToCall?roomID=${roomID}`;
-
-    // Emit socket event with userId and personal link
 	if(calling ===0){
 		socket.emit('callingUser', {Caller, userId, personalLink });
 		setCalling(1)

@@ -14,7 +14,6 @@ function Message({ message }) {
     message.senderId === selectedConversation._id ||  message.senderId ===authUser._id &&
     message.receiverId === authUser._id ||   message.receiverId===selectedConversation._id 
   );
-  console.log(showThisMessage,"==>")
   if (!showThisMessage) {
     return null;
   }

@@ -2,9 +2,9 @@ import { createContext, useState, useEffect, useContext, useCallback } from "rea
 import io from "socket.io-client";
 import { useSelector } from "react-redux";
 import toast from 'react-hot-toast';
-import { useNavigate,Link} from "react-router-dom";
-import { BsFillPhoneLandscapeFill } from 'react-icons/bs';
+import { useNavigate} from "react-router-dom";
 import { BiPhoneCall } from 'react-icons/bi';
+import Callreject from "../../components/User/Communication/VideoCall/Callreject";
 const SocketContext = createContext();
 
 export const useSocketContext = () => {
@@ -19,18 +19,18 @@ export const SocketContextProvider = ({ children }) => {
   const [typingUsers, setTypingUsers] = useState([]);
   const [unreadMessages, setUnreadMessages] = useState({});
   const navigate = useNavigate();
+  const userId = User?.user?._id || Doctor?.doctor?._id;
 
+  console.log(socket,"socketcontext2323")
   useEffect(() => {
-    const userId = User?.user?._id || Doctor?.doctor?._id;
     if (userId) {
       const newSocket = io("http://localhost:3000", { query: { userId } });
-
       setSocket(newSocket);
 
       newSocket.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
       });
-
+      
       newSocket.on("typing", (user) => {
         setTypingUsers((prevTypingUsers) => {
           if (!prevTypingUsers.some((u) => u._id === user._id)) {
@@ -53,33 +53,26 @@ export const SocketContextProvider = ({ children }) => {
         }));
       });
 
+      newSocket.on("callRejected", () => {
+        toast.error("CAll REJECTED")
+      });
+
       newSocket.on("incomingCall", ({ Caller, personalLink }) => {
         toast((t) => (
           <div className="p-4 bg-white rounded-lg shadow-md">
             <BiPhoneCall className='h-8 w-8 text-green-500' />
-            <p className="mb-2 text-lg font-semibold text-gray-800">Incoming Call from {Caller}</p>
+            <p className="mb-2 text-lg font-semibold text-gray-800">Incoming Call from {Caller.name}</p>
             <div className="flex justify-between">
               <button
                 className="px-4 py-2 mr-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700"
-                // onClick={() => {
-                //   toast.dismiss(t.id);
-                // }}
               >
                 <a href={personalLink}>join now</a>
               </button>
-              <button
-                className="px-4 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-700"
-                onClick={() => {
-                  toast.dismiss(t.id);
-                }}
-              >
-                Reject
-              </button>
+              <Callreject t={t.id} Caller={Caller}/>
             </div>
           </div>
         ), { duration: 10000 }); 
       });
-      
       return () => {
         newSocket.close();
         setSocket(null);
@@ -88,7 +81,7 @@ export const SocketContextProvider = ({ children }) => {
       socket.close();
       setSocket(null);
     }
-  }, [User, Doctor, history]);
+  }, [userId]);
 
   const startTyping = useCallback(() => {
     if (socket) {
@@ -131,6 +124,13 @@ export const SocketContextProvider = ({ children }) => {
     }
   }, [socket]);
 
+  const onCallRejected = useCallback((Caller) => {
+    console.log(socket,"sockethere")
+    if (socket) {
+      socket.emit("onRejected", {Caller});
+    }
+  }, [socket]);
+ 
   return (
     <SocketContext.Provider
       value={{
@@ -143,6 +143,7 @@ export const SocketContextProvider = ({ children }) => {
         sendnewMessage,
         markAsRead,
         Videocall,
+        onCallRejected
       }}
     >
       {children}
