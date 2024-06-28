@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Api from "../../../API/DoctorCareApi";
 import { loadStripe } from '@stripe/stripe-js';
 import { addAppointment, removeAppointment } from "../../../ReduxStore/features/appointmentSlice";
 import {payment_checkoutsession} from "../../../Services/User/userService"

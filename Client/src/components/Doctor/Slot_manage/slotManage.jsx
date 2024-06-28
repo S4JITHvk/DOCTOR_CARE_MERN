@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import DatePicker from "react-datepicker"; 
 import "react-datepicker/dist/react-datepicker.css";
-import Api from '../../../API/DoctorCareApi';
 import { useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-
+import{slotUpdate,fetchappointment} from "../../../Services/Doctor/doctorService"
 function SlotManage() {
   const getDate = new Date();
   getDate.setDate(getDate.getDate() + 1);
@@ -46,8 +44,7 @@ function SlotManage() {
       slots: selectedSlots,
       doctorId: doctorData.doctor._id,
     };
-    try {
-      const response = await Api.post('/doctor/slotupdate', data);
+      const response = await slotUpdate(data)
       if (response.status === 200) {
         alert('Slots locked successfully');
         setDoctorUpdatedSlots((prev) => [...prev, ...selectedSlots]);
@@ -55,16 +52,11 @@ function SlotManage() {
       } else {
         alert('Failed to book slots');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to book slots');
-    }
   };
 
   const fetchAppointments = async () => {
     const doctorId = doctorData.doctor._id;
-    try {
-      const response = await Api.get(`/doctor/appointments/${selectedDate}/${doctorId}`);
+      const response = await fetchappointment(selectedDate,doctorId);
       if (response.status === 200) {
         setBookedSlots(response.data.appointments.map(appointment => appointment.shift));
         const updatedSlots = response.data.Slots[0]?.shifts || []; 
@@ -72,9 +64,6 @@ function SlotManage() {
       } else {
         console.error('Failed to fetch appointments');
       }
-    } catch (error) {
-      console.error('Error fetching appointments:', error);
-    }
   };
 
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Api from "../../API/DoctorCareApi";
 import toast from "react-hot-toast";
 import { FiUpload, FiTrash } from "react-icons/fi";
 import fetchDoctor from "../../Services/Doctorfetch";
 import Swal from 'sweetalert2';
+import {docedit_profile,doc_profilepic} from "../../Services/Doctor/doctorService"
 import Compressor from 'compressorjs';
 function DoctorProfile() {
   const [selectedImage, setSelectedImage] = useState('');
@@ -93,12 +93,7 @@ function DoctorProfile() {
     if (imageFile) {
       formData.append('profilePic', imageFile);
     }
-    try {
-      const response = await Api.post('/doctor/editprofile', formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await docedit_profile(formData) 
       if (response.status === 200) {
         toast.success("Profile updated successfully");
         fetchDoctor(dispatch);
@@ -106,12 +101,9 @@ function DoctorProfile() {
       } else {
         toast.error("Failed to update profile");
       }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+   
   };
   const handleDeleteImage = async () => {
-    try {
       const result = await Swal.fire({
         title: "Are you sure?",
         text: "Remove Profile image.",
@@ -123,7 +115,7 @@ function DoctorProfile() {
       });
 
       if (result.isConfirmed) {
-        const response = await Api.post('/doctor/deleteprofilepic');
+        const response = await doc_profilepic()
         if (response.status === 200) {
           fetchDoctor(dispatch);
           setSelectedImage(null);
@@ -138,10 +130,8 @@ function DoctorProfile() {
           toast.error("Failed to update profile");
         }
       }
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
+    } 
+  
 
 
   return (

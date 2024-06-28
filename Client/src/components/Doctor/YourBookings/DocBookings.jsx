@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Api from "../../../API/DoctorCareApi";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchappointment,cancelappointment } from "../../../Services/Doctor/doctorService";
 const DEFAULT_SHIFTS = {
   "9am-10am": 9,
   "11am-12pm": 11,
@@ -24,11 +24,9 @@ function DocBookings() {
   }, [selectedDate]);
 
   const fetchAppointments = async (date) => {
-    try {
       const doctorId = doctorData.doctor._id;
-      const response = await Api.get(
-        `/doctor/appointments/${date.toISOString().split("T")[0]}/${doctorId}`
-      );
+      const dateto=date.toISOString().split("T")[0]
+      const response = await fetchappointment(dateto,doctorId)      
       if (response.status === 200) {
         if (response.data.appointments.length === 0) {
           toast.error("No appointments found");
@@ -39,14 +37,10 @@ function DocBookings() {
         toast.error(response.data.message);
         setAppointments([]);
       }
-    } catch (error) {
-      toast.error(error.response.data.message);
-      setAppointments([]);
-    }
-  };
+    } 
+  
 
   const handleCancel = async (id) => {
-    try {
       const result = await Swal.fire({
         title: "Are you sure?",
         text: "Cancel this appointment.",
@@ -58,7 +52,7 @@ function DocBookings() {
       });
 
       if (result.isConfirmed) {
-        const response = await Api.post(`/doctor/appointments/${id}/cancel`);
+        const response = await cancelappointment(id) 
         if (response.status === 200) {
           toast.success("Appointment canceled successfully");
           fetchAppointments(selectedDate);
@@ -66,26 +60,8 @@ function DocBookings() {
           toast.error("Failed to cancel appointment");
         }
       }
-    } catch (error) {
-      console.error("Error cancelling appointment:", error);
-      toast.error("Error cancelling appointment");
-    }
-  };
-
-  // const handleIntake = async (id) => {
-  //   try {
-  //     const response = await Api.post(`/appointments/${id}/intake`);
-  //     if (response.status === 200) {
-  //       toast.success("Appointment intake started");
-  //       fetchAppointments(selectedDate);
-  //     } else {
-  //       toast.error("Failed to start intake");
-  //     }
-  //   } catch (error) {
-  //     console.error('Error starting intake:', error);
-  //     toast.error('Error starting intake');
-  //   }
-  // };
+    } 
+  
 
   const canCancel = (date, shift) => {
     const currentTime = new Date();

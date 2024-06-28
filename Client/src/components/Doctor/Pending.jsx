@@ -2,13 +2,15 @@ import React from 'react';
 import { clearDoctor } from '../../ReduxStore/features/doctorSlice';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 function Pending() {
+  const navigate=useNavigate()
     const dispatch=useDispatch()
     const logout =  () => {
         try {
             dispatch(clearDoctor());
             Cookies.remove('doctortoken');
-            window.location.reload()
+            navigate('/')
         } catch (err) {
           console.log(err);
         }
