@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Api from "../../API/DoctorCareApi";
 import {
   MdOutlineKeyboardDoubleArrowLeft,
   MdOutlineKeyboardDoubleArrowRight,
@@ -9,7 +8,7 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
+import {doctorList,userbooking} from "../../Services/User/userService"
 
 Modal.setAppElement("#root");
 
@@ -37,36 +36,22 @@ function DoctorList() {
   }, [currentPage, experienceFilter, genderFilter, searchQuery]);
 
   const fetchDoctors = async () => {
-    try {
-      const response = await Api.get(`/doctorList`, {
-        params: {
-          page: currentPage,
-          limit: itemsPerPage,
-          experience: experienceFilter,
-          gender: genderFilter,
-          search: searchQuery,
-        },
-      });
+      const data= {
+       currentPage,
+        itemsPerPage,
+        experienceFilter,
+        genderFilter,
+        searchQuery,
+      }
+      const response =await doctorList(data)
       setDoctors(response.data.Doctors);
       setTotalPages(response.data.totalPages);
-    } catch (e) {
-      console.error("Error fetching doctors:", e.message);
-    }
   };
 
   const getDoctorBookings = async (doctorId) => {
-    try {
-      const response = await Api.get(`/doctorBookings/${doctorId}`);
-      console.log(response.data, "==>");
-      const formattedBookings = response.data.List.map((booking) => ({
-        ...booking,
-        date: new Date(booking.date),
-      }));
+      const response = await userbooking(doctorId)
       setDoctorBookings(formattedBookings);
       setDoctorSlots(response.data.Slots);
-    } catch (error) {
-      console.error("Error fetching doctor bookings:", error);
-    }
   };
 
   const handlePageChange = (page) => {

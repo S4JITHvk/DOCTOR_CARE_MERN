@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Api from "../../../API/DoctorCareApi";
 import {isEmailValid} from "../../../helpers/validation"
 import { useLocation } from 'react-router-dom';
+import {forgetpass_emailreq} from "../../../Services/Auth/userAuth"
 function EmailForm() {
   const location = useLocation();
-  console.log(location,"fljal")
   const action  = location.state?.action
-  console.log(action,"actionnfkanfk")
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -17,17 +15,12 @@ function EmailForm() {
       setErrorMessage('Please enter a valid email address.');
       return;
     }
-    try {
-      const response = await Api.post("/forget_pass_req", { email,action });
+      const response = await forgetpass_emailreq(email,action)
       if (response.status === 200) {
         navigate('/otp', { state: { email, action: action } });
       } else {
         setErrorMessage("Email not Found");
       }
-    } catch (error) {
-      console.error("Error resetting password:", error.message);
-      setErrorMessage("Email not Found");
-    }
   };
 
   return (

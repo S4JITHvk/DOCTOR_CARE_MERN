@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Api from "../../../API/DoctorCareApi";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useLocation } from 'react-router-dom';
+import {validateOtp,resendOtp} from "../../../Services/Auth/userAuth"
 function Otp() {
-  
-
   const navigate=useNavigate()
   const [otp, setOtp] = useState(['', '', '', '']);
   const [errors, setErrors] = useState(Array(4).fill(false));
@@ -55,19 +53,17 @@ function Otp() {
       setErrors(Array(4).fill(true)); 
       return;
     }
-    try {
       const {state}=location
       if (state && (state.action === "User_forgot_pass" || state.action === "Doctor_forgot_pass")){
         const email=state.email
-        const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email,action:state.action });
+        const response =await validateOtp(enteredOtp,state);
         if(response.status===200){
           navigate("/Resetpass",{state:{email,action:response.data.message}})
         }else if(response.status===400) {
           setErrorMessage("Otp Not Matched! Request denied");
         }
       }else{
-      const response = await Api.post("/otp-verify", { otp: enteredOtp,email:state.email,action:state.action });
-      console.log(response.data,"===>")
+      const response = await validateOtp(enteredOtp,state)
       if (response.status === 200) {
         toast.success(response.data.message)
         navigate('/');
@@ -75,27 +71,18 @@ function Otp() {
         setErrorMessage("Otp Not Matched! Request denied");
       }
     }
-    } catch (error) {
-      console.error("Error:", error.message);
-      setErrorMessage("Otp Not Matched! Request denied");
-    }
   };
   
   const handleResend = async () => {
     const {state}=location
     setTimer(20);
     setResendEnabled(false);
-    try {
-      const response = await Api.post('/resend-otp', { email:state.email },{withCredentials:true});
+      const response =await resendOtp(state)
       if (response.status === 200) {
         toast.success("OTP successfully resent.");
       } else {
         toast.error("Failed to resend OTP.");
       }
-    } catch (error) {
-      console.error("Error resending OTP:", error.message);
-      toast.error("Failed to resend OTP. Please try again.");
-    }
   };
   
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Api from "../../../API/DoctorCareApi";
 import { loadStripe } from '@stripe/stripe-js';
 import { addAppointment, removeAppointment } from "../../../ReduxStore/features/appointmentSlice";
-
+import {payment_checkoutsession} from "../../../Services/User/userService"
 const stripePromise = loadStripe('pk_test_51PLmMyKj3ZW2TL11Wyt4ze8kj2I1yk3a6PKrYHdRq9sfwloK1RjFhClqDUEKGxwB8Cv3Sc78itTbjUdjHfOrVn8W009leKwMga');
 
 function PaymentProcess() {
@@ -37,7 +37,6 @@ function PaymentProcess() {
   };
 
   const handleProceed = async () => {
-    try {
       const existingAppointment = appointments?.find(appointment => appointment?.userId === User.user._id);
       if (existingAppointment) {
         alert("The slot is already booked. Please select another slot.");
@@ -51,20 +50,18 @@ function PaymentProcess() {
       }
       await dispatch(addAppointment(data));
       if (selectedPaymentOption === 'online') {
-        const sessionResponse = await Api.post('/payment-checkout-session', {
+        const data={
           doctorId: selectedDoctor._id,
           userId: User.user._id,
           date: selectedDate.toISOString().split('T')[0],
           shift: selectedShift,
-        });
+        }
+        const sessionResponse = await payment_checkoutsession(data)
         const sessionId = sessionResponse.data.session.url;
         window.location.href = sessionId;
       } else {
         console.log("redirecting to wallet");
       }
-    } catch (e) {
-      console.log(e.message);
-    }
   };
 
   return (

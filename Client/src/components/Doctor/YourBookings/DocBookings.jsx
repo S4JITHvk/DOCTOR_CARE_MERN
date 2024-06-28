@@ -147,14 +147,14 @@ function DocBookings() {
                   <td className="py-2 px-6 border-b">
                     {appointment.status === "Cancelled" ? (
                       <button
-                        className="bg-gray-300 text-gray-700 ml-10 px-4 py-2 rounded cursor-not-allowed"
+                        className="bg-gray-300 text-gray-700 w-[110px] ml-10 px-4 py-2 rounded cursor-not-allowed"
                         disabled
                       >
-                        Cancelled
+                         Cancelled
                       </button>
                     ) : appointment.status === "Completed" ? (
                       <button
-                        className="bg-green-500 text-white px-4 py-2 rounded cursor-not-allowed"
+                        className="bg-green-500 text-white px-4 py-2 w-[110px] ml-10 rounded cursor-not-allowed"
                         disabled
                       >
                         Completed

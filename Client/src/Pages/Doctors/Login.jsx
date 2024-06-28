@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Api from "../../API/DoctorCareApi";
 import { isEmailValid, isEmpty } from "../../helpers/validation";
+import {doctorLogin} from "../../Services/Auth/doctorAuth"
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
@@ -32,17 +32,14 @@ function Login() {
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      try {
-        const response = await Api.post('/doctor/login', formData);
-        console.log(response.data); 
-        if(response.status===200){
-          const { token } = response.data;
-          document.cookie = `doctortoken=${token}; path=/`;
-          window.location.reload()
-        }
-      }  catch (error) {
-        if (error.response) {
-          const { status, data } = error.response;
+       const response= await doctorLogin(formData)
+       if(response.status===200){
+        const { token } = response.data;
+        document.cookie = `doctortoken=${token}; path=/`;
+        window.location.reload()
+      }else {
+        if (response.error) {
+          const { status, data } = response.error;
           if (status === 404) {
             setErrorMessage(data.message);
           } else if (status === 401) {

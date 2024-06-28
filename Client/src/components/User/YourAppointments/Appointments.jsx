@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Api from "../../../API/DoctorCareApi";
 import { useSelector } from "react-redux";
 import Sidebar from "../Profile/Sidebar";
 import Modal from "./Viewdetails";
@@ -7,7 +6,7 @@ import {
   MdOutlineKeyboardDoubleArrowLeft,
   MdOutlineKeyboardDoubleArrowRight,
 } from "react-icons/md";
-
+import { yourBooking } from "../../../Services/User/userService";
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,14 +14,13 @@ function Appointments() {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const appointmentsPerPage = 8
-console.log(selectedAppointment,"==.")
   const User = useSelector((state) => state.user);
   const userid = User.user._id;
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await Api.get(`/your-appointments/${userid}`);
+        const response = await yourBooking(userid)
         setAppointments(response.data);
       } catch (error) {
         setError(error.message);

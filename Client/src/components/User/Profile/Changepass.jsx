@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import Api from "../../../API/DoctorCareApi"; 
+import React, { useState } from 'react'; 
 import toast from "react-hot-toast";
 import Sidebar from "./Sidebar"
 import{isPasswordValid,isEmpty} from "../../../helpers/validation"
+import { useSelector } from 'react-redux';
+import {set_newpass} from "../../../Services/Auth/userAuth"
 function Changepass() {
+  const User=useSelector((state)=>state.user)
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -27,9 +29,14 @@ function Changepass() {
     if (error) {
         setErrorMessage(error);
         return;
-    }
-    try {      
-      const response = await Api.post('/newpassword', {email:Doctor.doctor.email, password: newPassword ,action:"User_reset"});
+    }   
+      const location={
+        state:{
+          email:User.user?.email,
+          action:"User_reset"
+        }
+      }
+      const response = await set_newpass(location,newPassword) ;
       if (response.status === 200) {
         toast.success('Password reset successfully');
         setNewPassword('');
@@ -38,11 +45,6 @@ function Changepass() {
       } else {
         setErrorMessage('Failed to reset password');
       }
-    
-    } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('An error occurred. Please try again.');
-    }
   };
 
   return (

@@ -8,9 +8,9 @@ import {
   isEmailValid,
   passwordcheck,
 } from "../../helpers/validation";
-import Api from "../../API/DoctorCareApi";
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
+import {userSignup,googleLogin} from "../../Services/Auth/userAuth"
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -64,12 +64,7 @@ function Signup() {
   const googleAuth = async (data) => {
     const { email, name } = data;
     try {
-      const response = await Api.post("/google-login", { email, name });
-      if (response.status === 200) {
-        const { token } = response.data;
-        document.cookie = `token=${token}`;
-        window.location.reload();
-      }
+     googleLogin(email,name)
     } catch (error) {
       const { status, data } = error.response;
       if (status) setErrorMessage(data.message);
@@ -126,17 +121,13 @@ function Signup() {
 
     setError(errors);
     seterrordef(errorMessages);
-
-    try {
       if (
         !errors.emailred &&
         !errors.namered &&
         !errors.passwordred &&
         !errors.confirmpasswordred
       ) {
-        const response = await Api.post("/usersignup", userData, {
-          withCredentials: true,
-        });
+        const response =await userSignup(userData)
         if (response.data.message === "OTP sent") {
           toast.success("Enter otp send to your mail");
           navigate("/otp", { state: { email: userData.email } });
@@ -154,14 +145,7 @@ function Signup() {
           console.error("Error registering user:", response.statusText);
         }
       }
-    } catch (error) {
-      console.error("Error in catch block:", error);
-      if (error.response && error.response.data) {
-        console.error("Error registering user:", error.response.data.message);
-      } else {
-        console.error("Error registering user:", error.message);
-      }
-    }
+  
   };
 
   const togglePasswordVisibility = () => {

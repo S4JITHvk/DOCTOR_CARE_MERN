@@ -30,7 +30,7 @@ function MessageContainer({ bookingId }) {
       });
 
       if (confirmed.isConfirmed) {
-        const response = await Api.post(`/doctor/consultation/${bookingId}`);
+        const response = await Api.post(`/doctor/consultation/${bookingId._id}`);
         if (response.status === 200) {
           toast.success("Consultation marked as completed successfully");
           navigate("/doctor/Yourbookings");

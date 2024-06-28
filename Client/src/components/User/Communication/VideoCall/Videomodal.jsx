@@ -30,7 +30,6 @@ export default function App() {
   const params = getUrlParams();
   const roomID = params.get('roomID') || randomID(5);
   const userId = params.get('userId');
-
   const User = useSelector((state) => state.user.user);
   useEffect(() => {
     if (!User || User._id !== userId) {
@@ -39,14 +38,10 @@ export default function App() {
     }
 
     const initMeeting = async (element) => {
-      // generate Kit Token
       const appID = 919371831;
       const serverSecret = "bf4e835c6eeab8a1f5ebc95e8ce554a0";
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), randomID(5));
-
-      // Create instance object from Kit Token.
       const zp = ZegoUIKitPrebuilt.create(kitToken);
-      // Start the call
       zp.joinRoom({
         container: element,
         sharedLinks: [

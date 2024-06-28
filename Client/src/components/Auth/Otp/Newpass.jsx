@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Api from "../../../API/DoctorCareApi"
 import toast from 'react-hot-toast';
 import{isPasswordValid,isEmpty} from "../../../helpers/validation"
+import {set_newpass} from "../../../Services/Auth/userAuth"
 function Newpass() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -26,22 +26,13 @@ function Newpass() {
             setErrorMessage(error);
             return;
         }
-        try {
-            const response = await Api.post("/newpassword", {
-                email: location.state.email,
-                password: newPassword,
-                action:location.state.action
-            });
+            const response = await set_newpass(location,newPassword) 
             if (response.status === 200) {
                 toast.success("Successfully Reset password.")
                 navigate('/');
             } else {
                 setErrorMessage("Failed to reset password. Please try again.");
             }
-        } catch (error) {
-            console.error("Error resetting password:", error.message);
-            setErrorMessage("Failed to reset password. Please try again.");
-        }
     };
 
     const togglePasswordVisibility = () => {

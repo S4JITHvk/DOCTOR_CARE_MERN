@@ -5,7 +5,7 @@ import { isEmailValid, isEmpty } from "../../helpers/validation";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";
-
+import {googleLogin,userLogin} from "../../Services/Auth/userAuth"
 function Login() {
   const navigate=useNavigate()
   const [formData, setFormData] = useState({
@@ -33,12 +33,7 @@ function Login() {
   const googleAuth = async (data) => {
     const { email, name } = data;
     try {
-      const response = await Api.post("/google-login", { email, name });
-      if (response.status === 200) {
-        const { token } = response.data;
-        document.cookie = `token=${token}`;
-        window.location.reload();
-      }
+      googleLogin(email, name )
     } catch (error) {
       const { status, data } = error.response;
       if (status) setErrorMessage(data.message);
@@ -60,17 +55,16 @@ function Login() {
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      try {
-        const response = await Api.post("/login", formData);
-        console.log(response.data);
-        if (response.status === 200) {
-          const { token } = response.data;
-          document.cookie = `token=${token}`;
-          window.location.reload();
-        }
-      } catch (error) {
-        if (error.response) {
-          const { status, data } = error.response;
+           const response=await  userLogin(formData)
+           console.log(response,"response")
+           if (response.status === 200) {
+            const { token } = response.data;
+            document.cookie = `token=${token}`;
+            window.location.reload();
+          }else {
+        if (response.error) {
+          const { status, data } = response.error;
+          console.log(status,"status")
           if (status === 404) {
             toast.error(data.message);
             setErrorMessage(data.message);

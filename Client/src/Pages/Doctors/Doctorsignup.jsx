@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { setUser } from "../../ReduxStore/features/userSlice";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   isEmpty,
   isPasswordValid,
   isEmailValid,
-  passwordcheck,
 } from "../../helpers/validation";
-import Api from "../../API/DoctorCareApi";
-
+import {doctorSignup} from "../../Services/Auth/doctorAuth"
 function Doctorsignup() {
-  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState({
@@ -197,10 +192,8 @@ function Doctorsignup() {
   const handleSignup = async (event) => {
     event.preventDefault();
     const isValid = validateInputs();
-    console.log(userData, "==>userdata", isValid);
     if (isValid) {
-      try {
-        const response = await Api.post("/doctor/signup", userData);
+        const response = doctorSignup(userData)
         if (response.status === 200) {
           toast.success("Enter otp send to your mail");
           navigate("/otp", {
@@ -212,9 +205,6 @@ function Doctorsignup() {
             "Failed to register doctor. Please try again.";
           toast.error(errorMessage);
         }
-      } catch (error) {
-        toast.error(error.response.data.message);
-      }
     }
   };
 
