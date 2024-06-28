@@ -77,7 +77,7 @@ io.on("connection", (socket) => {
   socket.on("callingUser", ({Caller, userId, personalLink }) => {
     const receiverSocketId = getReceiverSocketId(userId);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("incomingCall", { Caller,personalLink });
+      io.to(receiverSocketId).emit("incomingCall", { Caller,userId,personalLink });
     }
   });
 

@@ -63,18 +63,18 @@ export const SocketContextProvider = ({ children }) => {
       newSocket.on("incomingCall", ({ Caller, personalLink }) => {
         toast((t) => (
           <div className="p-4 bg-white rounded-lg shadow-md">
-            <BiPhoneCall className='h-8 w-8 text-green-500' />
+            <BiPhoneCall className="h-8 w-8 text-green-500" />
             <p className="mb-2 text-lg font-semibold text-gray-800">Incoming Call from {Caller.name}</p>
             <div className="flex justify-between">
               <button
                 className="px-4 py-2 mr-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700"
               >
-                <a href={personalLink}>join now</a>
+                <a href={personalLink}>Join Now</a>
               </button>
-              <Callreject t={t.id} Caller={Caller}/>
+              <Callreject t={t.id} Caller={Caller} />
             </div>
           </div>
-        ), { duration: 10000 }); 
+        ), { duration: 10000 });
       });
       return () => {
         newSocket.close();

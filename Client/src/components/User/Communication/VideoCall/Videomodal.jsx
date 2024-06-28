@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { useEffect } from 'react';
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FiPhoneOff } from 'react-icons/fi';
+
 function randomID(len) {
   let result = '';
   if (result) return result;
@@ -16,20 +18,26 @@ function randomID(len) {
   return result;
 }
 
-export function getUrlParams(
-  url = window.location.href
-) {
+export function getUrlParams(url = window.location.href) {
   let urlStr = url.split('?')[1];
   return new URLSearchParams(urlStr);
 }
 
 export default function App() {
-	const location = useLocation();
-  const navigate=useNavigate()
-	const { personalLink } = location.state || {}
- const roomID = getUrlParams().get('roomID') || randomID(5);
-    
-  React.useEffect(() => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { personalLink } = location.state || {};
+  const params = getUrlParams();
+  const roomID = params.get('roomID') || randomID(5);
+  const userId = params.get('userId');
+
+  const User = useSelector((state) => state.user.user);
+  useEffect(() => {
+    if (!User || User._id !== userId) {
+      navigate('/');
+      return;
+    }
+
     const initMeeting = async (element) => {
       // generate Kit Token
       const appID = 919371831;
@@ -44,8 +52,7 @@ export default function App() {
         sharedLinks: [
           {
             name: 'Join link',
-            url:personalLink
-            
+            url: personalLink
           },
         ],
         scenario: {
@@ -55,32 +62,32 @@ export default function App() {
     };
 
     initMeeting(document.querySelector('.myCallContainer'));
-  });
+  }, [personalLink, roomID, userId, navigate]);
+
   useEffect(() => {
     return () => {
       window.location.reload();
     };
   }, []);
-  
+
   const handleDisconnect = () => {
     navigate(-1);
   };
 
-
   return (
     <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-    <div
-      className="myCallContainer"
-      style={{ width: '80vw', height: '80vh' }}
-    ></div>
-    <button
-      onClick={handleDisconnect}
-      style={{ width: '40%', height: '10%', display: 'flex', alignItems: 'center', justifyContent: 'center',marginTop:0}}
-      className='bg-red-500 text-white rounded-lg'
-    >
-      <FiPhoneOff className='mr-2' />
-      Disconnect
-    </button>
-  </div>
+      <div
+        className="myCallContainer"
+        style={{ width: '80vw', height: '80vh' }}
+      ></div>
+      <button
+        onClick={handleDisconnect}
+        style={{ width: '40%', height: '10%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 0 }}
+        className='bg-red-500 text-white rounded-lg'
+      >
+        <FiPhoneOff className='mr-2' />
+        Disconnect
+      </button>
+    </div>
   );
 }

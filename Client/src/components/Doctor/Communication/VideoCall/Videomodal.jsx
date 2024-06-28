@@ -55,7 +55,7 @@ export default function App() {
              window.location.protocol + '//' + 
              window.location.host +'/redirectToCall'+
               '?roomID=' +
-              roomID,
+              roomID + '&userId=' + userId,
           },
         ],
         scenario: {
@@ -64,7 +64,7 @@ export default function App() {
       });
     };
 
-    const personalLink = `${window.location.protocol}//${window.location.host}/redirectToCall?roomID=${roomID}`;
+    const personalLink = `${window.location.protocol}//${window.location.host}/redirectToCall?roomID=${roomID}&userId=${userId}`;
 	if(calling ===0){
 		socket.emit('callingUser', {Caller, userId, personalLink });
 		setCalling(1)
