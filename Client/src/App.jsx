@@ -16,7 +16,7 @@ function App() {
     if(!User.user){
       fetchUser(dispatch); 
     }
-  }, [dispatch]);
+  }, [User]);
 
   return (
     <>

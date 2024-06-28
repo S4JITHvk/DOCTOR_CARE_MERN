@@ -35,9 +35,7 @@ function Conversation({ conversation, lastIdx }) {
             <img
               src={conversation?.profile || "/assets/doc.png"}
               alt="user avatar"
-              className={`w-8 rounded-full border-2 ${
-                isOnline ? "border-green-500" : ""
-              }`}
+              className={`w-8 rounded-full border-2 `}
             />
           </div>
         </div>
@@ -45,6 +43,14 @@ function Conversation({ conversation, lastIdx }) {
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-semibold">(DR) {conversation?.name}</p>
+            {isOnline ?
+            <span className="text-green-500 font-bold text-sm">
+                Online
+              </span>:
+              <span className="text-gray-500 font-bold text-sm">
+              Offline
+            </span>
+            }
             {hasUnreadMessages && (
               <span className="text-green-500 font-bold text-sm">
                 Messages {unreadCount}

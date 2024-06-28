@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { useSelector } from "react-redux";
 import toast from 'react-hot-toast';
 import { useNavigate} from "react-router-dom";
-import { BiPhoneCall } from 'react-icons/bi';
+import { BiPhoneCall,  BiPhoneOff } from 'react-icons/bi';
 import Callreject from "../../components/User/Communication/VideoCall/Callreject";
 const SocketContext = createContext();
 
@@ -20,8 +20,6 @@ export const SocketContextProvider = ({ children }) => {
   const [unreadMessages, setUnreadMessages] = useState({});
   const navigate = useNavigate();
   const userId = User?.user?._id || Doctor?.doctor?._id;
-
-  console.log(socket,"socketcontext2323")
   useEffect(() => {
     if (userId) {
       const newSocket = io("http://localhost:3000", { query: { userId } });
@@ -54,8 +52,13 @@ export const SocketContextProvider = ({ children }) => {
       });
 
       newSocket.on("callRejected", () => {
-        toast.error("CAll REJECTED")
-      });
+        toast((t) => (
+          <div className="p-4 bg-red-300 rounded-sm shadow-md">
+            <  BiPhoneOff className='h-5 w-5 text-red-500' />
+            <p className="mb-2 text-md font-semibold text-gray-800">CALL DECLINED</p>
+          </div>
+        ), { duration: 4000 }); 
+      })
 
       newSocket.on("incomingCall", ({ Caller, personalLink }) => {
         toast((t) => (

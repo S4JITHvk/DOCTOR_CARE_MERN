@@ -113,7 +113,17 @@ function MessageInput() {
         <div className="flex justify-end mt-2">
           <button
             type="button"
-            className="text-white bg-green-500 hover:bg-green-700 rounded-lg px-4 py-2"
+            className="text-white bg-red-500 hover:bg-red-700  px-4 py-2"
+            onClick={() => {
+              stopRecording();
+              setAudioBlob(null);
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="text-white bg-green-500 hover:bg-green-700  px-4 py-2"
             onClick={sendVoiceMessage}
           >
             Send Voice Message
@@ -124,7 +134,14 @@ function MessageInput() {
         <div className="flex justify-end mt-2">
           <button
             type="button"
-            className="text-white bg-green-500 hover:bg-green-700 rounded-lg px-4 py-2"
+            className="text-white bg-red-500 hover:bg-red-700  px-4 py-2"
+            onClick={() => setImageFile(null)} 
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="text-white bg-green-500 hover:bg-green-700  px-4 py-2"
             onClick={handleSubmit}
           >
             Send Image

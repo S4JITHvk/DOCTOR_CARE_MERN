@@ -14,15 +14,13 @@ function Conversation({ conversation, lastIdx }) {
   const hasUnreadMessages = unreadCount > 0;
   const handleSelectUser = () => {
     setSelectedConversation(conversation);
-    markAsRead(doctor._id, conversation._id);
+    markAsRead(doctor?._id, conversation?._id);
   };
-
   useEffect(() => {
-    if (selectedConversation ) {
-      console.log("calling")
-      markAsRead(doctor._id,selectedConversation._id );
-    }
-  }, [selectedConversation, doctor._id, markAsRead]);
+    console.log("useEffect called");
+      markAsRead(doctor?._id, selectedConversation?._id);
+  
+  }, []);
   return (
     <>
       <div
@@ -33,9 +31,7 @@ function Conversation({ conversation, lastIdx }) {
       >
         <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div
-            className={`w-12 rounded-full ${
-              isOnline ? "border-green-500" : ""
-            }`}
+            className={`w-12 rounded-full`}
           >
             <img
               src={conversation?.profile || "/assets/user.png"}
@@ -46,6 +42,14 @@ function Conversation({ conversation, lastIdx }) {
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-semibold">{conversation?.name}</p>
+            {isOnline ?
+            <span className="text-green-500 font-bold text-sm">
+                Online
+              </span>:
+              <span className="text-gray-500 font-bold text-sm">
+              Offline
+            </span>
+            }
             {hasUnreadMessages && (
               <span className="text-green-500 font-bold text-sm">
                 Messages {unreadCount}

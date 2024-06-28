@@ -1,11 +1,12 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { clearUser } from "../../ReduxStore/features/userSlice";
 import profilePlaceholder from "/assets/admin.png";
-
+import { useNavigate } from "react-router-dom";
 function Sidebar() {
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const location = useLocation();
   
@@ -13,7 +14,7 @@ function Sidebar() {
     try {
       dispatch(clearUser());
       Cookies.remove("token");
-      window.location.reload();
+      navigate("/")
     } catch (err) {
       console.log(err);
     }
