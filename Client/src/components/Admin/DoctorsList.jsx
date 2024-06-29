@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Api from '../../API/DoctorCareApi';
 import toast from "react-hot-toast"
 import { MdOutlineKeyboardDoubleArrowLeft,MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
 import Swal from 'sweetalert2';
+import {fetch_doctorlist,doctorban,doctorSoftdelete} from "../../Services/Admin/adminService"
 function DoctorsList() {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -10,16 +10,11 @@ function DoctorsList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const fetchData = async () => {
-    try {
-      const response = await Api('/admin/doctorlist');
+      const response = await fetch_doctorlist()
       if (response.status === 200) {
         setList(response.data.data);
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setIsLoading(false);
-    }
   };
   useEffect(() => {
     fetchData();
@@ -48,17 +43,13 @@ function DoctorsList() {
   };
 
   const blockDoctor =async (id) => {
-    try {
-      const response = await Api.put(`/admin/banDoctor/${id}`);
+      const response = await doctorban(id)
       if (response.status === 200) {
         fetchData();
         toast.success(response.data.message);
       } else {
         console.log('Failed to ban user');
       }
-    } catch (err) {
-      console.log(err.message);
-    }
   };
   const handleDelete = async (id) => {
     try {
@@ -73,7 +64,7 @@ function DoctorsList() {
         });
 
         if (result.isConfirmed) {
-            const response = await Api.put(`/admin/deleteDoctor/${id}`);
+            const response = await doctorSoftdelete(id);
             if (response.status === 200) {
                 fetchData();
                 toast.success(response.data.message);

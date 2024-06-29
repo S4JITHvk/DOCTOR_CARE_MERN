@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Api from '../../API/DoctorCareApi';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'react-modal';
-
+import {fetch_bookinglist} from "../../Services/Admin/adminService"
 Modal.setAppElement('#root');
 
 function BookingList() {
@@ -22,21 +21,17 @@ function BookingList() {
 
   const fetchBookings = async () => {
     setLoading(true);
-    try {
-      const response = await Api.get('/admin/bookingList', {
-        params: {
+      const data={
           page: currentPage,
           date: filterDate ? filterDate?.toISOString().split('T')[0] : '',
           doctorName: searchDoctor,
-        },
-      });
+      }
+      const response = await fetch_bookinglist(data)
+      if(response.data){
       setBookings(response.data.bookings);
       setTotalPages(response.data.totalPages);
-    } catch (error) {
-      console.error('Error fetching bookings:', error);
-    } finally {
       setLoading(false);
-    }
+      }
   };
 
   const handleDateChange = (date) => {

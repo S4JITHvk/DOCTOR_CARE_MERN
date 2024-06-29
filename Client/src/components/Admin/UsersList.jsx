@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Api from '../../API/DoctorCareApi';
 import toast from "react-hot-toast";
 import { MdOutlineKeyboardDoubleArrowLeft,MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
 import Swal from 'sweetalert2';
+import {fetch_userlist,userban,userSoftdelete} from "../../Services/Admin/adminService"
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -11,20 +11,14 @@ function UsersList() {
   const usersPerPage = 10;
 
   const fetchData = async () => {
-    try {
-      const response = await Api('/admin/usersFetch');
+      const response = await fetch_userlist()
       if (response.status === 200) {
         const filteredUsers = response.data.data.filter(user =>
           user.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setUsers(filteredUsers);
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   useEffect(() => {
@@ -32,20 +26,15 @@ function UsersList() {
   }, [searchQuery]);
 
   const handleBanUser = async (userid) => {
-    try {
-      const response = await Api.put(`/admin/banUser/${userid}`);
+      const response = await userban(userid)
       if (response.status === 200) {
         fetchData();
         toast.success(response.data.message);
       } else {
         console.log('Failed to ban user');
       }
-    } catch (err) {
-      console.log(err.message);
-    }
   };
   const handleDelete = async (userid) => {
-    try {
         const result = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -57,7 +46,7 @@ function UsersList() {
         });
 
         if (result.isConfirmed) {
-            const response = await Api.put(`/admin/deleteUser/${userid}`);
+            const response = await userSoftdelete(userid)
             if (response.status === 200) {
                 fetchData();
                 toast.success(response.data.message);
@@ -70,9 +59,6 @@ function UsersList() {
                 console.log('Failed to delete user');
             }
         }
-    } catch (err) {
-        console.log(err.message);
-    }
 }
 
   const indexOfLastUser = currentPage * usersPerPage;

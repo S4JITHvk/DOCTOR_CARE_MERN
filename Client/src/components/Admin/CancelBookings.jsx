@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Api from '../../API/DoctorCareApi';
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import Swal from 'sweetalert2';
-
+import {cancel_booking,fetchcancelled_booking} from "../../Services/Admin/adminService"
 function CancelBookings() {
   const [cancelledBookings, setCancelledBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,15 +12,12 @@ function CancelBookings() {
   const [refundInitiated, setRefundInitiated] = useState({});
 
   const fetchCancelledBookings = async () => {
-    try {
-      const response = await Api.get(`/admin/cancelled-bookings?page=${page}&limit=${limit}`);
+      const response = await  fetchcancelled_booking(page,limit)
+      if(response.status===200){
       setCancelledBookings(response.data.cancelledBookings);
       setTotalPages(response.data.totalPages);
       setLoading(false);
-    } catch (error) {
-      console.error('Error fetching cancelled bookings:', error);
-      setLoading(false);
-    }
+      }
   };
 
   useEffect(() => {
@@ -40,7 +36,7 @@ function CancelBookings() {
     }
   };
 
-  const handleDoneClick = (bookingId) => {
+  const handleDoneClick = async (bookingId) => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -49,11 +45,12 @@ function CancelBookings() {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, mark as done!'
-    }).then((result) => {
+    }).then(async (result) => { 
       if (result.isConfirmed) {
-        Api.post('/admin/booking_refund', { bookingId })
-          .then(response => {
-            fetchCancelledBookings()
+        try {
+          const response = await cancel_booking(bookingId); 
+          if (response.status===200) {
+            fetchCancelledBookings();
             setRefundInitiated(prevState => ({
               ...prevState,
               [bookingId]: true 
@@ -63,19 +60,19 @@ function CancelBookings() {
               'Booking has been marked as done.',
               'success'
             );
-          })
-          .catch(error => {
-            console.error('There was an error!', error);
-            Swal.fire(
-              'Error!',
-              'There was an issue marking the booking as done.',
-              'error'
-            );
-          });
+          }
+        } catch (error) {
+          console.error('There was an error!', error);
+          Swal.fire(
+            'Error!',
+            'There was an issue marking the booking as done.',
+            'error'
+          );
+        }
       }
     });
   };
-
+  
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
@@ -112,7 +109,7 @@ function CancelBookings() {
                     <div className="flex space-x-2">
                       <button 
                         onClick={() => handleDoneClick(booking._id)} 
-                        disabled={refundInitiated[booking._id]} // Disable if refund initiated
+                        disabled={refundInitiated[booking._id]} 
                         className={`px-2 py-1 ${refundInitiated[booking._id] ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-700'} text-white rounded`}
                       >
                         Refund
