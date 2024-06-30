@@ -362,6 +362,27 @@ const your_appointments = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+const add_favorite = async (req, res) => {
+  try {
+    const { doctorId, userId } = req.body;
+    const response = await Query.add_favoritedoctor(doctorId, userId);
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+const fetch_favoritedoctor= async (req, res) => {
+  try {
+    const data = req.userID ;
+    const userId=data.toString();
+    const response = await Query.fetch_favoritedoctor(userId);
+    console.log(response,"repsone")
+    res.status(200).json(response);
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json({ error: err.message });
+  }
+};
 module.exports = {
   userSignup,
   userLogin,
@@ -376,4 +397,6 @@ module.exports = {
   get_bookinglist,
   make_payment,
   your_appointments,
+  add_favorite,
+  fetch_favoritedoctor
 };

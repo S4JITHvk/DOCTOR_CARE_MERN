@@ -151,6 +151,45 @@ const saveBooking = async (booking) => {
     throw new Error('Error saving user');
   }
 };
+const add_favoritedoctor = async (doctorId, userId) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const doctorIndex = user.favoriteDoctors.indexOf(doctorId);
+    let message;
+
+    if (doctorIndex !== -1) {
+      user.favoriteDoctors.splice(doctorIndex, 1);
+      message = 'Doctor removed from favorites';
+    } else {
+      const doctor = await Doctor.findById(doctorId);
+      if (!doctor) {
+        throw new Error('Doctor not found');
+      }
+      user.favoriteDoctors.push(doctorId);
+      message = 'Doctor added to favorites';
+    }
+
+    await user.save();
+    return { message };
+  } catch (err) {
+    throw new Error('Error adding favorite doctor user');
+  }
+};
+
+const fetch_favoritedoctor=async(userId)=>{
+  try{
+    const user = await User.findById(userId).populate('favoriteDoctors').exec();
+    const favoriteDoctors = user.favoriteDoctors;
+    console.log(favoriteDoctors,"doctor")
+    return favoriteDoctors;
+  } catch (err) {
+    throw new Error('Error adding fetch fav doctor user');
+  }
+}
   
 module.exports = {
   findbyid,
@@ -165,5 +204,7 @@ module.exports = {
   placeBooking,
   yourappointments,
   Bookingfindbyid,
-  saveBooking
+  saveBooking,
+  add_favoritedoctor,
+  fetch_favoritedoctor
 };

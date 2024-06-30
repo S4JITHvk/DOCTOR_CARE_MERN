@@ -17,6 +17,7 @@ const Paymentsuccess=lazy(()=>import("../../components/User/Payment/Success"))
 const Paymentfailure=lazy(()=>import("../../components/User/Payment/Failure"))
 const Myappointments=lazy(()=>import("../../components/User/YourAppointments/Appointments"))
 const Chat=lazy(()=>import("../../components/User/Communication/Chat"))
+const Favcomp=lazy(()=>import("../../components/User/Profile/Favoritedoc"))
 import Authenticate from "../../components/Auth/Authenticate";
 import RedirectToCall from "../../components/User/Communication/VideoCall/Videomodal";
 import Protect from "../../components/Auth/Protect";
@@ -46,6 +47,7 @@ function UserRoute() {
       <Route path="/payment-cancel" element={<><Header /><Paymentfailure/><Footer/></>}/>
       <Route path="/Communicate" element={<><Header /><Chat/></>}/>
       <Route path="/redirectToCall" element={<><Header /><RedirectToCall /><Footer/></>} />
+      <Route path="/favorite-doctor" element={<><Header /><Favcomp /><Footer/></>} />
     </Route>
   </Routes>
 </Suspense>

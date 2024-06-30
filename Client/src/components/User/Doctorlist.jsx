@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation  } from "react-router-dom";
 import {
   MdOutlineKeyboardDoubleArrowLeft,
   MdOutlineKeyboardDoubleArrowRight,
+  MdFavoriteBorder,
+  MdFavorite,
+  MdComment
 } from "react-icons/md";
+import toast from "react-hot-toast"
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSelector } from "react-redux";
-import {doctorList,userbooking} from "../../Services/User/userService"
+import { useSelector,useDispatch } from "react-redux";
+import {doctorList,userbooking,add_favdoctor} from "../../Services/User/userService"
+import fetchUser from "../../Services/usersFetch"
 
 Modal.setAppElement("#root");
 
 function DoctorList() {
+  const location = useLocation();
   const User = useSelector((state) => state.user);
+  const dispatch=useDispatch()
+  const { Doctor } = location.state || {};
   const [doctors, setDoctors] = useState([]);
   const [experienceFilter, setExperienceFilter] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
@@ -29,11 +37,30 @@ function DoctorList() {
   const [selectedDate, setSelectedDate] = useState(getDate);
   const [doctorBookings, setDoctorBookings] = useState([]);
   const [doctorSlots, setDoctorSlots] = useState([]);
+  const [favoriteDoctors, setFavoriteDoctors] = useState([]);
   const shifts = ["9am-10am", "11am-12pm", "2pm-3pm", "5pm-6pm", "8pm-9pm"];
 
   useEffect(() => {
     fetchDoctors();
   }, [currentPage, experienceFilter, genderFilter, searchQuery]);
+
+  useEffect(() => {
+    if (User?.user?.favoriteDoctors) {
+      setFavoriteDoctors(User.user.favoriteDoctors);
+    }
+  }, [User]);
+
+  useEffect(() => {
+    const fetchDoctorDetails = async () => {
+      if (Doctor) {
+        setSelectedDoctor(Doctor);
+        await getDoctorBookings(Doctor._id);
+        setIsModalOpen(true);
+      }
+    };
+    fetchDoctorDetails();
+  }, [Doctor]);
+  
 
   const fetchDoctors = async () => {
       const data= {
@@ -50,6 +77,10 @@ function DoctorList() {
 
   const getDoctorBookings = async (doctorId) => {
       const response = await userbooking(doctorId)
+      const formattedBookings = response.data.List.map((booking) => ({	
+        ...booking,	
+        date: new Date(booking.date),	
+      }));
       setDoctorBookings(formattedBookings);
       setDoctorSlots(response.data.Slots);
   };
@@ -79,6 +110,20 @@ function DoctorList() {
     setSelectedShift("");
   };
 
+  const handleFavoriteToggle = async(doctor) => {
+    const response=await add_favdoctor(doctor,User.user?._id)
+    if(response.status===200){
+    setFavoriteDoctors((prevFavorites) => {
+      if (prevFavorites.includes(doctor._id)) {
+        return prevFavorites.filter((id) => id !== doctor._id);
+      } else {
+        return [...prevFavorites, doctor._id];
+      }
+    });
+    fetchUser(dispatch)
+    toast.success(response.data?.message)
+  }
+  };
   const filteredDoctors = doctors?.filter((doctor) => {
     return (
       (experienceFilter === "" ||
@@ -175,12 +220,22 @@ function DoctorList() {
                 </p>
                 <p className="text-gray-500">GENDER : {doctor.gender}</p>
                 <div className="flex justify-between mt-4">
-                  <button className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-                    Reviews
+                  <button className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700">
+                  <MdComment />
+                  </button>
+                  <button
+                    onClick={() => handleFavoriteToggle(doctor)}
+                    className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700 flex items-center"
+                  >
+                    {favoriteDoctors.includes(doctor._id) ? (
+                      <MdFavorite className="text-red-500" />
+                    ) : (
+                      <MdFavoriteBorder  />
+                    )}
                   </button>
                   <button
                     onClick={() => handleBookSlot(doctor)}
-                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                    className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700"
                   >
                     Book Slot
                   </button>

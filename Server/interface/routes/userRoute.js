@@ -22,5 +22,7 @@ Router.get('/doctorBookings/:doctorId',userAuth,userController.get_bookinglist)
 Router.post('/payment-checkout-session',userAuth,userController.make_payment)
 Router.post('/payment-checkout-session',userAuth,userController.make_payment)
 Router.get('/your-appointments/:userid',userAuth,userController.your_appointments)
+Router.post('/add-favorite-doctor',userAuth,userController.add_favorite)
+Router.get('/fetch-favorite-doctor',userAuth,userController.fetch_favoritedoctor)
 
 module.exports = Router

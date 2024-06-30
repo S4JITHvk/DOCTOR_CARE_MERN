@@ -67,3 +67,23 @@ export const payment_checkoutsession=async(data)=>{
         console.log("Error in payment checkout session Api",err.message)
     }
 }
+export const add_favdoctor=async(data,userId)=>{
+    try{
+        const response = await Api.post('/add-favorite-doctor', {
+            doctorId: data._id,
+            userId:userId
+    });
+          return response
+    }catch(err){
+        console.log("Error in add favorite doctor Api",err.message)
+    }
+}
+export const fetch_favdoctors=async()=>{
+    try{
+        const response = await Api.get('/fetch-favorite-doctor');
+          return response
+    }catch(err){
+        console.log("Error in add favorite doctor fetching Api",err.message)
+    }
+}
+

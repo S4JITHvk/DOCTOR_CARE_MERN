@@ -50,7 +50,7 @@ function Sidebar() {
               </Link>
             </li>
             <li className="mb-3">
-              <Link to="/favorite-doctors" className={getLinkClass("/favorite-doctors")}>
+              <Link to="/favorite-doctor" className={getLinkClass("/favorite-doctor")}>
                 FAVORITE DOCTORS
               </Link>
             </li>

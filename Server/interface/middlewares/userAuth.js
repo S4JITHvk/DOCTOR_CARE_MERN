@@ -8,6 +8,7 @@ const Auth = async (req, res, next) => {
       const data = await User.findById(verified.user);
       if (data) {
         if (data.role === "USER") {
+          req.userID = data._id;
           next();
         } else {
           res.status(404).json({ message: "UnAuthorized!" });

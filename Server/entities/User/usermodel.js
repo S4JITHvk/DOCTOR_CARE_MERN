@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
         enum: ["ADMIN", "USER"],
         default: "USER"
     },
+    favoriteDoctors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Doctor' }],
     profile: {
         type: String,
       },
