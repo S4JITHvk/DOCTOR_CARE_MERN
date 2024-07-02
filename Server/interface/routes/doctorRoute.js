@@ -14,4 +14,5 @@ Router.get('/appointments/:date/:doctorId',doctorAuth, DoctorControl.your_bookin
 Router.post('/appointments/:id/cancel',doctorAuth,DoctorControl.cancel_booking)
 Router.post('/slotupdate',doctorAuth,DoctorControl.slot_update)
 Router.post('/consultation/:bookingId',doctorAuth,DoctorControl.update_booking)
+Router.get('/fetch-appointments/:id',doctorAuth,DoctorControl.fetch_doc)
 module.exports=Router

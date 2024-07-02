@@ -43,7 +43,7 @@ function Doctorsidebar() {
           <p className="text-gray-700 text-center">{doctorData.doctor.expertise}</p>
         </div>
         <hr className="border-t border-gray-300" />
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-8">
           <ul>
             <li className="mb-2">
               <div className={getLinkClass("/doctor")}>

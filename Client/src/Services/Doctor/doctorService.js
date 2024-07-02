@@ -45,3 +45,11 @@ export const cancelappointment=async(id)=>{
         console.log("Error in doc fetch appointments APi",err.message)
     }
 }
+export const fetchappointment_dashboard=async(id)=>{
+    try{
+    const response= await Api.get(`/doctor/fetch-appointments/${id}`);
+     return response
+    }catch(err){
+        console.log("Error in doc fetch appointments for dash APi",err.message)
+    }
+}

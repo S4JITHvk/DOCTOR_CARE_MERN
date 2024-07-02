@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 const navigation = [
   { name: 'Home', href: '/home' },
   { name: 'Doctors', href: '/Doctors' },
-  { name: 'About us', href: '' },
+  { name: 'About us', href: '/Aboutus' },
   { name: 'Messages', href: '/Communicate' },
 ];
 

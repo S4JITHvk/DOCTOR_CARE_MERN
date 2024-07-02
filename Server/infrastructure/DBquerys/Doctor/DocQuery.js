@@ -127,6 +127,18 @@ const slotUpdate=async(doctorId,date,shifts)=>{
   }
 
 }
+const fetch_dash = async (doctorId) => {
+  try {
+    const bookings = await Booking.find({ doctorId })
+      .populate('userId', 'name email')
+      .exec();
+
+    return bookings;
+  } catch (e) {
+    console.log(e.message);
+    throw e; 
+  }
+};
 
 module.exports={
  docfindbyId,
@@ -140,5 +152,6 @@ module.exports={
  yourbookings,
  cancelbooking,
  ban_cancel_booking,
- slotUpdate
+ slotUpdate,
+ fetch_dash
 }

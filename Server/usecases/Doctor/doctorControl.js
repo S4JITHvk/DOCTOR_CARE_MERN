@@ -204,6 +204,17 @@ const update_booking=async(req,res)=>{
     console.log("error caught in updatebooking:",e.message)
   }
 }
+const fetch_doc = async (req, res) => {
+  try {
+    const doctorId = req.params.id;
+    const appointments = await DocQuery.fetch_dash(doctorId);
+    res.status(200).json(appointments); 
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ error: 'Failed to fetch appointments' });
+  }
+};
+
 module.exports = {
   Doctor_signup,
   Doctor_login,
@@ -213,5 +224,6 @@ module.exports = {
   your_bookings,
   cancel_booking,
   slot_update,
-  update_booking
+  update_booking,
+  fetch_doc
 };
