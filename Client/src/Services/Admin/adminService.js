@@ -94,3 +94,11 @@ export const userSoftdelete=async(userid)=>{
         console.log("Error in user delete Api",err.message)
     }
 }
+export const fetch_allbookinglist=async()=>{
+    try{
+        const response = await Api.get('/admin/bookingallList');
+        return response
+    }catch(err){
+        console.log("Error in doctor all fetchingbooking list Api",err.message)
+    }
+}

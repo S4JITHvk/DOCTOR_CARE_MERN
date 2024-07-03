@@ -1,10 +1,10 @@
 import React from 'react'
-
+import Stats from './DashboardComp/Stats'
 function AdminDash() {
   return (
-    <div>
-      <h1>Dashboard</h1>
-            </div>
+    <>
+    <Stats />
+    </>
   )
 }
 

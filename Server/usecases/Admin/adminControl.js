@@ -141,6 +141,14 @@ const bookingList = async (req, res) => {
     res.status(500).json({ message: 'Error fetching bookings' });
   }
 };
+const allbookingList = async (req, res) => {
+  try {
+    const { bookings} = await AdminQuery.Booking_alllist();
+    res.status(200).json({ bookings});
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching bookings' });
+  }
+};
 const cancelledBooking = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
@@ -180,5 +188,6 @@ module.exports = {
   cancelledBooking,
   userDelete,
   deleteDoctor,
-  refundBooking
+  refundBooking,
+  allbookingList
 };

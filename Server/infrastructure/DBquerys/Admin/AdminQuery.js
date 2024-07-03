@@ -84,6 +84,44 @@ const Booking_list = async (match, skip, limit) => {
     throw error;
   }
 };
+const Booking_alllist = async () => {
+  try {
+    const bookings = await Booking.aggregate([
+      {
+        $lookup: {
+          from: 'doctors',
+          localField: 'doctorId',
+          foreignField: '_id',
+          as: 'doctorDetails'
+        }
+      },
+      { $unwind: '$doctorDetails' },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'userDetails'
+        }
+      },
+      { $unwind: '$userDetails' }
+    ]);
+    const populatedBookings = bookings.map(booking => {
+      booking.doctorId = booking.doctorDetails;
+      booking.userId = booking.userDetails;
+      delete booking.doctorDetails;
+      delete booking.userDetails;
+      return booking;
+    });
+
+    return {
+      bookings: populatedBookings,
+    };
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+    throw error;
+  }
+};
 const cancelled_booking = async (skip, limit) => {
   try {
     const cancelledBookings = await Booking.aggregate([
@@ -116,8 +154,6 @@ const cancelled_booking = async (skip, limit) => {
       { $unwind: '$userDetails' }
     ]);
 
-    console.log(cancelledBookings, "booking");
-
     const totalBookings = await Booking.countDocuments({
       status: 'Cancelled',
       'payment.status': 'Paid' 
@@ -138,5 +174,6 @@ module.exports={
     Approvals,
     DoctorList,
     Booking_list,
-    cancelled_booking
+    cancelled_booking,
+    Booking_alllist
 }
