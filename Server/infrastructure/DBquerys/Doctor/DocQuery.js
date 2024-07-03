@@ -130,7 +130,7 @@ const slotUpdate=async(doctorId,date,shifts)=>{
 const fetch_dash = async (doctorId) => {
   try {
     const bookings = await Booking.find({ doctorId })
-      .populate('userId', 'name email')
+      .populate('userId', 'name email profile')
       .exec();
 
     return bookings;

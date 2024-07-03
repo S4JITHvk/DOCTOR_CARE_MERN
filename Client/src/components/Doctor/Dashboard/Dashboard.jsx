@@ -41,7 +41,10 @@ function Dashboard() {
   const completedBookingsCount = appointments.filter(appointment => appointment.status === 'Completed').length;
   const cancelledBookingsCount = appointments.filter(appointment => appointment.status === 'Cancelled').length;
   const pendingBookingsCount = appointments.filter(appointment => appointment.status === 'Active').length;
- const sortedAppointments = [...appointments].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedAppointments = [...appointments]
+  .sort((a, b) => new Date(b.date) - new Date(a.date))
+  .slice(0, 10);
+ 
   return (
     <div className="container mx-auto py-6 px-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -58,7 +61,16 @@ function Dashboard() {
           <h2 className="text-lg font-semibold text-white">Consulted Patients</h2>
           <ul className="text-white overflow-y-auto" style={{ maxHeight: '200px' }}>
             {patients.map((patient) => (
-              <li key={patient._id} className="border-b border-gray-700 py-1">{patient.name}</li>
+               <div className="flex mt-2">
+               <img
+               src={patient.profile || '/assets/user.png'} 
+               alt={`${patient.name}'s profile`}
+               className="w-8 h-8 rounded-full mr-2"
+             />
+           <li key={patient._id} className="border-b border-gray-700 py-1">
+             {patient.name}
+           </li>
+           </div>
             ))}
           </ul>
         </div>
@@ -66,22 +78,22 @@ function Dashboard() {
           <h2 className="text-lg font-semibold text-white">Latest Appointments</h2>
           <ul className="text-white overflow-y-auto" style={{ maxHeight: '200px' }}>
             {sortedAppointments.map((appointment) => (
-              <li key={appointment._id} className="border-b border-gray-700 py-1">
-                {new Date(appointment.date).toLocaleDateString()} -- {appointment.userId.name} -- {appointment.shift}
+              <li key={appointment._id} className="border-b border-gray-700 py-1 text-sm">
+                {new Date(appointment.date).toLocaleDateString()} with {appointment.userId.name} on {appointment.shift}
               </li>
             ))}
           </ul>
         </div>
         <div className="bg-gray-800 p-4 border border-gray-600 rounded-lg flex flex-col items-center justify-center">
   <div className="text-white text-center text-xl space-y-2">
-  <div className="bg-green-500 p-2 rounded-md">
-      Completed Bookings: {completedBookingsCount}
+  <div className="bg-green-500 p-2 rounded-md text-sm">
+    Total Completed Bookings: {completedBookingsCount}
     </div>
-    <div className="bg-red-500 p-2 rounded-md">
-      Cancelled Bookings: {cancelledBookingsCount}
+    <div className="bg-red-500 p-2 rounded-md  text-sm">
+     Total Cancelled Bookings: {cancelledBookingsCount}
     </div>
-    <div className="bg-blue-500 p-2 rounded-md">
-      Pending  Bookings: {pendingBookingsCount}
+    <div className="bg-blue-500 p-2 rounded-md  text-sm">
+     Total Pending  Bookings: {pendingBookingsCount}
     </div>
   </div>
 </div>

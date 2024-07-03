@@ -61,7 +61,6 @@ function Dashboard() {
     totalPossibleIncome !== 0
       ? ((totalIncome / totalPossibleIncome) * 100).toFixed(2)
       : 0;
-
   return (
     <div className="container mx-auto py-6 px-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
