@@ -24,5 +24,6 @@ Router.post('/payment-checkout-session',userAuth,userController.make_payment)
 Router.get('/your-appointments/:userid',userAuth,userController.your_appointments)
 Router.post('/add-favorite-doctor',userAuth,userController.add_favorite)
 Router.get('/fetch-favorite-doctor',userAuth,userController.fetch_favoritedoctor)
-
+Router.post('/add-review',userAuth,userController.add_review)
+Router.get('/fetch-review/:id',userAuth,userController.fetch_review)
 module.exports = Router

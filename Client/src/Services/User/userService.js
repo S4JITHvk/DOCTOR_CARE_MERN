@@ -86,4 +86,19 @@ export const fetch_favdoctors=async()=>{
         console.log("Error in add favorite doctor fetching Api",err.message)
     }
 }
-
+export const addreview=async(text,userId,doctorId)=>{
+    try{
+        const response = await Api.post('/add-review',{text,userId,doctorId});
+          return response
+    }catch(err){
+        console.log("Error in add review Api",err.message)
+    }
+}
+export const fetchreview=async(id)=>{
+    try{
+        const response = await Api.get(`/fetch-review/${id}`);
+          return response
+    }catch(err){
+        console.log("Error in fetch review Api",err.message)
+    }
+}

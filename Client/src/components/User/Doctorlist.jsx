@@ -12,9 +12,9 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector,useDispatch } from "react-redux";
-import {doctorList,userbooking,add_favdoctor} from "../../Services/User/userService"
+import {doctorList,userbooking,add_favdoctor,addreview} from "../../Services/User/userService"
 import fetchUser from "../../Services/usersFetch"
-
+import ReviewModal from "./Review/ReviewModal";
 Modal.setAppElement("#root");
 
 function DoctorList() {
@@ -30,6 +30,7 @@ function DoctorList() {
   const [totalPages, setTotalPages] = useState(1);
   const [itemsPerPage] = useState(9);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reviewModalOpen, setreviewModalOpen] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedShift, setSelectedShift] = useState("");
   const getDate = new Date();
@@ -94,13 +95,20 @@ function DoctorList() {
     await getDoctorBookings(doctor._id);
     setIsModalOpen(true);
   };
+  const handlereview = async (doctor) => {
+    setSelectedDoctor(doctor)
+    setreviewModalOpen(true);
+  };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
     setSelectedDoctor(null);
     setSelectedShift("");
   };
-
+  const handlereviewModalClose = () => {
+    setreviewModalOpen(false);
+    setSelectedDoctor(null);
+  };
   const handleShiftSelect = (shift) => {
     setSelectedShift(shift);
   };
@@ -147,7 +155,7 @@ function DoctorList() {
     );
     return isBooked || isInSlots;
   };
-
+ 
   return (
     <div className="flex">
       <div className="w-1/4 p-6 bg-gray-100 h-screen sticky top-0">
@@ -220,8 +228,8 @@ function DoctorList() {
                 </p>
                 <p className="text-gray-500">GENDER : {doctor.gender}</p>
                 <div className="flex justify-between mt-4">
-                  <button className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700">
-                  <MdComment />
+                  <button  onClick={() => handlereview(doctor)} className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700">
+                  <MdComment  />
                   </button>
                   <button
                     onClick={() => handleFavoriteToggle(doctor)}
@@ -381,6 +389,11 @@ function DoctorList() {
           </div>
         )}
       </Modal>
+      <ReviewModal
+        isOpen={reviewModalOpen}
+        onClose={handlereviewModalClose}
+        doctor={selectedDoctor}
+      />
     </div>
   );
 }

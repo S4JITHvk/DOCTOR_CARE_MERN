@@ -4,6 +4,7 @@ const User = require("../../../entities/User/usermodel");
 const Doctor=require("../../../entities/Doctor/Doctormodel")
 const Booking=require("../../../entities/Booking/Bookingmodel")
 const Slot=require("../../../entities/Doctor/Slotmodel")
+const Review=require("../../../entities/Doctor/Reviewmodel")
 const findbyid = async (id) => {
   try {
     const data = await User.findOne({_id:id});
@@ -184,13 +185,47 @@ const fetch_favoritedoctor=async(userId)=>{
   try{
     const user = await User.findById(userId).populate('favoriteDoctors').exec();
     const favoriteDoctors = user.favoriteDoctors;
-    console.log(favoriteDoctors,"doctor")
     return favoriteDoctors;
   } catch (err) {
     throw new Error('Error adding fetch fav doctor user');
   }
 }
-  
+const add_reviewDoc = async (text, userId, doctorId) => {
+  try {
+    let review = await Review.findOne({ doctorId });
+    if (review) {
+      review.reviews.push({
+        userId,
+        comment: text,
+        timestamp: new Date()
+      });
+    } else {
+      review = new Review({
+        doctorId,
+        reviews: [{
+          userId,
+          comment: text,
+          timestamp: new Date()
+        }]
+      });
+    }
+    await review.save();
+  } catch (err) {
+    throw new Error('Error adding review doctor user: ' + err.message);
+  }
+};
+
+const fetch_reviewDoc = async (doctorId) => {
+  try {
+    const reviewDoc = await Review.findOne({ doctorId }).populate('reviews.userId', 'name profile');
+    if (!reviewDoc) {
+      throw new Error('No reviews found for this doctor');
+    }
+    return reviewDoc;
+  } catch (err) {
+    throw new Error('Error fetching doctor reviews: ' + err.message);
+  }
+};
 module.exports = {
   findbyid,
   findbyEmail,
@@ -206,5 +241,7 @@ module.exports = {
   Bookingfindbyid,
   saveBooking,
   add_favoritedoctor,
-  fetch_favoritedoctor
+  fetch_favoritedoctor,
+  add_reviewDoc,
+  fetch_reviewDoc
 };

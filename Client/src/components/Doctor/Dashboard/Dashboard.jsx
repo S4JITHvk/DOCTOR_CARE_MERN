@@ -39,9 +39,11 @@ function Dashboard() {
   };
 
   const completedBookingsCount = appointments.filter(appointment => appointment.status === 'Completed').length;
+  const cancelledBookingsCount = appointments.filter(appointment => appointment.status === 'Cancelled').length;
+  const pendingBookingsCount = appointments.filter(appointment => appointment.status === 'Active').length;
  const sortedAppointments = [...appointments].sort((a, b) => new Date(b.date) - new Date(a.date));
   return (
-    <div className="container mx-auto py-8 px-8">
+    <div className="container mx-auto py-6 px-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-gray-800 p-4 border border-gray-600 rounded-lg">
           <LineChart appointments={appointments}/>
@@ -70,11 +72,20 @@ function Dashboard() {
             ))}
           </ul>
         </div>
-        <div className="bg-gray-800 p-4 border border-gray-600 rounded-lg flex items-center justify-center">
-          <div className="text-white text-center text-2xl">
-            Completed Bookings: {completedBookingsCount}
-          </div>
-        </div>
+        <div className="bg-gray-800 p-4 border border-gray-600 rounded-lg flex flex-col items-center justify-center">
+  <div className="text-white text-center text-xl space-y-2">
+  <div className="bg-green-500 p-2 rounded-md">
+      Completed Bookings: {completedBookingsCount}
+    </div>
+    <div className="bg-red-500 p-2 rounded-md">
+      Cancelled Bookings: {cancelledBookingsCount}
+    </div>
+    <div className="bg-blue-500 p-2 rounded-md">
+      Pending  Bookings: {pendingBookingsCount}
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
   );

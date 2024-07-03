@@ -383,6 +383,26 @@ const fetch_favoritedoctor= async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+const add_review= async (req, res) => {
+  try {
+    const {text,userId,doctorId}=req.body
+    const response = await Query.add_reviewDoc(text,userId,doctorId);
+    res.status(200).json({message:"Review Added"})
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json({ error: err.message });
+  }
+};
+const fetch_review= async (req, res) => {
+  try {
+    const {id}=req.params
+    const response = await Query.fetch_reviewDoc(id);
+    res.status(200).json(response)
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json({ error: err.message });
+  }
+};
 module.exports = {
   userSignup,
   userLogin,
@@ -398,5 +418,7 @@ module.exports = {
   make_payment,
   your_appointments,
   add_favorite,
-  fetch_favoritedoctor
+  fetch_favoritedoctor,
+  add_review,
+  fetch_review
 };
