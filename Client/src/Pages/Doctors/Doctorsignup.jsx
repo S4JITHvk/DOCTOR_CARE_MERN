@@ -53,18 +53,15 @@ function Doctorsignup() {
     gender: "",
     medical_license_no: "",
   });
-
   const handleChange = (event) => {
     setUserData({
       ...userData,
       [event.target.name]: event.target.value,
     });
   };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const validateInputs = () => {
     let isValid = true;
     const newError = { ...error };
@@ -116,7 +113,6 @@ function Doctorsignup() {
       newError.confirmpasswordred = false;
       newErrorDef.confirmpassworderr = "";
     }
-
     if (isEmpty(userData.phone_number)) {
       newError.phone_number_red = true;
       newErrorDef.phone_number_err = "Phone number is required";
@@ -182,13 +178,10 @@ function Doctorsignup() {
       newError.medical_license_no_red = false;
       newErrorDef.medical_license_no_err = "";
     }
-
     setError(newError);
     seterrordef(newErrorDef);
-
     return isValid;
   };
-
   const handleSignup = async (event) => {
     event.preventDefault();
     const isValid = validateInputs();
@@ -207,7 +200,6 @@ function Doctorsignup() {
         }
     }
   };
-
   return (
     <>
       <div
@@ -484,8 +476,6 @@ function Doctorsignup() {
                   )}
                 </div>
               </div>
-
-              {/* Current Working Place Contact Number */}
               <div>
                 <label
                   htmlFor="working_place_contact"

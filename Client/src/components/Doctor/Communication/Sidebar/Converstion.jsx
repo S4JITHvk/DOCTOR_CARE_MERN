@@ -1,15 +1,13 @@
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
 import { useSelector } from "react-redux";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 function Conversation({ conversation, lastIdx }) {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { onlineUsers, unreadMessages, markAsRead } = useSocketContext();
   const doctor = useSelector((state) => state.doctor.doctor);
-
   const isSelected = selectedConversation?._id === conversation._id;
   const isOnline = onlineUsers.includes(conversation._id);
-
   const unreadCount = unreadMessages[conversation._id] || 0;
   const hasUnreadMessages = unreadCount > 0;
   const handleSelectUser = () => {
@@ -17,9 +15,7 @@ function Conversation({ conversation, lastIdx }) {
     markAsRead(doctor?._id, conversation?._id);
   };
   useEffect(() => {
-    console.log("useEffect called");
-      markAsRead(doctor?._id, selectedConversation?._id);
-  
+    markAsRead(doctor?._id, selectedConversation?._id);
   }, []);
   return (
     <>
@@ -30,9 +26,7 @@ function Conversation({ conversation, lastIdx }) {
         onClick={handleSelectUser}
       >
         <div className={`avatar ${isOnline ? "online" : ""}`}>
-          <div
-            className={`w-12 rounded-full`}
-          >
+          <div className={`w-12 rounded-full`}>
             <img
               src={conversation?.profile || "/assets/user.png"}
               alt="user avatar"
@@ -42,14 +36,11 @@ function Conversation({ conversation, lastIdx }) {
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-semibold">{conversation?.name}</p>
-            {isOnline ?
-            <span className="text-green-500 font-bold text-sm">
-                Online
-              </span>:
-              <span className="text-gray-500 font-bold text-sm">
-              Offline
-            </span>
-            }
+            {isOnline ? (
+              <span className="text-green-500 font-bold text-sm">Online</span>
+            ) : (
+              <span className="text-gray-500 font-bold text-sm">Offline</span>
+            )}
             {hasUnreadMessages && (
               <span className="text-green-500 font-bold text-sm">
                 Messages {unreadCount}

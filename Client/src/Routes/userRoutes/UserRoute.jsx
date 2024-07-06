@@ -36,7 +36,6 @@ function UserRoute() {
       <Route path="/emailform" element={<Email />} />
       <Route path="/Resetpass" element={<ResetPass />} />
     </Route>
-  
     <Route element={<Protect role="USER" />}>    
       <Route path="/home" element={<><Header /> <Home /><Footer/></>} />
       <Route path="/Doctors" element={<><Header /><Doctor/> <Footer/></>}/>
@@ -56,5 +55,4 @@ function UserRoute() {
     </>
   );
 }
-
 export default UserRoute;

@@ -9,11 +9,9 @@ function Docchangepass() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     let error = "";

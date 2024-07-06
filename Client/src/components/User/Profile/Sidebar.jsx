@@ -3,13 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { clearUser } from "../../../ReduxStore/features/userSlice";
-import profilePlaceholder from '/assets/user.png';
+import profilePlaceholder from "/assets/user.png";
 
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
-
   const logout = () => {
     try {
       dispatch(clearUser());
@@ -21,9 +20,9 @@ function Sidebar() {
   };
 
   const getLinkClass = (path) => {
-    return location.pathname === path 
-      ? "block bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center" 
-      : "block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center"
+    return location.pathname === path
+      ? "block bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center"
+      : "block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition duration-300 ease-in-out text-center";
   };
 
   return (
@@ -50,20 +49,21 @@ function Sidebar() {
               </Link>
             </li>
             <li className="mb-3">
-              <Link to="/favorite-doctor" className={getLinkClass("/favorite-doctor")}>
+              <Link
+                to="/favorite-doctor"
+                className={getLinkClass("/favorite-doctor")}
+              >
                 FAVORITE DOCTORS
               </Link>
             </li>
             <li className="mb-3">
-              <Link to="/Yourappointments" className={getLinkClass("/Yourappointments")}>
+              <Link
+                to="/Yourappointments"
+                className={getLinkClass("/Yourappointments")}
+              >
                 APPOINTMENTS
               </Link>
             </li>
-            {/* <li className="mb-3">
-              <Link to="/notifications" className={getLinkClass("/notifications")}>
-                Notifications
-              </Link>
-            </li> */}
             <li className="mb-3">
               <Link to="/Newpassword" className={getLinkClass("/Newpassword")}>
                 CHANGE PASSWORD

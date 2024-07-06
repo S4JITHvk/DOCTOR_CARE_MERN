@@ -5,9 +5,11 @@ import { useConversation } from "../../../../Socket/zustand/useConversation";
 function Conversations() {
   const { loading, conversations } = useGetConversations();
   const { selectedConversation } = useConversation();
-
   const reorderedConversations = selectedConversation
-    ? [selectedConversation, ...conversations.filter(c => c._id !== selectedConversation._id)]
+    ? [
+        selectedConversation,
+        ...conversations.filter((c) => c._id !== selectedConversation._id),
+      ]
     : conversations;
 
   return (

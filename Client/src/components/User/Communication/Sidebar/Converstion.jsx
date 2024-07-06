@@ -4,19 +4,16 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 function Conversation({ conversation, lastIdx }) {
   const { selectedConversation, setSelectedConversation } = useConversation();
-
   const isSelected = selectedConversation?._id === conversation._id;
   const { onlineUsers, unreadMessages, markAsRead } = useSocketContext();
   const isOnline = onlineUsers.includes(conversation._id);
   const User = useSelector((state) => state.user.user);
   const unreadCount = unreadMessages[conversation._id] || 0;
   const hasUnreadMessages = unreadCount > 0;
-
   const handleSelectUser = () => {
     setSelectedConversation(conversation);
     markAsRead(User?._id, conversation._id);
   };
-
   useEffect(() => {
     if (selectedConversation) {
       markAsRead(User?._id, selectedConversation?._id);
@@ -39,18 +36,14 @@ function Conversation({ conversation, lastIdx }) {
             />
           </div>
         </div>
-
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
             <p className="font-semibold">(DR) {conversation?.name}</p>
-            {isOnline ?
-            <span className="text-green-500 font-bold text-sm">
-                Online
-              </span>:
-              <span className="text-gray-500 font-bold text-sm">
-              Offline
-            </span>
-            }
+            {isOnline ? (
+              <span className="text-green-500 font-bold text-sm">Online</span>
+            ) : (
+              <span className="text-gray-500 font-bold text-sm">Offline</span>
+            )}
             {hasUnreadMessages && (
               <span className="text-green-500 font-bold text-sm">
                 Messages {unreadCount}

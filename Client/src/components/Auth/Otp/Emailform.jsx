@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {isEmailValid} from "../../../helpers/validation"
-import { useLocation } from 'react-router-dom';
-import {forgetpass_emailreq} from "../../../Services/Auth/userAuth"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { isEmailValid } from "../../../helpers/validation";
+import { useLocation } from "react-router-dom";
+import { forgetpass_emailreq } from "../../../Services/Auth/userAuth";
 function EmailForm() {
   const location = useLocation();
-  const action  = location.state?.action
-  const [email, setEmail] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const action = location.state?.action;
+  const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isEmailValid(email)) {
-      setErrorMessage('Please enter a valid email address.');
+      setErrorMessage("Please enter a valid email address.");
       return;
     }
-      const response = await forgetpass_emailreq(email,action)
-      if (response.status === 200) {
-        navigate('/otp', { state: { email, action: action } });
-      } else {
-        setErrorMessage("Email not Found");
-      }
+    const response = await forgetpass_emailreq(email, action);
+    if (response.status === 200) {
+      navigate("/otp", { state: { email, action: action } });
+    } else {
+      setErrorMessage("Email not Found");
+    }
   };
 
   return (
@@ -28,15 +28,21 @@ function EmailForm() {
       className="flex min-h-screen justify-center items-center"
       style={{
         backgroundImage: `url('/public/assets/bg.jpg')`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
     >
       <div className="bg-white p-8 rounded-md shadow-lg">
-        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">MIND CARE</h1>
-        <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Enter Your Email</h2>
-        {errorMessage && <p className="mt-4 text-red-500 text-center">{errorMessage}</p>}
+        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">
+          MIND CARE
+        </h1>
+        <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">
+          Enter Your Email
+        </h2>
+        {errorMessage && (
+          <p className="mt-4 text-red-500 text-center">{errorMessage}</p>
+        )}
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex justify-center">
             <input
@@ -54,12 +60,14 @@ function EmailForm() {
             Submit
           </button>
         </form>
-
-       
-
         <p className="mt-10 text-center text-sm text-gray-500">
           Back to login_
-          <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign In</a>
+          <a
+            href="/login"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Sign In
+          </a>
         </p>
       </div>
     </div>

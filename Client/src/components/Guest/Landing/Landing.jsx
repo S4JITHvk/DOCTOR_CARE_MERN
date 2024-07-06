@@ -19,7 +19,9 @@ export default function Landing() {
               </h1>
               <p className="mx-auto mb-9 max-w-[600px] text-base font-medium text-white sm:text-lg sm:leading-[1.44]">
                 Welcome to <span className="font-bold">Mind Care</span>, Here we
-                provide support and assistance to individuals navigating challenging mental health issues such as depression, suicidal thoughts, and social anxiety.
+                provide support and assistance to individuals navigating
+                challenging mental health issues such as depression, suicidal
+                thoughts, and social anxiety.
               </p>
               <ul className="mb-10 flex flex-wrap items-center justify-center gap-5">
                 <li>

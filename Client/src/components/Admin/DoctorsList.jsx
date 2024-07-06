@@ -31,7 +31,6 @@ function DoctorsList() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
-
   const paginate = (pageNumber) => {
     if (pageNumber === 'prev') {
       setCurrentPage((prev) => Math.max(prev - 1, 1));
@@ -81,7 +80,6 @@ function DoctorsList() {
         console.log(err.message);
     }
 }
-
   if (isLoading) {
     return <><h1>Fetching Doctors...</h1></>;
   }

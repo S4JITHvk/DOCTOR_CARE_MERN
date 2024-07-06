@@ -9,7 +9,6 @@ function UsersList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
-
   const fetchData = async () => {
       const response = await fetch_userlist()
       if (response.status === 200) {
@@ -20,7 +19,6 @@ function UsersList() {
         setIsLoading(false);
       }
   };
-
   useEffect(() => {
     fetchData();
   }, [searchQuery]);
@@ -64,7 +62,6 @@ function UsersList() {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
   const paginate = (pageNumber) => {
     if (pageNumber === 'prev') {
       setCurrentPage((prev) => Math.max(prev - 1, 1));

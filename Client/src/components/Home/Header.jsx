@@ -1,35 +1,35 @@
-import { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useSelector, useDispatch } from 'react-redux';
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useSelector, useDispatch } from "react-redux";
 import { clearUser } from "../../ReduxStore/features/userSlice";
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { FaComments, FaUser } from 'react-icons/fa';
-import profilePlaceholder from '/assets/user.png';
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { FaComments, FaUser } from "react-icons/fa";
+import profilePlaceholder from "/assets/user.png";
 import Cookies from "js-cookie";
 
 const navigation = [
-  { name: 'Home', href: '/home' },
-  { name: 'Doctors', href: '/Doctors' },
-  { name: 'About us', href: '/Aboutus' },
-  { name: 'Messages', href: '/Communicate' },
+  { name: "Home", href: "/home" },
+  { name: "Doctors", href: "/Doctors" },
+  { name: "About us", href: "/Aboutus" },
+  { name: "Messages", href: "/Communicate" },
 ];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 function Header() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const location = useLocation(); 
+  const location = useLocation();
 
   const logout = () => {
     try {
       dispatch(clearUser());
       Cookies.remove("token");
-      navigate('/login')
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }
@@ -55,9 +55,14 @@ function Header() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img src="/assets/mindcare.jpg" alt="Logo" className="h-8 w-8 rounded-full" />
+                  <img
+                    src="/assets/mindcare.jpg"
+                    alt="Logo"
+                    className="h-8 w-8 rounded-full"
+                  />
                   <h1>
-                    <span style={{ color: 'white' }}>Mind</span> <span style={{ color: 'red' }}>Care</span>
+                    <span style={{ color: "white" }}>Mind</span>{" "}
+                    <span style={{ color: "red" }}>Care</span>
                   </h1>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -67,10 +72,14 @@ function Header() {
                         key={item.name}
                         to={item.href}
                         className={classNames(
-                          location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          location.pathname === item.href
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "rounded-md px-3 py-2 text-sm font-medium"
                         )}
-                        aria-current={location.pathname === item.href ? 'page' : undefined}
+                        aria-current={
+                          location.pathname === item.href ? "page" : undefined
+                        }
                       >
                         {item.name}
                       </Link>
@@ -116,7 +125,10 @@ function Header() {
                         {({ active }) => (
                           <Link
                             to="/profile"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Your Profile
                           </Link>
@@ -127,7 +139,10 @@ function Header() {
                           <Link
                             to="#"
                             onClick={logout}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
                           >
                             Logout
                           </Link>
@@ -148,10 +163,14 @@ function Header() {
                   as={Link}
                   to={item.href}
                   className={classNames(
-                    location.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                    location.pathname === item.href
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
                   )}
-                  aria-current={location.pathname === item.href ? 'page' : undefined}
+                  aria-current={
+                    location.pathname === item.href ? "page" : undefined
+                  }
                 >
                   {item.name}
                 </Disclosure.Button>

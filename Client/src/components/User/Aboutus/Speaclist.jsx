@@ -15,7 +15,12 @@ function MeetOurSpecialist() {
             Our specialists are here to provide you with the best care possible.
           </p>
           <p className="text-center text-sm text-gray-700 mt-8">
-            Our team of highly skilled specialists is dedicated to delivering personalized and compassionate care to every patient. With a wealth of experience and a commitment to excellence, they work collaboratively to ensure you receive the best possible treatment and support. Whether you need routine care or specialized treatment, our specialists are here to guide you every step of the way.
+            Our team of highly skilled specialists is dedicated to delivering
+            personalized and compassionate care to every patient. With a wealth
+            of experience and a commitment to excellence, they work
+            collaboratively to ensure you receive the best possible treatment
+            and support. Whether you need routine care or specialized treatment,
+            our specialists are here to guide you every step of the way.
           </p>
         </div>
         <div className="flex justify-center md:p-8">

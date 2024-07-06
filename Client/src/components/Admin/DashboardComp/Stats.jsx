@@ -9,10 +9,8 @@ function Dashboard() {
   const [appointments, setAppointments] = useState([]);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalPossibleIncome, setTotalPossibleIncome] = useState(0);
-
   useEffect(() => {
     const fetchAppointments = async () => {
-      try {
         const response = await fetch_allbookinglist();
         if (response.status === 200) {
           setAppointments(response.data.bookings);
@@ -21,11 +19,7 @@ function Dashboard() {
           calculateTotalIncome(response.data.bookings);
           calculateTotalPossibleIncome(response.data.bookings);
         }
-      } catch (error) {
-        console.error("Error fetching appointments:", error);
-      }
     };
-
     fetchAppointments();
   }, []);
 
@@ -38,12 +32,9 @@ function Dashboard() {
     });
     return Object.values(patientsMap);
   };
-
   const sortedAppointments = [...appointments]
   .sort((a, b) => new Date(b.date) - new Date(a.date))
   .slice(0, 10);
-
-
   const calculateTotalIncome = (bookings) => {
     const totalIncomeAmount = bookings.reduce((total, booking) => {
       if (booking.payment.status === "Paid") {

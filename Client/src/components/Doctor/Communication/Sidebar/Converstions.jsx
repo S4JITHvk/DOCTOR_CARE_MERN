@@ -7,7 +7,10 @@ function Conversations() {
   const { selectedConversation } = useConversation();
 
   const reorderedConversations = selectedConversation
-    ? [selectedConversation, ...conversations.filter(c => c._id !== selectedConversation._id)]
+    ? [
+        selectedConversation,
+        ...conversations.filter((c) => c._id !== selectedConversation._id),
+      ]
     : conversations;
 
   return (

@@ -9,5 +9,4 @@ function Adminhead() {
     </header>
   );
 }
-
 export default Adminhead;

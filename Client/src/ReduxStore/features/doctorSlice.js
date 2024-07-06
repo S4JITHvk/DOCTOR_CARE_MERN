@@ -5,7 +5,6 @@ const initialState = {
   doctor: null, 
   isAuthenticated: false,
 };
-
 const doctorSlice = createSlice({
   name: 'doctor',
   initialState,
@@ -20,7 +19,5 @@ const doctorSlice = createSlice({
     }
   }
 });
-
 export const { setDoctor, clearDoctor} = doctorSlice.actions;
-
 export default doctorSlice.reducer;

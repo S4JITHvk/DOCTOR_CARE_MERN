@@ -17,6 +17,7 @@ const Bookingcomp=lazy(()=>import("../../components/Doctor/YourBookings/DocBooki
 const Yourslot=lazy(()=>import("../../components/Doctor/Slot_manage/slotManage"))
 const Chat=lazy(()=>import("../../components/Doctor/Communication/Chat"))
 const Video=lazy(()=>import("../../components/Doctor/Communication/VideoCall/Videomodal"))
+
 function Doctorroute() {
   const Doctor=useSelector((state)=>state.doctor)
   const dispatch = useDispatch();
@@ -26,7 +27,6 @@ function Doctorroute() {
       fetchDoctor(dispatch);
     }  
   }, [dispatch]);
-
   return (
     <Suspense fallback={<Loader />}>
       <Routes>

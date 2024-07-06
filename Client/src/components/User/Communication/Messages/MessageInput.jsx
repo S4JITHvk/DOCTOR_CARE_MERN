@@ -4,7 +4,7 @@ import EmojiPicker from "emoji-picker-react";
 import { ReactMic } from "react-mic";
 import useSendMessage from "../../../../Socket/Hooks/useSendMessage";
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
-import { useConversation } from "../../../../Socket/zustand/useConversation";
+
 function MessageInput() {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -37,19 +37,14 @@ function MessageInput() {
     setMessage("");
     setImageFile(null);
   };
-
   const startRecording = () => setIsRecording(true);
-
   const stopRecording = () => setIsRecording(false);
-
   const onStop = (recordedBlob) => setAudioBlob(recordedBlob.blob);
-
   const sendVoiceMessage = async () => {
     if (!audioBlob) return;
     await sendMessage(audioBlob);
     setAudioBlob(null);
   };
-
   const handleImageUpload = (e) => {
     setImageFile(e.target.files[0]);
   };
@@ -139,7 +134,7 @@ function MessageInput() {
           <button
             type="button"
             className="text-white bg-red-500 hover:bg-red-700  px-4 py-2"
-            onClick={() => setImageFile(null)} 
+            onClick={() => setImageFile(null)}
           >
             Cancel
           </button>

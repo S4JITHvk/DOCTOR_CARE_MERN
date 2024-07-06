@@ -9,7 +9,6 @@ function Sidebar() {
   const navigate=useNavigate()
   const dispatch = useDispatch();
   const location = useLocation();
-  
   const logout = () => {
     try {
       dispatch(clearUser());
@@ -19,7 +18,6 @@ function Sidebar() {
       console.log(err);
     }
   };
-
   const getLinkClass = (path) => {
     return location.pathname === path 
       ? "bg-blue-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out" 

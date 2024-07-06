@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FiPhoneOff } from 'react-icons/fi';
-
+const Appid=import.meta.env.VITE_ZEGO_APPID
+const ServerSecret=import.meta.env.VITE_ZEGO_SECRETKEY
 function randomID(len) {
   let result = '';
   if (result) return result;
@@ -38,8 +39,8 @@ export default function App() {
     }
 
     const initMeeting = async (element) => {
-      const appID = 919371831;
-      const serverSecret = "bf4e835c6eeab8a1f5ebc95e8ce554a0";
+      const appID = Appid;
+      const serverSecret = ServerSecret;
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), randomID(5));
       const zp = ZegoUIKitPrebuilt.create(kitToken);
       zp.joinRoom({

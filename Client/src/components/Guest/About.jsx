@@ -15,11 +15,24 @@ export default function AboutUs() {
                   Why Mind Care
                 </h2>
                 <p className="mb-10 text-text leading-relaxed text-body-color text-white">
-                 
-                 "Mind Care" is a revolutionary doctor consulting application designed to provide support and assistance to individuals navigating challenging mental health issues such as depression, suicidal thoughts, and social anxiety. Our platform connects users with qualified healthcare professionals who specialize in mental health care, offering a safe and confidential space for consultations. Whether you're seeking guidance, therapy, or simply someone to listen, Doctor Care is here to help you on your journey towards healing and well-being.
+                  "Mind Care" is a revolutionary doctor consulting application
+                  designed to provide support and assistance to individuals
+                  navigating challenging mental health issues such as
+                  depression, suicidal thoughts, and social anxiety. Our
+                  platform connects users with qualified healthcare
+                  professionals who specialize in mental health care, offering a
+                  safe and confidential space for consultations. Whether you're
+                  seeking guidance, therapy, or simply someone to listen, Doctor
+                  Care is here to help you on your journey towards healing and
+                  well-being.
                   <br />
                   <br />
-                  Our vision at Doctor Care is to create a world where mental health support is accessible to all, without stigma or barriers. We envision a future where individuals can easily connect with empathetic professionals and resources, empowering them to prioritize their mental well-being and live fulfilling lives
+                  Our vision at Doctor Care is to create a world where mental
+                  health support is accessible to all, without stigma or
+                  barriers. We envision a future where individuals can easily
+                  connect with empathetic professionals and resources,
+                  empowering them to prioritize their mental well-being and live
+                  fulfilling lives
                 </p>
 
                 <Link
@@ -36,7 +49,7 @@ export default function AboutUs() {
                 <div className="w-full px-2 sm:w-1/2 sm:px-4 lg:px-2 xl:px-4">
                   <div className="mb-4 sm:mb-8 sm:h-[400px] md:h-[540px] lg:h-[400px] xl:h-[500px]">
                     <img
-                    src="https://c0.wallpaperflare.com/preview/685/663/788/adult-doctor-girl-healthcare.jpg"
+                      src="https://c0.wallpaperflare.com/preview/685/663/788/adult-doctor-girl-healthcare.jpg"
                       alt="about image"
                       className="h-full w-full object-cover object-center"
                     />

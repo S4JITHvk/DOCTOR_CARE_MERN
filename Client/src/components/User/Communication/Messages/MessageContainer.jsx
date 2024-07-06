@@ -1,16 +1,15 @@
 import { useEffect } from "react";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
-import {Link} from "react-router-dom"
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useSelector } from "react-redux";
-import { FaVideo } from "react-icons/fa";
 
 function MessageContainer() {
   const { selectedConversation, setSelectedConversation } = useConversation();
-  const { onlineUsers, typingUsers, startTyping, stopTyping } = useSocketContext();
+  const { onlineUsers, typingUsers, startTyping, stopTyping } =
+    useSocketContext();
   const isOnline = onlineUsers.includes(selectedConversation?._id);
   useEffect(() => {
     return () => setSelectedConversation(null);
@@ -20,7 +19,7 @@ function MessageContainer() {
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (
-        <>  
+        <>
           <div className="flex items-center justify-between p-4 bg-blue-700 text-white">
             <div className="flex items-center">
               <img
@@ -33,17 +32,18 @@ function MessageContainer() {
                   DR {selectedConversation?.name}
                 </h3>
                 <span className="text-sm text-gray-300">
-                {typingUsers.some((user) => user?.userId === selectedConversation?._id)
-                  ? "Typing..."
-                  : isOnline
-                  ? "Online"
-                  : ""}
-              </span>
-              
+                  {typingUsers.some(
+                    (user) => user?.userId === selectedConversation?._id
+                  )
+                    ? "Typing..."
+                    : isOnline
+                    ? "Online"
+                    : ""}
+                </span>
               </div>
             </div>
           </div>
-         
+
           <Messages />
           <MessageInput />
         </>
@@ -66,5 +66,3 @@ const NoChatSelected = () => {
     </div>
   );
 };
-
-

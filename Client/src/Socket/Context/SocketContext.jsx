@@ -1,16 +1,20 @@
-import { createContext, useState, useEffect, useContext, useCallback } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import io from "socket.io-client";
 import { useSelector } from "react-redux";
-import toast from 'react-hot-toast';
-import { useNavigate} from "react-router-dom";
-import { BiPhoneCall,  BiPhoneOff } from 'react-icons/bi';
+import toast from "react-hot-toast";
+import { BiPhoneCall, BiPhoneOff } from "react-icons/bi";
 import Callreject from "../../components/User/Communication/VideoCall/Callreject";
+const Serverhost=import.meta.env.VITE_SERVER_HOST
 const SocketContext = createContext();
-
 export const useSocketContext = () => {
   return useContext(SocketContext);
 };
-
 export const SocketContextProvider = ({ children }) => {
   const User = useSelector((state) => state.user);
   const Doctor = useSelector((state) => state.doctor);
@@ -18,17 +22,15 @@ export const SocketContextProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
   const [unreadMessages, setUnreadMessages] = useState({});
-  const navigate = useNavigate();
   const userId = User?.user?._id || Doctor?.doctor?._id;
   useEffect(() => {
     if (userId) {
-      const newSocket = io("http://localhost:3000", { query: { userId } });
+      const newSocket = io(Serverhost, { query: { userId } });
       setSocket(newSocket);
 
       newSocket.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
       });
-      
       newSocket.on("typing", (user) => {
         setTypingUsers((prevTypingUsers) => {
           if (!prevTypingUsers.some((u) => u._id === user._id)) {
@@ -37,44 +39,48 @@ export const SocketContextProvider = ({ children }) => {
           return prevTypingUsers;
         });
       });
-
       newSocket.on("stopTyping", (user) => {
         setTypingUsers((prevTypingUsers) => {
           return prevTypingUsers.filter((u) => u._id !== user._id);
         });
       });
-
       newSocket.on("newunreadMessage", ({ from, unreadCount }) => {
         setUnreadMessages((prevUnreadMessages) => ({
           ...prevUnreadMessages,
           [from]: unreadCount,
         }));
       });
-
       newSocket.on("callRejected", () => {
-        toast((t) => (
-          <div className="p-4 bg-red-300 rounded-sm shadow-md">
-            <  BiPhoneOff className='h-5 w-5 text-red-500' />
-            <p className="mb-2 text-md font-semibold text-gray-800">CALL DECLINED</p>
-          </div>
-        ), { duration: 4000 }); 
-      })
-
-      newSocket.on("incomingCall", ({ Caller, personalLink }) => {
-        toast((t) => (
-          <div className="p-4 bg-white rounded-lg shadow-md">
-            <BiPhoneCall className="h-8 w-8 text-green-500" />
-            <p className="mb-2 text-lg font-semibold text-gray-800">Incoming Call from {Caller.name}</p>
-            <div className="flex justify-between">
-              <button
-                className="px-4 py-2 mr-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700"
-              >
-                <a href={personalLink}>Join Now</a>
-              </button>
-              <Callreject t={t.id} Caller={Caller} />
+        toast(
+          (t) => (
+            <div className="p-4 bg-red-300 rounded-sm shadow-md">
+              <BiPhoneOff className="h-5 w-5 text-red-500" />
+              <p className="mb-2 text-md font-semibold text-gray-800">
+                CALL DECLINED
+              </p>
             </div>
-          </div>
-        ), { duration: 10000 });
+          ),
+          { duration: 4000 }
+        );
+      });
+      newSocket.on("incomingCall", ({ Caller, personalLink }) => {
+        toast(
+          (t) => (
+            <div className="p-4 bg-white rounded-lg shadow-md">
+              <BiPhoneCall className="h-8 w-8 text-green-500" />
+              <p className="mb-2 text-lg font-semibold text-gray-800">
+                Incoming Call from {Caller.name}
+              </p>
+              <div className="flex justify-between">
+                <button className="px-4 py-2 mr-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700">
+                  <a href={personalLink}>Join Now</a>
+                </button>
+                <Callreject t={t.id} Caller={Caller} />
+              </div>
+            </div>
+          ),
+          { duration: 10000 }
+        );
       });
       return () => {
         newSocket.close();
@@ -85,19 +91,16 @@ export const SocketContextProvider = ({ children }) => {
       setSocket(null);
     }
   }, [userId]);
-
   const startTyping = useCallback(() => {
     if (socket) {
       socket.emit("typing");
     }
   }, [socket]);
-
   const stopTyping = useCallback(() => {
     if (socket) {
       socket.emit("stopTyping");
     }
   }, [socket]);
-
   const sendnewMessage = useCallback(
     (to, from) => {
       if (socket) {
@@ -106,7 +109,6 @@ export const SocketContextProvider = ({ children }) => {
     },
     [socket]
   );
-
   const markAsRead = useCallback(
     (to, from) => {
       if (socket) {
@@ -120,20 +122,23 @@ export const SocketContextProvider = ({ children }) => {
     },
     [socket]
   );
-
-  const Videocall = useCallback((userId, link) => {
-    if (socket) {
-      socket.emit("callingUser", { userId, link });
-    }
-  }, [socket]);
-
-  const onCallRejected = useCallback((Caller) => {
-    console.log(socket,"sockethere")
-    if (socket) {
-      socket.emit("onRejected", {Caller});
-    }
-  }, [socket]);
- 
+  const Videocall = useCallback(
+    (userId, link) => {
+      if (socket) {
+        socket.emit("callingUser", { userId, link });
+      }
+    },
+    [socket]
+  );
+  const onCallRejected = useCallback(
+    (Caller) => {
+      console.log(socket, "sockethere");
+      if (socket) {
+        socket.emit("onRejected", { Caller });
+      }
+    },
+    [socket]
+  );
   return (
     <SocketContext.Provider
       value={{
@@ -146,7 +151,7 @@ export const SocketContextProvider = ({ children }) => {
         sendnewMessage,
         markAsRead,
         Videocall,
-        onCallRejected
+        onCallRejected,
       }}
     >
       {children}

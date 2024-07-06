@@ -8,9 +8,7 @@ function CancelBookings() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
-
   const [refundInitiated, setRefundInitiated] = useState({});
-
   const fetchCancelledBookings = async () => {
       const response = await  fetchcancelled_booking(page,limit)
       if(response.status===200){
@@ -19,7 +17,6 @@ function CancelBookings() {
       setLoading(false);
       }
   };
-
   useEffect(() => {
     fetchCancelledBookings();
   }, [page]);

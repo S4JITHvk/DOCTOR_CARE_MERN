@@ -7,7 +7,7 @@ import { useConversation } from "../../../../Socket/zustand/useConversation";
 function Messages() {
   const { selectedConversation } = useConversation();
   const { messages, loading } = useGetMessages();
-  useListenMessages()
+  useListenMessages();
   const lastMessageRef = useRef();
   useEffect(() => {
     setTimeout(() => {

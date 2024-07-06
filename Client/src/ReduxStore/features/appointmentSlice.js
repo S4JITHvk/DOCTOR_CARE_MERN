@@ -1,30 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   appointments: [],
   loading: false,
   error: null,
 };
-
 const appointmentsSlice = createSlice({
-  name: 'appointments',
+  name: "appointments",
   initialState,
   reducers: {
     addAppointment(state, action) {
       state.appointments.push(action.payload);
     },
     removeAppointment(state, action) {
-      state.appointments = state.appointments.filter(appointment => appointment.userid !== action.payload.userid);
+      state.appointments = state.appointments.filter(
+        (appointment) => appointment.userid !== action.payload.userid
+      );
     },
-    // clearit(state){
-    //   state.appointments=[]
-    // }
   },
 });
-
-export const {
-  addAppointment,
-  removeAppointment,
-} = appointmentsSlice.actions;
-
-export default appointmentsSlice.reducer
+export const { addAppointment, removeAppointment } = appointmentsSlice.actions;
+export default appointmentsSlice.reducer;

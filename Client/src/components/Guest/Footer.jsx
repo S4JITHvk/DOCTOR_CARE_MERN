@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-
 export default function Footer() {
   return (
     <>
@@ -10,7 +9,11 @@ export default function Footer() {
       >
         <div className="container">
           <div className="mb-10 w-full items-center justify-center flex flex-col">
-          <img src="/assets/mindcare.jpg" alt="Logo" className="h-8 w-8 rounded-full" />
+            <img
+              src="/assets/mindcare.jpg"
+              alt="Logo"
+              className="h-8 w-8 rounded-full"
+            />
             <h1 className="mb-6 inline-block text-white max-w-[160px]">
               Mind Care
             </h1>
@@ -28,25 +31,19 @@ export default function Footer() {
                 <div className="my-1">
                   <div className="-mx-3 flex items-center justify-center md:justify-start">
                     <Link
-                      to={
-                        ""
-                      }
+                      to={""}
                       className="px-3 text-text  text-white hover:underline"
                     >
                       Code of Conduct
                     </Link>
                     <Link
-                      to={
-                        ""
-                      }
+                      to={""}
                       className="px-3 text-text  text-white hover:underline"
                     >
                       Contributing
                     </Link>
                     <Link
-                      to={
-                        ""
-                      }
+                      to={""}
                       className="px-3 text-text  text-white hover:underline"
                     >
                       LICENCE
@@ -58,10 +55,7 @@ export default function Footer() {
                 <div className="my-1 flex justify-center md:justify-end">
                   <h1 className="text-white ">
                     Designed and Developed by
-                    <Link
-                    to={""}
-                      className="text-gray-1 hover:underline"
-                    >
+                    <Link to={""} className="text-gray-1 hover:underline">
                       MindCare
                     </Link>
                   </h1>

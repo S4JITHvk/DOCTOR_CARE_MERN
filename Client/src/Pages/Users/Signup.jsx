@@ -10,7 +10,7 @@ import {
 } from "../../helpers/validation";
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
-import {userSignup,googleLogin} from "../../Services/Auth/userAuth"
+import { userSignup, googleLogin } from "../../Services/Auth/userAuth";
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ function Signup() {
   const googleAuth = async (data) => {
     const { email, name } = data;
     try {
-     googleLogin(email,name)
+      googleLogin(email, name);
     } catch (error) {
       const { status, data } = error.response;
       if (status) setErrorMessage(data.message);
@@ -118,36 +118,33 @@ function Signup() {
       errors.confirmpasswordred = true;
       errorMessages.confirmpassworderr = "Passwords don't match";
     }
-
     setError(errors);
     seterrordef(errorMessages);
-      if (
-        !errors.emailred &&
-        !errors.namered &&
-        !errors.passwordred &&
-        !errors.confirmpasswordred
-      ) {
-        const response =await userSignup(userData)
-        if (response.data.message === "OTP sent") {
-          toast.success("Enter otp send to your mail");
-          navigate("/otp", { state: { email: userData.email } });
-        } else if (response.data.message === "Email exists!") {
-          toast.error("Email already exists!");
-          setError((previous) => ({
-            ...previous,
-            emailred: true,
-          }));
-          seterrordef((previous) => ({
-            ...previous,
-            emailerr: "Email already exists!",
-          }));
-        } else {
-          console.error("Error registering user:", response.statusText);
-        }
+    if (
+      !errors.emailred &&
+      !errors.namered &&
+      !errors.passwordred &&
+      !errors.confirmpasswordred
+    ) {
+      const response = await userSignup(userData);
+      if (response.data.message === "OTP sent") {
+        toast.success("Enter otp send to your mail");
+        navigate("/otp", { state: { email: userData.email } });
+      } else if (response.data.message === "Email exists!") {
+        toast.error("Email already exists!");
+        setError((previous) => ({
+          ...previous,
+          emailred: true,
+        }));
+        seterrordef((previous) => ({
+          ...previous,
+          emailerr: "Email already exists!",
+        }));
+      } else {
+        console.error("Error registering user:", response.statusText);
       }
-  
+    }
   };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -164,7 +161,6 @@ function Signup() {
           paddingBottom: "9rem",
         }}
       >
-
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h1 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
             MIND CARE

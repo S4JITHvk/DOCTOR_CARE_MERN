@@ -1,5 +1,6 @@
 import axios from "axios"
-const baseURL = 'http://localhost:3000/api'
+const Hostname=import.meta.env.VITE_SERVER_HOST
+const baseURL =Hostname+'/api'
 
 const DoctorcareApi = axios.create({
     baseURL,

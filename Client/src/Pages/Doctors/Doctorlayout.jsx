@@ -20,5 +20,4 @@ const Doctorlayout = ({ children }) => {
     </div>
   );
 };
-
 export default Doctorlayout;

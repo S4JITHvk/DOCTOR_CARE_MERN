@@ -7,5 +7,4 @@ function AdminDash() {
     </>
   )
 }
-
 export default AdminDash

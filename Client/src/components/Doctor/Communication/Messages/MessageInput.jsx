@@ -1,10 +1,10 @@
 import { BsSend, BsEmojiSmile, BsMic, BsStop, BsImage } from "react-icons/bs";
 import { useState, useEffect } from "react";
-import EmojiPicker from 'emoji-picker-react';
-import { ReactMic } from 'react-mic';
+import EmojiPicker from "emoji-picker-react";
+import { ReactMic } from "react-mic";
 import useSendMessage from "../../../../Socket/Hooks/useSendMessage";
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
-import { useConversation } from "../../../../Socket/zustand/useConversation";
+
 function MessageInput() {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -37,13 +37,9 @@ function MessageInput() {
     setMessage("");
     setImageFile(null);
   };
-
   const startRecording = () => setIsRecording(true);
-
   const stopRecording = () => setIsRecording(false);
-
   const onStop = (recordedBlob) => setAudioBlob(recordedBlob.blob);
-
   const sendVoiceMessage = async () => {
     if (!audioBlob) return;
     await sendMessage(audioBlob);
@@ -95,7 +91,11 @@ function MessageInput() {
           type="submit"
           className="absolute inset-y-0 end-0 flex items-center pe-3"
         >
-          {loading ? (<div className="loading loading-spinner"></div>) : <BsSend />}
+          {loading ? (
+            <div className="loading loading-spinner"></div>
+          ) : (
+            <BsSend />
+          )}
         </button>
         {showEmojiPicker && (
           <div className="absolute bottom-10 right-0 z-50">
@@ -135,7 +135,7 @@ function MessageInput() {
           <button
             type="button"
             className="text-white bg-red-500 hover:bg-red-700  px-4 py-2"
-            onClick={() => setImageFile(null)} 
+            onClick={() => setImageFile(null)}
           >
             Cancel
           </button>

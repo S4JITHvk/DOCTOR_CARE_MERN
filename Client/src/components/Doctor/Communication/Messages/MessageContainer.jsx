@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";

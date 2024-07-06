@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Api from "../../API/DoctorCareApi";
+import { Link } from "react-router-dom";
 import { isEmailValid, isEmpty } from "../../helpers/validation";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";
-import {googleLogin,userLogin} from "../../Services/Auth/userAuth"
+import { googleLogin, userLogin } from "../../Services/Auth/userAuth";
 function Login() {
-  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const [errors, setErrors] = useState({});
   const [errormsg, setErrorMessage] = useState("");
   useEffect(() => {
@@ -33,7 +30,7 @@ function Login() {
   const googleAuth = async (data) => {
     const { email, name } = data;
     try {
-      googleLogin(email, name )
+      googleLogin(email, name);
     } catch (error) {
       const { status, data } = error.response;
       if (status) setErrorMessage(data.message);
@@ -55,16 +52,16 @@ function Login() {
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-           const response=await  userLogin(formData)
-           console.log(response,"response")
-           if (response.status === 200) {
-            const { token } = response.data;
-            document.cookie = `token=${token}`;
-            window.location.reload();
-          }else {
+      const response = await userLogin(formData);
+      console.log(response, "response");
+      if (response.status === 200) {
+        const { token } = response.data;
+        document.cookie = `token=${token}`;
+        window.location.reload();
+      } else {
         if (response.error) {
           const { status, data } = response.error;
-          console.log(status,"status")
+          console.log(status, "status");
           if (status === 404) {
             toast.error(data.message);
             setErrorMessage(data.message);
@@ -149,8 +146,8 @@ function Login() {
                 </label>
                 <div className="text-sm">
                   <Link
-                    to="/emailform" 
-                    state={{ action: "User_forgot_pass" }} 
+                    to="/emailform"
+                    state={{ action: "User_forgot_pass" }}
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
@@ -208,7 +205,12 @@ function Login() {
           </p>
           <p className="mt-5 text-center text-lg text-gray-500">
             Back to home?
-            <Link to="/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Home</Link>
+            <Link
+              to="/"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Home
+            </Link>
           </p>
         </div>
       </div>

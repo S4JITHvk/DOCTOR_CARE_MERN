@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { useLocation } from 'react-router-dom';
-import {validateOtp,resendOtp} from "../../../Services/Auth/userAuth"
+import { useLocation } from "react-router-dom";
+import { validateOtp, resendOtp } from "../../../Services/Auth/userAuth";
 function Otp() {
-  const navigate=useNavigate()
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const navigate = useNavigate();
+  const [otp, setOtp] = useState(["", "", "", ""]);
   const [errors, setErrors] = useState(Array(4).fill(false));
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [resendEnabled, setResendEnabled] = useState(false);
   const [timer, setTimer] = useState(60);
   const location = useLocation();
-
- 
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -32,14 +30,13 @@ function Otp() {
       setOtp(newOtp);
       setErrors((prevErrors) => {
         const newErrors = [...prevErrors];
-        newErrors[index] = false; 
+        newErrors[index] = false;
         return newErrors;
       });
-     
     } else {
       setErrors((prevErrors) => {
         const newErrors = [...prevErrors];
-        newErrors[index] = true; 
+        newErrors[index] = true;
         return newErrors;
       });
     }
@@ -47,61 +44,72 @@ function Otp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const enteredOtp = otp.join('');
+    const enteredOtp = otp.join("");
     if (enteredOtp.length < 4) {
-      setErrorMessage('Please enter a 4-digit OTP');
-      setErrors(Array(4).fill(true)); 
+      setErrorMessage("Please enter a 4-digit OTP");
+      setErrors(Array(4).fill(true));
       return;
     }
-      const {state}=location
-      if (state && (state.action === "User_forgot_pass" || state.action === "Doctor_forgot_pass")){
-        const email=state.email
-        const response =await validateOtp(enteredOtp,state);
-        if(response.status===200){
-          navigate("/Resetpass",{state:{email,action:response.data.message}})
-        }else if(response.status===400) {
-          setErrorMessage("Otp Not Matched! Request denied");
-        }
-      }else{
-      const response = await validateOtp(enteredOtp,state)
+    const { state } = location;
+    if (
+      state &&
+      (state.action === "User_forgot_pass" ||
+        state.action === "Doctor_forgot_pass")
+    ) {
+      const email = state.email;
+      const response = await validateOtp(enteredOtp, state);
       if (response.status === 200) {
-        toast.success(response.data.message)
-        navigate('/');
-      } else if(response.status===400) {
+        navigate("/Resetpass", {
+          state: { email, action: response.data.message },
+        });
+      } else if (response.status === 400) {
+        setErrorMessage("Otp Not Matched! Request denied");
+      }
+    } else {
+      const response = await validateOtp(enteredOtp, state);
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        navigate("/");
+      } else if (response.status === 400) {
         setErrorMessage("Otp Not Matched! Request denied");
       }
     }
   };
-  
+
   const handleResend = async () => {
-    const {state}=location
+    const { state } = location;
     setTimer(20);
     setResendEnabled(false);
-      const response =await resendOtp(state)
-      if (response.status === 200) {
-        toast.success("OTP successfully resent.");
-      } else {
-        toast.error("Failed to resend OTP.");
-      }
+    const response = await resendOtp(state);
+    if (response.status === 200) {
+      toast.success("OTP successfully resent.");
+    } else {
+      toast.error("Failed to resend OTP.");
+    }
   };
-  
 
   return (
     <div
       className="flex min-h-screen justify-center items-center"
       style={{
         backgroundImage: `url('/public/assets/bg.jpg')`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
     >
       <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-white p-8 rounded-md shadow-lg">
-        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">MIND CARE</h1>
-        <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Enter OTP</h2>
+        <h1 className="text-2xl font-bold text-center text-red-500 mb-6">
+          MIND CARE
+        </h1>
+        <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">
+          Enter OTP
+        </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
-          {errorMessage && <div className="text-red-500 text-xs mb-4 ml-5">{errorMessage}</div>}
+          {errorMessage && (
+            <div className="text-red-500 text-xs mb-4 ml-5">{errorMessage}</div>
+          )}
           <div className="flex justify-center">
             {otp.map((value, index) => (
               <div key={index} className="relative">
@@ -111,7 +119,7 @@ function Otp() {
                   value={value}
                   onChange={(e) => handleChange(index, e.target.value)}
                   className={`w-10 h-10 text-center border rounded-md focus:outline-none focus:ring focus:ring-indigo-500 ml-2 ${
-                    errors[index] ? 'border-red-500' : ''
+                    errors[index] ? "border-red-500" : ""
                   }`}
                 />
               </div>
@@ -130,7 +138,7 @@ function Otp() {
             disabled={!resendEnabled}
             className="text-indigo-500 hover:underline focus:outline-none"
           >
-            Resend OTP {resendEnabled ? '' : `(${timer}s)`}
+            Resend OTP {resendEnabled ? "" : `(${timer}s)`}
           </button>
         </div>
       </div>

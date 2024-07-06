@@ -7,7 +7,6 @@ const initialState = {
   loading: false, 
   error: null 
 };
-
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -22,7 +21,5 @@ const userSlice = createSlice({
     }
   }
 });
-
 export const { setUser, clearUser} = userSlice.actions;
-
 export default userSlice.reducer;

@@ -5,17 +5,12 @@ function Doctors({ Appointments }) {
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [bookings, setBookings] = useState([]);
-
   useEffect(() => {
     const fetchDoctors = async () => {
-      try {
         const response = await fetch_doctorlist();
         if (response.status === 200) {
           setDoctors(response.data.data);
         }
-      } catch (error) {
-        console.error("Error fetching doctors:", error);
-      }
     };
     setBookings(Appointments);
     fetchDoctors();
@@ -24,14 +19,12 @@ function Doctors({ Appointments }) {
   const handleDoctorSelect = (doctor) => {
     setSelectedDoctor(doctor);
   };
-
   const getCompletedBookingsPerMonth = (bookings, doctorId) => {
     const completedBookings = bookings.filter(
       (booking) =>
         booking.status === "Completed" && booking.doctorId._id === doctorId
     );
     const bookingsPerMonth = {};
-
     completedBookings.forEach((booking) => {
       const month = new Date(booking.date).toLocaleString("default", {
         month: "long",
@@ -45,7 +38,6 @@ function Doctors({ Appointments }) {
 
     return bookingsPerMonth;
   };
-
   const completedBookingsPerMonth = selectedDoctor
     ? getCompletedBookingsPerMonth(bookings, selectedDoctor._id)
     : {};
@@ -116,5 +108,4 @@ function Doctors({ Appointments }) {
     </div>
   );
 }
-
 export default Doctors;

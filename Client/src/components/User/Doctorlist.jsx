@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation  } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   MdOutlineKeyboardDoubleArrowLeft,
   MdOutlineKeyboardDoubleArrowRight,
   MdFavoriteBorder,
   MdFavorite,
-  MdComment
+  MdComment,
 } from "react-icons/md";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSelector,useDispatch } from "react-redux";
-import {doctorList,userbooking,add_favdoctor,addreview} from "../../Services/User/userService"
-import fetchUser from "../../Services/usersFetch"
+import { useSelector, useDispatch } from "react-redux";
+import {
+  doctorList,
+  userbooking,
+  add_favdoctor,
+  addreview,
+} from "../../Services/User/userService";
+import fetchUser from "../../Services/usersFetch";
 import ReviewModal from "./Review/ReviewModal";
 Modal.setAppElement("#root");
 
 function DoctorList() {
   const location = useLocation();
   const User = useSelector((state) => state.user);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const { Doctor } = location.state || {};
   const [doctors, setDoctors] = useState([]);
   const [experienceFilter, setExperienceFilter] = useState("");
@@ -61,29 +66,28 @@ function DoctorList() {
     };
     fetchDoctorDetails();
   }, [Doctor]);
-  
 
   const fetchDoctors = async () => {
-      const data= {
-       currentPage,
-        itemsPerPage,
-        experienceFilter,
-        genderFilter,
-        searchQuery,
-      }
-      const response =await doctorList(data)
-      setDoctors(response.data.Doctors);
-      setTotalPages(response.data.totalPages);
+    const data = {
+      currentPage,
+      itemsPerPage,
+      experienceFilter,
+      genderFilter,
+      searchQuery,
+    };
+    const response = await doctorList(data);
+    setDoctors(response.data.Doctors);
+    setTotalPages(response.data.totalPages);
   };
 
   const getDoctorBookings = async (doctorId) => {
-      const response = await userbooking(doctorId)
-      const formattedBookings = response.data.List.map((booking) => ({	
-        ...booking,	
-        date: new Date(booking.date),	
-      }));
-      setDoctorBookings(formattedBookings);
-      setDoctorSlots(response.data.Slots);
+    const response = await userbooking(doctorId);
+    const formattedBookings = response.data.List.map((booking) => ({
+      ...booking,
+      date: new Date(booking.date),
+    }));
+    setDoctorBookings(formattedBookings);
+    setDoctorSlots(response.data.Slots);
   };
 
   const handlePageChange = (page) => {
@@ -96,7 +100,7 @@ function DoctorList() {
     setIsModalOpen(true);
   };
   const handlereview = async (doctor) => {
-    setSelectedDoctor(doctor)
+    setSelectedDoctor(doctor);
     setreviewModalOpen(true);
   };
 
@@ -118,19 +122,19 @@ function DoctorList() {
     setSelectedShift("");
   };
 
-  const handleFavoriteToggle = async(doctor) => {
-    const response=await add_favdoctor(doctor,User.user?._id)
-    if(response.status===200){
-    setFavoriteDoctors((prevFavorites) => {
-      if (prevFavorites.includes(doctor._id)) {
-        return prevFavorites.filter((id) => id !== doctor._id);
-      } else {
-        return [...prevFavorites, doctor._id];
-      }
-    });
-    fetchUser(dispatch)
-    toast.success(response.data?.message)
-  }
+  const handleFavoriteToggle = async (doctor) => {
+    const response = await add_favdoctor(doctor, User.user?._id);
+    if (response.status === 200) {
+      setFavoriteDoctors((prevFavorites) => {
+        if (prevFavorites.includes(doctor._id)) {
+          return prevFavorites.filter((id) => id !== doctor._id);
+        } else {
+          return [...prevFavorites, doctor._id];
+        }
+      });
+      fetchUser(dispatch);
+      toast.success(response.data?.message);
+    }
   };
   const filteredDoctors = doctors?.filter((doctor) => {
     return (
@@ -155,7 +159,7 @@ function DoctorList() {
     );
     return isBooked || isInSlots;
   };
- 
+
   return (
     <div className="flex">
       <div className="w-1/4 p-6 bg-gray-100 h-screen sticky top-0">
@@ -228,8 +232,11 @@ function DoctorList() {
                 </p>
                 <p className="text-gray-500">GENDER : {doctor.gender}</p>
                 <div className="flex justify-between mt-4">
-                  <button  onClick={() => handlereview(doctor)} className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700">
-                  <MdComment  />
+                  <button
+                    onClick={() => handlereview(doctor)}
+                    className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700"
+                  >
+                    <MdComment />
                   </button>
                   <button
                     onClick={() => handleFavoriteToggle(doctor)}
@@ -238,7 +245,7 @@ function DoctorList() {
                     {favoriteDoctors.includes(doctor._id) ? (
                       <MdFavorite className="text-red-500" />
                     ) : (
-                      <MdFavoriteBorder  />
+                      <MdFavoriteBorder />
                     )}
                   </button>
                   <button
