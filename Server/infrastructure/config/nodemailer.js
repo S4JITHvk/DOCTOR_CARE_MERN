@@ -10,7 +10,6 @@ const transporter = nodemailer.createTransport({
 const sendMail = (mailOptions) => {
     transporter.sendMail(mailOptions).then(() => {
         console.log('Email sent successfully. Message ID:');
-
     }).catch((error) => {
         console.error('Error sending email:', error);
         throw new Error('Error sending email')

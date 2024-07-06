@@ -96,8 +96,10 @@ export const addreview=async(text,userId,doctorId)=>{
 }
 export const fetchreview=async(id)=>{
     try{
+        if(id){
         const response = await Api.get(`/fetch-review/${id}`);
           return response
+        }
     }catch(err){
         console.log("Error in fetch review Api",err.message)
     }

@@ -18,7 +18,7 @@ function Achievements() {
                 <div className="boder-2 h-1 w-20 bg-gray-300"></div>
               </div>
               <p className="text-sm text-white font-thin">
-                Lorem ipsum dolor sit amet consectetur adipisicing.
+                MIND CARE IS HERE TO HEAR YOU
               </p>
             </div>
           </div>
@@ -37,13 +37,12 @@ function Achievements() {
               <div className="boder-2 h-1 w-20 bg-gray-300"></div>
             </div>
             <p className="text-center text-sm font-thin mt-4">
-              Lorem ipsum dolor sit amet.
+            Our dedicated team of doctors is committed to providing the highest quality care to our patients.
             </p>
             <p className="text-center text-sm text-gray-700 mt-8">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt,
-              quod laborum alias. Vitae dolorum, officia sit! Saepe ullam facere
-              at, consequatur incidunt, quae esse, quis ut reprehenderit
-              dignissimos, libero delectus.
+            With a blend of expertise and compassion, our doctors have made significant strides in advancing medical treatments. 
+            Their achievements include pioneering new surgical techniques, contributing to groundbreaking research, and earning recognition from esteemed medical institutions worldwide.
+             We take pride in their relentless pursuit of excellence and their unwavering commitment to improving patient outcomes.
             </p>
           </div>
           <div className="md:p-8 flex justify-center">

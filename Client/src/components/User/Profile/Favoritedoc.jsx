@@ -56,8 +56,8 @@ function Favoritedoc() {
                       <h3 className="text-lg font-semibold text-blue-800">
                         DR {doctor.name}
                       </h3>
-                      {/* <p className="text-gray-700">EXPERTISE : {doctor.expertise}</p>
-                      <p className="text-gray-500">EXPERIENCE : {doctor.experience_years} years</p> */}
+                      <p className="text-gray-700"> {doctor.expertise}</p>
+                      {/* <p className="text-gray-500">EXPERIENCE : {doctor.experience_years} years</p> */}
                       <p className="text-gray-500">GENDER : {doctor.gender}</p>
                       <div className="flex mt-4">
                         {/* <button className="px-2 py-1 bg-black text-white rounded hover:bg-blue-700">

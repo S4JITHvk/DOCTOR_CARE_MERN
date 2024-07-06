@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-
 const slotSchema = new Schema({
   doctorId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -19,7 +18,5 @@ const slotSchema = new Schema({
     },
   ],
 });
-
 const Slot = mongoose.model('Slot', slotSchema);
-
 module.exports = Slot;

@@ -1,5 +1,4 @@
 const mongoose=require('mongoose')
-
 const OTPschema= mongoose.Schema({
     email:String,
     otp:String,
@@ -7,5 +6,4 @@ const OTPschema= mongoose.Schema({
     expireAt:Date
 })
 const OTP =mongoose.model("OTP",OTPschema);
-
 module.exports=OTP;

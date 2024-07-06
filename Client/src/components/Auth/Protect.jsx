@@ -7,6 +7,7 @@ export default function Protect({ role }) {
   const user = useSelector((state) => state.user);
   const token = Cookies.get("token");
   const isAuth = token && user?.user && user.user?.role === role && user.user?.is_banned!==true || false;
+  const istokenUser=token && user?.user 
   return <>{isAuth ? <Outlet /> : <Navigate to="/" />}</>;
 }
 

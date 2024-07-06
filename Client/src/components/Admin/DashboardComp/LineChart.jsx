@@ -52,7 +52,6 @@ function LineChart({ appointments }) {
     appointmentsByYear[year] += 1;
   });
 
-  // Generate datasets for each year
   const yearDatasets = years.map((year, index) => {
     const colors = [
       'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(75, 192, 192, 0.2)', 

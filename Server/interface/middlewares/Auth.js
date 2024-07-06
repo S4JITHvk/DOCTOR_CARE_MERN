@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../entities/User/usermodel");
+require("dotenv").config();
+const logger = require("../../util/Logger");
 const Auth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
@@ -8,14 +10,23 @@ const Auth = async (req, res, next) => {
       const data = await User.findById(verified.user);
       if (data) {
         if (data.role === "ADMIN") {
+          logger.info(`User ${data._id} authorized as ADMIN`);
           next();
         } else {
-          res.status(404).json({ message: "UnAuthorized!" });
+          logger.warn(`User ${data._id} unauthorized access attempt`);
+          res.status(404).json({ message: "Unauthorized!" });
         }
+      } else {
+        logger.warn("User not found for the given token");
+        res.status(404).json({ message: "User not found" });
       }
+    } else {
+      logger.warn("No token found in cookies");
+      res.status(401).json({ message: "No token provided" });
     }
   } catch (e) {
-    console.log(e.message);
+    logger.error("Error in authentication middleware: " + e.message);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

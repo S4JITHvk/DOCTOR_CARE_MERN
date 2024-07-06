@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const bookingSchema = new mongoose.Schema({
   doctorId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -42,7 +41,5 @@ const bookingSchema = new mongoose.Schema({
     }
   }
 }, { timestamps: true });
-
 const Booking = mongoose.model('Booking', bookingSchema);
-
 module.exports = Booking;

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const reviewSchema = new Schema({
   doctorId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -25,7 +24,5 @@ const reviewSchema = new Schema({
     },
   ],
 });
-
 const Review = mongoose.model('Review', reviewSchema);
-
 module.exports = Review;
