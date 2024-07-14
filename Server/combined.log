@@ -25,3 +25,10 @@
 {"level":"info","message":"Messages retrieved for conversation between 665ffbdd940b9c33cfa2fb95 and 666006428225e18f4f2281dd","timestamp":"2024-07-06T14:05:34.962Z"}
 {"level":"info","message":"Messages retrieved for conversation between 665ffbdd940b9c33cfa2fb95 and 666006428225e18f4f2281dd","timestamp":"2024-07-06T14:05:41.783Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-06T14:15:49.993Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-10T07:08:47.062Z"}
+{"level":"info","message":"Successfully logged in user in googleAuth","timestamp":"2024-07-10T07:08:56.720Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-10T07:08:58.590Z"}
+{"level":"info","message":"Data retrieved for action 'fetchDoctorForUsers' with id '665ffbdd940b9c33cfa2fb95'","timestamp":"2024-07-10T07:09:18.347Z"}
+{"level":"info","message":"Messages retrieved for conversation between 665ffbdd940b9c33cfa2fb95 and 666006428225e18f4f2281dd","timestamp":"2024-07-10T07:09:22.314Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-10T13:25:24.062Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-10T15:28:30.664Z"}

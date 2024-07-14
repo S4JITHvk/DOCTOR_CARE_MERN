@@ -170,12 +170,12 @@ function DoctorProfile() {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="font-bold text-fuchsia-600 underline ml-10 text-lg">
+            {/* <div className="font-bold text-fuchsia-600 underline ml-10 text-lg">
               PERSONAL DETAILS
             </div>
             <div className="font-bold text-fuchsia-600 underline ml-10 text-lg">
               PROFESSIONAL DETAILS
-            </div>
+            </div> */}
             <div className="mb-6">
               <label
                 htmlFor="name"
