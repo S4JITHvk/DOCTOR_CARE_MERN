@@ -1,0 +1,1 @@
+import{D as s}from"./index-DDg8tmzP.js";const e=async r=>{try{return await s.post("/doctor/signup",r)}catch(o){console.log("Error in doctorSignup Api",o.message)}},n=async r=>{try{return await s.post("/doctor/login",r)}catch(o){return{error:o.response}}};export{n as a,e as d};
