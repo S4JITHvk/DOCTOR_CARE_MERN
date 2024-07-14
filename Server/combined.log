@@ -32,3 +32,205 @@
 {"level":"info","message":"Messages retrieved for conversation between 665ffbdd940b9c33cfa2fb95 and 666006428225e18f4f2281dd","timestamp":"2024-07-10T07:09:22.314Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-10T13:25:24.062Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-10T15:28:30.664Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T05:45:52.651Z"}
+{"level":"info","message":"Successfully logged in user in googleAuth","timestamp":"2024-07-14T05:46:13.835Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-14T05:46:16.112Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:46:38.250Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:48:05.487Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:48:09.128Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:48:52.201Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:05.213Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:08.490Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:09.297Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:22.929Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:25.127Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:25.313Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:25.490Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:26.389Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:26.574Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:26.743Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:38.785Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:41.490Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:41.512Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-14T05:49:50.105Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T05:49:53.867Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-14T05:50:42.699Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T05:50:45.166Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T05:50:45.208Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T05:50:46.561Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T05:50:46.762Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T05:51:03.404Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-14","timestamp":"2024-07-14T05:51:03.557Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T05:51:05.551Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-14T05:51:05.645Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T05:51:10.099Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T05:51:10.199Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T05:51:13.266Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T05:52:18.269Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T05:52:18.369Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T05:58:09.555Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T05:58:10.245Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T05:58:10.357Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-14T06:04:32.954Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-14T06:04:34.259Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:04:34.914Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:04:34.923Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-14T06:04:34.970Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:04:34.981Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:04:35.117Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:04:35.170Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:05:07.424Z"}
+{"level":"info","message":"Fetched user list","timestamp":"2024-07-14T06:05:07.476Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:05:09.648Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:05:09.699Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:05:12.327Z"}
+{"level":"info","message":"Fetched booking list","timestamp":"2024-07-14T06:05:12.426Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:05:13.881Z"}
+{"level":"info","message":"Fetched cancelled bookings list","timestamp":"2024-07-14T06:05:13.978Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:05:15.708Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:05:15.713Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-14T06:05:15.762Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:05:15.770Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:05:15.919Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:05:15.977Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:10:16.108Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:10:16.118Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-14T06:10:16.162Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:10:16.170Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:10:16.365Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:10:16.532Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:11:28.667Z"}
+{"level":"info","message":"Fetched user list","timestamp":"2024-07-14T06:11:28.716Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:11:34.164Z"}
+{"level":"info","message":"Fetched approvals list","timestamp":"2024-07-14T06:11:34.218Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:11:39.398Z"}
+{"level":"info","message":"Fetched cancelled bookings list","timestamp":"2024-07-14T06:11:39.499Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:11:45.972Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:11:45.977Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-14T06:11:46.023Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:11:46.044Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:11:46.307Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:11:46.421Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:12:50.784Z"}
+{"level":"info","message":"Fetched user list","timestamp":"2024-07-14T06:12:50.832Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:12:52.150Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:12:52.207Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:12:53.216Z"}
+{"level":"info","message":"Fetched approvals list","timestamp":"2024-07-14T06:12:53.263Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:12:53.844Z"}
+{"level":"info","message":"Fetched booking list","timestamp":"2024-07-14T06:12:53.943Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:12:54.598Z"}
+{"level":"info","message":"Fetched cancelled bookings list","timestamp":"2024-07-14T06:12:54.692Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:12:55.486Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-14T06:13:11.048Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:13:11.671Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:13:11.707Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:13:12.103Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:13:12.208Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:15:41.073Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:15:41.347Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:15:41.449Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:16:24.367Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-14","timestamp":"2024-07-14T06:16:24.463Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:17:47.345Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-14","timestamp":"2024-07-14T06:17:47.441Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:18:36.659Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-14T06:18:37.829Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-14T06:18:57.171Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:19:13.624Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-14T06:19:13.719Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:19:25.796Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:19:25.894Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:21:57.193Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-14","timestamp":"2024-07-14T06:21:57.288Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:22:01.854Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-14T06:22:01.949Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:22:09.113Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:22:09.210Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:25:52.219Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:26:25.570Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-14T06:26:28.941Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:26:56.169Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:26:56.312Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:29:31.302Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-14","timestamp":"2024-07-14T06:29:31.410Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:29:56.430Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-14T06:29:56.529Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:30:58.411Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-14T06:30:58.513Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:31:01.468Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:31:01.593Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:31:04.630Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-14","timestamp":"2024-07-14T06:31:04.723Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:31:28.615Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-14","timestamp":"2024-07-14T06:31:28.710Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:31:30.253Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-14T06:31:30.350Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:31:32.207Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:31:32.305Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-14T06:31:46.689Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:31:47.976Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:34:34.764Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:34:40.341Z"}
+{"level":"info","message":"Successfully logged in user in googleAuth","timestamp":"2024-07-14T06:34:59.612Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-14T06:35:00.188Z"}
+{"level":"info","message":"Data retrieved for action 'fetchDoctorForUsers' with id '665ffbdd940b9c33cfa2fb95'","timestamp":"2024-07-14T06:35:30.133Z"}
+{"level":"info","message":"Messages retrieved for conversation between 665ffbdd940b9c33cfa2fb95 and 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:35:32.227Z"}
+{"level":"info","message":"Message sent from 665ffbdd940b9c33cfa2fb95 to 666006428225e18f4f2281dd: undefinedvoicemessages/voiceMessage-1720938938508-235230798.webm","timestamp":"2024-07-14T06:35:38.755Z"}
+{"level":"info","message":"Message sent from 665ffbdd940b9c33cfa2fb95 to 666006428225e18f4f2281dd: undefinedvoicemessages/voiceMessage-1720938956651-764176439.webm","timestamp":"2024-07-14T06:35:56.753Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:36:30.534Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-14T06:36:45.221Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:36:46.640Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:36:46.689Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:36:49.280Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:36:49.408Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:37:08.426Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-14T06:37:16.271Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-14T06:38:36.865Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:38:37.464Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-14T06:38:49.484Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-14T06:38:49.919Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:38:50.378Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:38:50.387Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-14T06:38:50.430Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:38:50.437Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:38:50.564Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:38:50.616Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:40:02.766Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:40:02.815Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:08.589Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:43:08.636Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:11.286Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:11.290Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-14T06:43:11.329Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:43:11.339Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:11.515Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:43:11.570Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:13.306Z"}
+{"level":"info","message":"Fetched user list","timestamp":"2024-07-14T06:43:13.356Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:14.980Z"}
+{"level":"info","message":"Fetched approvals list","timestamp":"2024-07-14T06:43:15.028Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:16.759Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:16.762Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-14T06:43:16.805Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:43:16.819Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-14T06:43:16.938Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-14T06:43:16.990Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:43:59.032Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-14T06:44:11.622Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:44:12.861Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:44:12.917Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:44:13.809Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:44:13.919Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:44:51.686Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:46:11.541Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:46:29.403Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:46:34.547Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-14T06:46:44.336Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:46:45.582Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:47:34.421Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:49:48.468Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-14T06:50:23.798Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-14T06:50:57.284Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:51:28.511Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:51:28.615Z"}
