@@ -39,7 +39,7 @@ export default function App() {
     }
 
     const initMeeting = async (element) => {
-      const appID = Appid;
+      const appID = Number(Appid);
       const serverSecret = ServerSecret;
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), randomID(5));
       const zp = ZegoUIKitPrebuilt.create(kitToken);

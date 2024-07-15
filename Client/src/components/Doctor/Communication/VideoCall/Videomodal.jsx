@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { FiPhoneOff } from "react-icons/fi";
 const Appid=import.meta.env.VITE_ZEGO_APPID
 const ServerSecret=import.meta.env.VITE_ZEGO_SECRETKEY
+
 function randomID(len) {
   let result = "";
   if (result) return result;
@@ -38,7 +39,7 @@ export default function App() {
   React.useEffect(() => {
     const initMeeting = async (element) => {
       // generate Kit Token
-      const appID = Appid;
+      const appID = Number(Appid);
       const serverSecret = ServerSecret;
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appID,
