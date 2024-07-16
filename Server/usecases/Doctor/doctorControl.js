@@ -111,7 +111,7 @@ const edit_profile = async (req, res) => {
           fs.unlinkSync(imagePath);
         }
       }
-      const path_image = process.env.HOST+ `profileimages/${req.file.filename}`;
+      const path_image = process.env.SERVER_HOST+ `profileimages/${req.file.filename}`;
       updateData.profile = path_image;
     }
     await DocQuery.profileUpdate(verified.doctor, updateData);

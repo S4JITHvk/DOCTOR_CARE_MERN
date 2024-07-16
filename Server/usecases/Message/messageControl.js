@@ -19,7 +19,7 @@ const sendMessage = async (req, res) => {
         }
         let newMessage;
         if (req.files.voiceMessage) {
-            const voicePath = process.env.HOST + `voicemessages/${req.files.voiceMessage[0].filename}`;
+            const voicePath = process.env.SERVER_HOST + `voicemessages/${req.files.voiceMessage[0].filename}`;
             newMessage = new Message({
                 senderId,
                 receiverId,
@@ -27,7 +27,7 @@ const sendMessage = async (req, res) => {
                 message: voicePath,
             });
         } else if (req.files.image) {
-            const imagePath = process.env.HOST + `images/${req.files.image[0].filename}`;
+            const imagePath = process.env.SERVER_HOST + `images/${req.files.image[0].filename}`;
             newMessage = new Message({
                 senderId,
                 receiverId,

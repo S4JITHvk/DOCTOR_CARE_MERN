@@ -217,7 +217,7 @@ const edit_profile = async (req, res) => {
         }
       }
       const path_image =
-        process.env.HOST+ `profileimages/${req.file.filename}`;
+        process.env.SERVER_HOST+ `profileimages/${req.file.filename}`;
       updateData.profile = path_image;
     }
     await Query.profileUpdate(verified.user, updateData);
@@ -311,7 +311,7 @@ const make_payment = async (req, res) => {
             currency: "inr",
             product_data: {
               name: "Appointment Payment",
-              images: [process.env.HOST+"assets/mindcare.jpg"],
+              images: [process.env.SERVER_HOST+"assets/mindcare.jpg"],
             },
             unit_amount: 49900,
           },
