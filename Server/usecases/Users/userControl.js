@@ -325,8 +325,8 @@ const make_payment = async (req, res) => {
         shift,
       },
       mode: "payment",
-      success_url: process.env.CLIENT_HOST+"payment-success",
-      cancel_url: process.env.CLIENT_HOST+"payment-cancel",
+      success_url: process.env.CLIENT_HOST+"/payment-success",
+      cancel_url: process.env.CLIENT_HOST+"/payment-cancel",
     });
     res.json({ session: session });
   } catch (e) {
