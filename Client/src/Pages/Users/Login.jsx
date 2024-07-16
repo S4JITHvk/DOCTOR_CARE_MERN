@@ -55,8 +55,6 @@ function Login() {
       const response = await userLogin(formData);
       console.log(response, "response");
       if (response.status === 200) {
-        const { token } = response.data;
-        document.cookie = `token=${token}`;
         window.location.reload();
       } else {
         if (response.error) {

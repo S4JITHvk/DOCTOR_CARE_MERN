@@ -4,16 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { clearUser } from "../../../ReduxStore/features/userSlice";
 import profilePlaceholder from "/assets/user.png";
-
+import {userLogout} from "../../../Services/Auth/userAuth"
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const location = useLocation();
-  const logout = () => {
+  const logout = async () => {
     try {
+      const response=await userLogout()
+      if(response.status===200){
       dispatch(clearUser());
-      Cookies.remove("token");
-      window.location.reload();
+      navigate("/login");
+      }
     } catch (err) {
       console.log(err);
     }

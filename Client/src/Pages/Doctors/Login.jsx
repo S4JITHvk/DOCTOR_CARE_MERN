@@ -31,8 +31,6 @@ function Login() {
     if (Object.keys(errors).length === 0) {
       const response = await doctorLogin(formData);
       if (response.status === 200) {
-        const { token } = response.data;
-        document.cookie = `doctortoken=${token}; path=/`;
         window.location.reload();
       } else {
         if (response.error) {

@@ -74,3 +74,11 @@ export const set_newpass = async (location, newPassword) => {
     console.log("Error in set_newpass Api", err.message);
   }
 };
+export const userLogout = async () => {
+  try {
+    const response = await Api.get("/logout");
+    return response;
+  } catch (error) {
+    return { error: error.response };
+  }
+};

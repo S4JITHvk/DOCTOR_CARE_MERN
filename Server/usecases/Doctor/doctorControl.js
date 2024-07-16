@@ -62,7 +62,8 @@ const Doctor_login = async (req, res) => {
           { expiresIn: "30d" }
         );
         logger.info(`Doctor ${email} logged in successfully`);
-        res.status(200).json({ token: token, message: "successfully Logined.." });
+        res.cookie('doctortoken', token, {httpOnly: true, sameSite:"none",secure:true })
+        res.status(200).json({ message: "successfully Logined.." });
       }
     }
   } catch (error) {
@@ -208,6 +209,15 @@ const fetch_doc = async (req, res) => {
     return res.status(500).json({ error: 'Failed to fetch appointments' });
   }
 };
+const Doctor_logout=async(req,res)=>{
+  try {
+    res.clearCookie('doctortoken', { httpOnly: true, sameSite:"none",secure:true });
+    res.status(200).json({message:"susccessfully logout"})
+  } catch (err) {
+    logger.error(`Error in looutcontroller: ${err.message}`);
+    res.status(500).json({ error: err.message });
+  }
+}
 module.exports = {
   Doctor_signup,
   Doctor_login,
@@ -218,5 +228,6 @@ module.exports = {
   cancel_booking,
   slot_update,
   update_booking,
-  fetch_doc
+  fetch_doc,
+  Doctor_logout
 };

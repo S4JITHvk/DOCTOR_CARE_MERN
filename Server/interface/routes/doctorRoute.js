@@ -7,6 +7,7 @@ const upload = multer({ storage: storage });
 const doctorAuth=require("../middlewares/doctorAuth")
 Router.post("/signup",DoctorControl.Doctor_signup)
 Router.post("/login",DoctorControl.Doctor_login)
+Router.get("/logout",DoctorControl.Doctor_logout)
 Router.get("/fetchdoctor",DoctorControl.fetch_doctor)
 Router.post('/editprofile',doctorAuth,upload.single('profilePic'),DoctorControl. edit_profile )
 Router.post('/deleteprofilepic',doctorAuth,DoctorControl.delete_propic)

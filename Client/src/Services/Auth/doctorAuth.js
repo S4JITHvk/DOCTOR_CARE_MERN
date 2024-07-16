@@ -15,3 +15,11 @@ export const doctorLogin = async (formData) => {
     return { error: error.response };
   }
 };
+export const doctorLogout = async () => {
+  try {
+    const response = await Api.get("/doctor/logout");
+    return response;
+  } catch (error) {
+    return { error: error.response };
+  }
+};

@@ -4,22 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { clearDoctor } from "../../ReduxStore/features/doctorSlice";
 import profilePlaceholder from "/assets/doctor.jpg";
-
+import {doctorLogout} from "../../Services/Auth/doctorAuth"
 function Doctorsidebar() {
   const navigate = useNavigate();
   const doctorData = useSelector((state) => state.doctor);
   const dispatch = useDispatch();
   const location = useLocation();
-  const logout = () => {
+  const logout = async () => {
     try {
+      const response=await doctorLogout()
+      if(response.status===200){
       dispatch(clearDoctor());
-      Cookies.remove("doctortoken");
-      navigate("/");
+      navigate("/doctor/login");
+      }
     } catch (err) {
       console.log(err);
     }
   };
-
   const getLinkClass = (path) => {
     return location.pathname === path
       ? "bg-blue-700 text-white py-2 px-4 rounded transition duration-300 ease-in-out"

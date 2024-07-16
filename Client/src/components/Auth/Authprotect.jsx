@@ -5,9 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function Authprotect({ role }) {
   const doctor = useSelector((state) => state.doctor);
-  const token = Cookies.get("doctortoken");
-  const isAuth = token && doctor?.doctor&& doctor.doctor?.role === role || false;
-  console.log(isAuth,"isauth")
+  const isAuth =  doctor?.doctor&& doctor.doctor?.role === role || false;
   return <>{isAuth ? <Outlet /> : <Navigate to="/doctor/login" />}</>;
 }
 

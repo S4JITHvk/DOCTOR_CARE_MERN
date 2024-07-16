@@ -6,8 +6,7 @@ import { clearUser } from "../../ReduxStore/features/userSlice";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { FaComments, FaUser } from "react-icons/fa";
 import profilePlaceholder from "/assets/user.png";
-import Cookies from "js-cookie";
-
+import {userLogout} from "../../Services/Auth/userAuth"
 const navigation = [
   { name: "Home", href: "/home" },
   { name: "Doctors", href: "/Doctors" },
@@ -25,11 +24,13 @@ function Header() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const logout = () => {
+  const logout = async () => {
     try {
+      const response=await userLogout()
+      if(response.status===200){
       dispatch(clearUser());
-      Cookies.remove("token");
       navigate("/login");
+      }
     } catch (err) {
       console.log(err);
     }

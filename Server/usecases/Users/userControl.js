@@ -46,6 +46,7 @@ const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const userExist = await Query.findbyEmail(email);
+
     if (!userExist) {
       logger.warn("User not found in userLogin");
       res.status(404).json({ message: "User not found" });
@@ -71,7 +72,8 @@ const userLogin = async (req, res) => {
       } else {
         const token = jwt.sign({ user: userExist._id }, process.env.JWT_SECRET, { expiresIn: "30d" });
         logger.info("Successfully logged in user in userLogin");
-        res.status(200).json({ token: token, message: "Successfully Logined.." });
+        res.cookie('token', token,{httpOnly: true, sameSite:"none",secure:true })
+        res.status(200).json({ message: "Successfully Logined.." });
       }
     }
   } catch (error) {
@@ -79,6 +81,7 @@ const userLogin = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 const forgetpassword = async (req, res) => {
   try {
@@ -186,7 +189,8 @@ const googleAuth = async (req, res) => {
     }
     const token = jwt.sign({ user: user._id }, process.env.JWT_SECRET, { expiresIn: "30d" });
     logger.info("Successfully logged in user in googleAuth");
-    res.status(200).json({ token: token, message: "Successfully logged in." });
+    res.cookie('token', token,{httpOnly: true, sameSite:"none",secure:true })
+    res.status(200).json({ message: "Successfully logged in." });
   } catch (e) {
     logger.error(`Error in googleAuth controller: ${e.message}`);
     res.status(500).json({ message: "An error occurred during authentication." });
@@ -381,6 +385,15 @@ const fetch_review= async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+const userLogout=async(req,res)=>{
+  try {
+    res.clearCookie('token', { httpOnly: true, sameSite:"none",secure:true });
+    res.status(200).json({message:"susccessfully logout"})
+  } catch (err) {
+    logger.error(`Error in looutcontroller: ${err.message}`);
+    res.status(500).json({ error: err.message });
+  }
+}
 module.exports = {
   userSignup,
   userLogin,
@@ -397,5 +410,6 @@ module.exports = {
   add_favorite,
   fetch_favoritedoctor,
   add_review,
-  fetch_review
+  fetch_review,
+  userLogout
 };

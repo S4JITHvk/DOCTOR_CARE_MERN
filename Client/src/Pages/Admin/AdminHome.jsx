@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import Cookies from "js-cookie";
+import {userLogout} from"../../Services/Auth/userAuth"
 import { clearUser } from "../../ReduxStore/features/userSlice";
 import profilePlaceholder from "/assets/admin.png";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +13,13 @@ function Sidebar() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const logout = () => {
+  const logout = async () => {
     try {
+      const response=await userLogout()
+      if(response.status===200){
       dispatch(clearUser());
-      Cookies.remove("token");
-      navigate("/");
+      navigate("/login");
+      }
     } catch (err) {
       console.log(err);
     }

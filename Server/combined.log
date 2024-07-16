@@ -234,3 +234,200 @@
 {"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-14T06:50:57.284Z"}
 {"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-14T06:51:28.511Z"}
 {"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-14T06:51:28.615Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-15T14:02:53.180Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:02:56.048Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-15T14:02:56.815Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-15T14:02:56.947Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-15T14:03:00.396Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-15T14:03:00.497Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-15T14:03:19.200Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-06","timestamp":"2024-07-15T14:03:19.353Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:03:21.732Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-15T14:03:47.165Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-15T14:03:47.358Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:03:48.252Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-15T14:03:48.764Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-15","timestamp":"2024-07-15T14:03:48.862Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-15T14:06:31.267Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-05","timestamp":"2024-07-15T14:06:31.419Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:06:35.929Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:06:35.939Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:07:28.779Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:07:30.644Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:07:30.756Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:07:48.828Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:07:48.880Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:07:50.789Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:07:51.848Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:07:51.932Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:08:25.342Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-15T14:08:32.528Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-15T14:08:32.822Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:08:54.715Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:08:54.790Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:08:57.551Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:08:58.654Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:08:58.669Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:10:08.015Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:10:08.060Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:10:11.617Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:10:14.233Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:10:14.289Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:10:41.256Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:10:41.311Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:10:43.384Z"}
+{"level":"info","message":"Data retrieved for action 'fetchUsersForDoctor' with id '666006428225e18f4f2281dd'","timestamp":"2024-07-15T14:10:44.557Z"}
+{"level":"info","message":"Messages retrieved for conversation between 666006428225e18f4f2281dd and 665ffbdd940b9c33cfa2fb95","timestamp":"2024-07-15T14:10:44.605Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:14:40.848Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-15T14:28:00.774Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:23:39.359Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:23:45.329Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:24:11.513Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:24:13.652Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:24:35.301Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:24:40.240Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:24:41.319Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:24:42.989Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:25:12.162Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:25:30.529Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:25:46.001Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:25:48.231Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:30:08.923Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:30:17.003Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:30:27.887Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:30:30.122Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:36:28.172Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:36:41.405Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:37:15.266Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:37:42.955Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:38:42.310Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:42:12.539Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:42:24.940Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:42:27.338Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-16T08:42:35.462Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:42:40.125Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:42:54.018Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:42:58.895Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-16T08:43:00.650Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-16T08:43:00.659Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-16T08:43:00.771Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-16T08:43:00.782Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-16T08:43:01.074Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-16T08:43:01.163Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:43:32.391Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:16.513Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:20.451Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:24.428Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:26.425Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:28.040Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:28.462Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:32.344Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:32.432Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:33.421Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:37.432Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:42.427Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:43.425Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:44.846Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:45.458Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:46.459Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:48.477Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:49.518Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:50.420Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:51.752Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:51:53.432Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:02.884Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:06.426Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:11.540Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:12.525Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:15.432Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:16.513Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:17.820Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:18.449Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:19.432Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:28.419Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:29.429Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:32.438Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:33.421Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:35.588Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:36.962Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:37.430Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:38.452Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:39.421Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:41.482Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:43.423Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:52:51.672Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:53:02.224Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:53:55.557Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:54:43.690Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:54:58.315Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:54:58.664Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:59:13.558Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T08:59:17.515Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T08:59:35.747Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T08:59:38.180Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:02:23.334Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T09:02:37.602Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:02:39.753Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:11:39.501Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:11:45.208Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-16T09:12:08.819Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-16T09:12:11.663Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:14:49.061Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:17:59.948Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T09:18:07.267Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:18:09.622Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:24:35.409Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:24:39.358Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T09:25:28.115Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:25:31.046Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:29:20.759Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:29:37.110Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:29:42.092Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:30:57.264Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:31:10.943Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T09:31:21.569Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:31:23.892Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:38:31.827Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T09:52:41.559Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T09:53:01.039Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T09:53:03.824Z"}
+{"level":"error","message":"Error in looutcontroller: response is not defined","timestamp":"2024-07-16T10:03:20.918Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:05:38.727Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T10:05:55.505Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T10:05:57.793Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-16T10:07:18.855Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-16T10:10:27.347Z"}
+{"level":"info","message":"Data retrieved for action 'fetchDoctorForUsers' with id '665ffbdd940b9c33cfa2fb95'","timestamp":"2024-07-16T10:10:31.528Z"}
+{"level":"info","message":"Messages retrieved for conversation between 665ffbdd940b9c33cfa2fb95 and 666006428225e18f4f2281dd","timestamp":"2024-07-16T10:10:33.230Z"}
+{"level":"info","message":"Messages retrieved for conversation between 665ffbdd940b9c33cfa2fb95 and 666006428225e18f4f2281dd","timestamp":"2024-07-16T10:10:37.542Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:11:30.922Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T10:11:57.043Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T10:11:59.108Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:12:02.137Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T10:14:00.827Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T10:14:03.748Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:14:09.407Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:14:11.485Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:16:56.914Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:17:01.832Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-16T10:21:21.826Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-16T10:21:25.053Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-16T10:21:26.483Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-16T10:21:26.627Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-16T10:22:42.303Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-16T10:22:44.566Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-16T10:22:45.232Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-16T10:22:45.353Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:22:49.670Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T10:22:55.832Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T10:22:57.996Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:23:00.890Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-16T10:23:09.255Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-16T10:23:11.626Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-16T10:23:12.574Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-16T10:23:12.589Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-16T10:23:12.625Z"}
+{"level":"info","message":"Fetched all bookings list","timestamp":"2024-07-16T10:23:12.789Z"}
+{"level":"info","message":"User 663f1b82129804eefc3f889c authorized as ADMIN","timestamp":"2024-07-16T10:23:13.210Z"}
+{"level":"info","message":"Fetched doctor list","timestamp":"2024-07-16T10:23:13.261Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-16T10:23:18.394Z"}

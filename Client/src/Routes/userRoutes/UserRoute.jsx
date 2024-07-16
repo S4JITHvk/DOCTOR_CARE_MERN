@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { useEffect } from "react";
 const Home = lazy(() => import("../../Pages/Users/Home"));
 const Login = lazy(() => import("../../Pages/Users/Login"));
 const Signup = lazy(() => import("../../Pages/Users/Signup"));
@@ -23,7 +24,17 @@ import Authenticate from "../../components/Auth/Authenticate";
 import RedirectToCall from "../../components/User/Communication/VideoCall/Videomodal";
 import Protect from "../../components/Auth/Protect";
 import Loader from "../../components/Loader/Loader";
+import fetchUser from "../../Services/usersFetch";
+import { useDispatch, useSelector } from "react-redux";
 function UserRoute() { 
+  const User = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!User.user) {
+      console.log("here calling")
+      fetchUser(dispatch);
+    }
+  }, [User]);
   return (
     <>
 <Suspense fallback={<Loader />}>
