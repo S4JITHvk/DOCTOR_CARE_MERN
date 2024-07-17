@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'react-modal';
 import {fetch_bookinglist} from "../../Services/Admin/adminService"
+import Loader from "../User/Loader"
 Modal.setAppElement('#root');
 
 function BookingList() {
@@ -80,7 +81,7 @@ function BookingList() {
         </div>
       </div>
       {loading ? (
-        <p className="text-center text-lg">Loading...</p>
+        <Loader/>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">

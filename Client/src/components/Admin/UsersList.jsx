@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { MdOutlineKeyboardDoubleArrowLeft,MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
 import Swal from 'sweetalert2';
 import {fetch_userlist,userban,userSoftdelete} from "../../Services/Admin/adminService"
+import Loader from "../User/Loader"
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -73,7 +74,7 @@ function UsersList() {
   };
   
   if (isLoading) {
-    return <><h1>Fetching users...</h1></>;
+    return <Loader/>
   }
 
   return (

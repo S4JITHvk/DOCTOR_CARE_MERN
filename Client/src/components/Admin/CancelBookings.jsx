@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MdOutlineKeyboardDoubleArrowLeft, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import Swal from 'sweetalert2';
 import {cancel_booking,fetchcancelled_booking} from "../../Services/Admin/adminService"
+import Loader from "../User/Loader"
 function CancelBookings() {
   const [cancelledBookings, setCancelledBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -71,7 +72,7 @@ function CancelBookings() {
   };
   
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <Loader/>
   }
 
   return (

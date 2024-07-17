@@ -3,6 +3,7 @@ import toast from "react-hot-toast"
 import Swal from 'sweetalert2';
 import { MdOutlineKeyboardDoubleArrowLeft,MdOutlineKeyboardDoubleArrowRight } from "react-icons/md"
 import {fetchdoctor_approvalist,verify_doctor} from "../../Services/Admin/adminService"
+import Loader from "../User/Loader"
 function Modal({ isVisible, onClose, doctor }) {
   if (!isVisible) return null;
 
@@ -166,11 +167,7 @@ function Approvals() {
   };
 
   if (isLoading) {
-    return (
-      <>
-        <h1>Fetching Lists...</h1>
-      </>
-    );
+    return <Loader/>
   }
 
   return (
