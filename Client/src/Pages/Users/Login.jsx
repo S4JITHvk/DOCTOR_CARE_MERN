@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";
 import { googleLogin, userLogin } from "../../Services/Auth/userAuth";
+
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -12,6 +13,7 @@ function Login() {
   });
   const [errors, setErrors] = useState({});
   const [errormsg, setErrorMessage] = useState("");
+
   useEffect(() => {
     if (errormsg || errors) {
       const timer = setTimeout(() => {
@@ -21,12 +23,14 @@ function Login() {
       return () => clearTimeout(timer);
     }
   }, [errormsg, errors]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
   const googleAuth = async (data) => {
     const { email, name } = data;
     try {
@@ -37,6 +41,7 @@ function Login() {
       toast.error(data.message);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
@@ -82,137 +87,109 @@ function Login() {
   };
 
   return (
-    <>
-      <div
-        className="flex min-h-full flex-col justify-center px-10 py-12 lg:px-8"
-        style={{
-          backgroundImage: `url('/assets/bg.jpg')`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          paddingBottom: "10rem",
-        }}
-      >
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
-            MIND CARE
-          </h1>
-          <h2 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          {errormsg && (
-            <p className="mt-1 text-center text-red-500 text-lg font-bold">
-              {errormsg}
-            </p>
-          )}
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  autoComplete="email"
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                    errors.email ? "border-red-500" : ""
-                  }`}
-                />
-                {errors.email && (
-                  <p className="mt-1 text-red-500 text-sm">{errors.email}</p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <Link
-                    to="/emailform"
-                    state={{ action: "User_forgot_pass" }}
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  autoComplete="current-password"
-                  className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
-                    errors.password ? "border-red-500" : ""
-                  }`}
-                />
-                {errors.password && (
-                  <p className="mt-1 text-red-500 text-sm">{errors.password}</p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-          <div className="flex flex-col items-center">
-            <p className="text-center text-sm text-gray-500">OR</p>
-            <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                const decoded = jwtDecode(credentialResponse.credential);
-                googleAuth(decoded);
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md transform transition-all duration-500 hover:scale-105">
+        <h1 className="text-3xl font-bold text-center text-indigo-600 mb-6">
+          MIND CARE
+        </h1>
+        <h2 className="text-xl font-semibold text-center text-gray-700 mb-6">
+          Sign in to your account
+        </h2>
+        {errormsg && (
+          <p className="text-center text-red-500 font-semibold mb-4">
+            {errormsg}
+          </p>
+        )}
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              autoComplete="email"
+              className={`mt-1 block w-full px-3 py-2 border ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-2">{errors.email}</p>
+            )}
           </div>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?
-            <Link
-              to="/usersignup"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          <div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <Link
+                to="/emailform"
+                state={{ action: "User_forgot_pass" }}
+                className="text-sm text-indigo-600 hover:text-indigo-500"
+              >
+                Forgot password?
+              </Link>
+            </div>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="current-password"
+              className={`mt-1 block w-full px-3 py-2 border ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-2">{errors.password}</p>
+            )}
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
             >
-              Sign Up
-            </Link>
-          </p>
-          <p className="mt-5 text-center text-lg text-gray-500">
-            Back to home?
-            <Link
-              to="/"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Home
-            </Link>
-          </p>
+              Sign in
+            </button>
+          </div>
+        </form>
+        <div className="flex flex-col items-center mt-6">
+          <p className="text-gray-500">OR</p>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              const decoded = jwtDecode(credentialResponse.credential);
+              googleAuth(decoded);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+            className="mt-4"
+          />
         </div>
+        <p className="mt-6 text-center text-sm text-gray-500">
+          Not a member?{" "}
+          <Link
+            to="/usersignup"
+            className="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Sign Up
+          </Link>
+        </p>
+        <p className="mt-4 text-center text-sm text-gray-500">
+          Back to home?{" "}
+          <Link
+            to="/"
+            className="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Home
+          </Link>
+        </p>
       </div>
-    </>
+    </div>
   );
 }
 
