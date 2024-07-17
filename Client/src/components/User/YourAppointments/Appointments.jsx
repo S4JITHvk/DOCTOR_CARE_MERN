@@ -7,6 +7,7 @@ import {
   MdOutlineKeyboardDoubleArrowRight,
 } from "react-icons/md";
 import { yourBooking } from "../../../Services/User/userService";
+import Loader from "../Loader"
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -90,15 +91,6 @@ function Appointments() {
       </button>
     ));
   }
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
-      </div>
-    );
-  }
-
   if (error) {
     return <div className="text-red-500 text-center mt-4">Error: {error}</div>;
   }
@@ -113,6 +105,9 @@ function Appointments() {
               <h1 className="text-2xl font-bold mb-4">
                 {appointments.length ? "Your Appointments" : "You Have No Appointments"}
               </h1>
+              {loading ? ( 
+             <Loader />
+             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-300">
                   <thead>
@@ -168,6 +163,7 @@ function Appointments() {
                   </tbody>
                 </table>
               </div>
+             )}
               <div className="flex justify-center mt-4">
                 <button
                   onClick={handlePreviousPage}
