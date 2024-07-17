@@ -20,6 +20,7 @@ import {
 } from "../../Services/User/userService";
 import fetchUser from "../../Services/usersFetch";
 import ReviewModal from "./Review/ReviewModal";
+import Loader from "./Loader"; 
 Modal.setAppElement("#root");
 
 function DoctorList() {
@@ -27,6 +28,7 @@ function DoctorList() {
   const User = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { Doctor } = location.state || {};
+  const [loading, setLoading] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [experienceFilter, setExperienceFilter] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
@@ -66,8 +68,8 @@ function DoctorList() {
     };
     fetchDoctorDetails();
   }, [Doctor]);
-
   const fetchDoctors = async () => {
+    setLoading(true);
     const data = {
       currentPage,
       itemsPerPage,
@@ -78,6 +80,7 @@ function DoctorList() {
     const response = await doctorList(data);
     setDoctors(response.data.Doctors);
     setTotalPages(response.data.totalPages);
+    setLoading(false);
   };
 
   const getDoctorBookings = async (doctorId) => {
@@ -211,6 +214,9 @@ function DoctorList() {
         </div>
       </div>
       <div className="w-3/4 p-6">
+      {loading ? ( 
+          <Loader />
+        ) : (
         <div className="flex flex-wrap gap-6">
           {filteredDoctors?.map((doctor) => (
             <div
@@ -257,8 +263,9 @@ function DoctorList() {
                 </div>
               </div>
             </div>
-          ))}
+          ))} 
         </div>
+        )}
         <div className="mt-6 flex justify-center">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
