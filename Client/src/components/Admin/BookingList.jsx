@@ -61,7 +61,9 @@ function BookingList() {
         return ''; 
     }
   };
-  
+  if (loading) {
+    return <Loader/>
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -80,9 +82,6 @@ function BookingList() {
           />
         </div>
       </div>
-      {loading ? (
-        <Loader/>
-      ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -145,7 +144,6 @@ function BookingList() {
 
           </table>
         </div>
-      )}
       <div className="mt-4 flex justify-between">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
