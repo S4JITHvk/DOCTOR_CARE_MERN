@@ -8,14 +8,15 @@ import { useSelector } from "react-redux";
 
 function MessageContainer() {
   const { selectedConversation, setSelectedConversation } = useConversation();
-  const { onlineUsers, typingUsers, startTyping, stopTyping } =
-    useSocketContext();
+  const { onlineUsers, typingUsers, startTyping, stopTyping } = useSocketContext();
   const isOnline = onlineUsers.includes(selectedConversation?._id);
+
   useEffect(() => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
+
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col overflow-hidden">
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (
@@ -32,9 +33,7 @@ function MessageContainer() {
                   DR {selectedConversation?.name}
                 </h3>
                 <span className="text-sm text-gray-300">
-                  {typingUsers.some(
-                    (user) => user?.userId === selectedConversation?._id
-                  )
+                  {typingUsers.some((user) => user?.userId === selectedConversation?._id)
                     ? "Typing..."
                     : isOnline
                     ? "Online"
@@ -44,8 +43,12 @@ function MessageContainer() {
             </div>
           </div>
 
-          <Messages />
-          <MessageInput />
+          <div className="flex-1 overflow-y-auto">
+            <Messages />
+          </div>
+          <div className="p-4">
+            <MessageInput />
+          </div>
         </>
       )}
     </div>

@@ -13,9 +13,8 @@ const Doctorlayout = ({ children }) => {
   };
 
   useEffect(() => {
-    // Close sidebar whenever any render occurs
     setIsSidebarOpen(false);
-  }, [children, Doctor]); // Watch children and Doctor state changes
+  }, [children, Doctor]); 
 
   return (
     <div className="flex flex-col h-screen">
