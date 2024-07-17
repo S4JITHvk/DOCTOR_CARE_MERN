@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useConversation } from "../../../../Socket/zustand/useConversation";
 import { useSocketContext } from "../../../../Socket/Context/SocketContext";
@@ -15,8 +15,9 @@ import { useNavigate } from "react-router-dom";
 function MessageContainer({ bookingId }) {
   const navigate = useNavigate();
   const { selectedConversation, setSelectedConversation } = useConversation();
-  const { onlineUsers, typingUsers} = useSocketContext();
+  const { onlineUsers, typingUsers } = useSocketContext();
   const isOnline = onlineUsers.includes(selectedConversation?._id);
+
   const handleConsultationCompleted = async () => {
     try {
       const confirmed = await Swal.fire({
@@ -43,9 +44,11 @@ function MessageContainer({ bookingId }) {
       alert("Failed to mark consultation as completed");
     }
   };
+
   useEffect(() => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
+
   return (
     <div className="flex-1 flex flex-col">
       {!selectedConversation ? (
@@ -64,16 +67,17 @@ function MessageContainer({ bookingId }) {
                   {selectedConversation?.name}
                 </h3>
                 <span className="text-sm text-gray-300">
-                {typingUsers.some((user) => user?.userId === selectedConversation?._id)
-                  ? "Typing..."
-                  : isOnline
-                  ? "Online"
-                  : ""}
-              </span>
-              
+                  {typingUsers.some(
+                    (user) => user?.userId === selectedConversation?._id
+                  )
+                    ? "Typing..."
+                    : isOnline
+                    ? "Online"
+                    : ""}
+                </span>
               </div>
             </div>
-            {bookingId?.userId?._id===selectedConversation?._id && (
+            {bookingId?.userId?._id === selectedConversation?._id && (
               <div className="flex items-center gap-2">
                 <div>
                   <p className="text-sm text-gray-300">Consulting over?</p>
