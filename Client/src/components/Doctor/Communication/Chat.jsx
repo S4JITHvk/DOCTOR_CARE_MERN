@@ -23,8 +23,8 @@ function Chat() {
   return (
     <div className="flex h-[88vh] bg-gray-200 relative">
       <button
-        className={`absolute top-5 right-4 z-50 md:hidden p-2 rounded-full shadow-lg transition-transform ${
-          isSidebarOpen ? "bg-red-500" : "bg-blue-500"
+        className={`absolute top-[90px] right-4 z-50 md:hidden p-2 rounded-full shadow-lg transition-transform ${
+          isSidebarOpen ? "bg-red-500" : "bg-green-500"
         } text-white`}
         onClick={toggleSidebar}
       >

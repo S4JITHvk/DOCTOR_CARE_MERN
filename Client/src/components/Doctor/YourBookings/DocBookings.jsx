@@ -81,7 +81,7 @@ function DocBookings() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Appointments</h1>
         <div className="flex items-center space-x-2">
-          <p className="font-bold">Filter by date - </p>
+          <p className="font-bold">Select Date - </p>
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}

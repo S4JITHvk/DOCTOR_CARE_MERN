@@ -50,7 +50,7 @@ function MessageContainer({ bookingId }) {
   }, [setSelectedConversation]);
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col h-full">
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (
@@ -99,7 +99,9 @@ function MessageContainer({ bookingId }) {
               </div>
             )}
           </div>
-          <Messages />
+          <div className="flex-1 overflow-y-auto">
+            <Messages />
+          </div>
           <MessageInput />
         </>
       )}
