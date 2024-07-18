@@ -1,40 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { isEmailValid, isEmpty } from "../../helpers/validation";
-import { jwtDecode } from "jwt-decode";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { GoogleLogin } from "@react-oauth/google";
 import { googleLogin, userLogin } from "../../Services/Auth/userAuth";
+import { jwtDecode}  from "jwt-decode";
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm();
   const [errormsg, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (errormsg || errors) {
+    if (errormsg) {
       const timer = setTimeout(() => {
         setErrorMessage("");
-        setErrors({});
+        clearErrors();
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [errormsg, errors]);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  }, [errormsg, clearErrors]);
 
   const googleAuth = async (data) => {
     const { email, name } = data;
     try {
-      googleLogin(email, name);
+      await googleLogin(email, name);
+      window.location.reload();
     } catch (error) {
       const { status, data } = error.response;
       if (status) setErrorMessage(data.message);
@@ -42,47 +38,21 @@ function Login() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const errors = {};
-    if (!isEmailValid(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    if (isEmpty(formData.password)) {
-      errors.password = "Please enter your password";
-    }
-    if (isEmpty(formData.email)) {
-      errors.email = "Please enter Email.";
-    }
-    setErrors(errors);
-
-    if (Object.keys(errors).length === 0) {
-      const response = await userLogin(formData);
-      console.log(response, "response");
+  const onSubmit = async (data) => {
+    try {
+      const response = await userLogin(data);
       if (response.status === 200) {
         window.location.reload();
       } else {
-        if (response.error) {
-          const { status, data } = response.error;
-          console.log(status, "status");
-          if (status === 404) {
-            toast.error(data.message);
-            setErrorMessage(data.message);
-          } else if (status === 401) {
-            toast.error(data.message);
-            setErrorMessage(data.message);
-          } else if (status === 403) {
-            toast.error(data.message);
-            setErrorMessage(data.message);
-          } else {
-            console.error("Login failed:", error.message);
-            setErrorMessage("An error occurred while logging in");
-          }
-        } else {
-          console.error("Login failed:", error.message);
-          setErrorMessage("An error occurred while logging in");
+        const { status, data: errorData } = response.error;
+        if (status) {
+          setErrorMessage(errorData.message);
+          toast.error(errorData.message);
         }
       }
+    } catch (error) {
+      setErrorMessage("An error occurred while logging in");
+      toast.error("An error occurred while logging in");
     }
   };
 
@@ -100,7 +70,7 @@ function Login() {
             {errormsg}
           </p>
         )}
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email address
@@ -109,15 +79,14 @@ function Login() {
               id="email"
               name="email"
               type="email"
-              value={formData.email}
-              onChange={handleChange}
+              {...register("email", { required: "Please enter your email", pattern: { value: /^\S+@\S+$/i, message: "Please enter a valid email address" } })}
               autoComplete="email"
               className={`mt-1 block w-full px-3 py-2 border ${
                 errors.email ? "border-red-500" : "border-gray-300"
               } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-2">{errors.email}</p>
+              <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
             )}
           </div>
           <div>
@@ -137,15 +106,14 @@ function Login() {
               id="password"
               name="password"
               type="password"
-              value={formData.password}
-              onChange={handleChange}
+              {...register("password", { required: "Please enter your password" })}
               autoComplete="current-password"
               className={`mt-1 block w-full px-3 py-2 border ${
                 errors.password ? "border-red-500" : "border-gray-300"
               } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
             />
             {errors.password && (
-              <p className="text-red-500 text-sm mt-2">{errors.password}</p>
+              <p className="text-red-500 text-sm mt-2">{errors.password.message}</p>
             )}
           </div>
           <div>
