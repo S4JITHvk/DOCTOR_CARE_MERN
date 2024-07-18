@@ -202,18 +202,17 @@ function Doctorsignup() {
   };
   return (
     <>
-      <div
-        className="flex min-h-full justify-center px-10 py-12 lg:px-8"
-        style={{
-          backgroundImage: `url('/assets/bg.jpg')`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          paddingBottom: "9rem",
-        }}
-      >
+       <div
+      className="flex justify-center items-center px-10 py-12 lg:px-8"
+      style={{
+        background: "linear-gradient(135deg, #72EDF2, #5151E5)", 
+        paddingBottom: "10rem",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", 
+        borderRadius: "8px", 
+      }}
+    >
         <Toaster position="top-center" reverseOrder={false} />
-        <div className="sm:w-full sm:max-w-sm">
+        <div className="sm:w-full sm:max-w-md border-2 border-gray-200 bg-white rounded-md p-5">
           <h1 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
             MIND CARE
           </h1>

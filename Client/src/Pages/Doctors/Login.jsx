@@ -1,85 +1,61 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { isEmailValid, isEmpty } from "../../helpers/validation";
+import { useForm } from "react-hook-form";
 import { doctorLogin } from "../../Services/Auth/doctorAuth";
+
 function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [errormsg, setErrorMessage] = useState("");
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const errors = {};
-    if (!isEmailValid(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    if (isEmpty(formData.password)) {
-      errors.password = "Please enter your password";
-    }
-    if (isEmpty(formData.email)) {
-      errors.email = "Please enter Email.";
-    }
-    setErrors(errors);
-    if (Object.keys(errors).length === 0) {
-      const response = await doctorLogin(formData);
-      if (response.status === 200) {
-        window.location.reload();
-      } else {
-        if (response.error) {
-          const { status, data } = response.error;
-          if (status === 404) {
-            setErrorMessage(data.message);
-          } else if (status === 401) {
-            setErrorMessage(data.message);
-          } else if (status === 403) {
-            setErrorMessage(data.message);
-          } else {
-            console.error("Login failed:", error.message);
-            setErrorMessage("An error occurred while logging in");
-          }
+
+  const onSubmit = async (data) => {
+    const response = await doctorLogin(data);
+    if (response.status === 200) {
+      window.location.reload();
+    } else {
+      if (response.error) {
+        const { status, data } = response.error;
+        if (status === 404 || status === 401 || status === 403) {
+          setErrorMessage(data.message);
         } else {
-          console.error("Login failed:", error.message);
+          console.error("Login failed:", response.error.message);
           setErrorMessage("An error occurred while logging in");
         }
+      } else {
+        console.error("Login failed:", response.error.message);
+        setErrorMessage("An error occurred while logging in");
       }
     }
   };
-  return (
-    <>
-      <div
-        className="flex min-h-full flex-col justify-center px-10 py-12 lg:px-8"
-        style={{
-          backgroundImage: `url('/assets/bg.jpg')`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          paddingBottom: "10rem",
-        }}
-      >
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
-            MIND CARE
-          </h1>
-          <h2 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Login as a Doctor!.
-          </h2>
-        </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+  return (
+    <div
+      className="flex justify-center items-center px-10 py-12 lg:px-8"
+      style={{
+        background: "linear-gradient(135deg, #72EDF2, #5151E5)", 
+        paddingBottom: "10rem",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", 
+        borderRadius: "8px", 
+      }}
+    >
+      <div className="sm:w-full sm:max-w-sm border border-gray-300 rounded-lg overflow-hidden bg-white">
+        <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-red-500">
+          MIND CARE
+        </h1>
+        <h2 className="mt-15 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          Login as a Doctor!
+        </h2>
+
+        <div className="mt-10 p-6">
           {errormsg && (
             <p className="mt-1 text-center text-red-500 text-lg font-bold">
               {errormsg}
             </p>
           )}
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label
                 htmlFor="email"
@@ -92,15 +68,22 @@ function Login() {
                   id="email"
                   name="email"
                   type="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  {...register("email", {
+                    required: "Please enter Email.",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Please enter a valid email address",
+                    },
+                  })}
                   autoComplete="email"
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
                     errors.email ? "border-red-500" : ""
                   }`}
                 />
                 {errors.email && (
-                  <p className="mt-1 text-red-500 text-sm">{errors.email}</p>
+                  <p className="mt-1 text-red-500 text-sm">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -128,15 +111,18 @@ function Login() {
                   id="password"
                   name="password"
                   type="password"
-                  value={formData.password}
-                  onChange={handleChange}
+                  {...register("password", {
+                    required: "Please enter your password",
+                  })}
                   autoComplete="current-password"
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
                     errors.password ? "border-red-500" : ""
                   }`}
                 />
                 {errors.password && (
-                  <p className="mt-1 text-red-500 text-sm">{errors.password}</p>
+                  <p className="mt-1 text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -170,7 +156,7 @@ function Login() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

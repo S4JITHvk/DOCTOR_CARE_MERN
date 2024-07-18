@@ -626,3 +626,17 @@
 {"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-20","timestamp":"2024-07-17T12:26:32.092Z"}
 {"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-17T12:26:41.134Z"}
 {"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-20","timestamp":"2024-07-17T12:26:41.208Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T12:51:26.587Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T12:56:37.568Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T12:57:12.019Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T12:57:30.863Z"}
+{"level":"warn","message":"Wrong password in userLogin","timestamp":"2024-07-18T12:57:43.517Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-18T12:57:56.320Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-18T12:57:58.394Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T12:58:01.369Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:00:45.559Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:05:56.606Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:06:14.743Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:06:43.934Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:07:02.649Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:08:05.122Z"}
