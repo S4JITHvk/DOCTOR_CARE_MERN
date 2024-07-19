@@ -640,3 +640,11 @@
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:06:43.934Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:07:02.649Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:08:05.122Z"}
+{"level":"warn","message":"No token found in cookies","timestamp":"2024-07-18T13:12:16.332Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:22:00.956Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:22:07.298Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-18T13:41:28.219Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-18T13:41:29.565Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-18T13:41:30.152Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-18T13:41:30.300Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-18T13:41:32.964Z"}

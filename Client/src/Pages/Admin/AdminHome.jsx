@@ -63,42 +63,42 @@ function Sidebar() {
           <ul>
             <li className="mb-2">
               <div className={getLinkClass("/admin")}>
-                <Link to="/admin" className="block">
+                <Link to="/admin" >
                   DASHBOARD
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/admin/userList")}>
-                <Link to="/admin/userList" className="block">
+                <Link to="/admin/userList" >
                   PATIENTS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/admin/doctors")}>
-                <Link to="/admin/doctors" className="block">
+                <Link to="/admin/doctors">
                   DOCTORS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/admin/approvals")}>
-                <Link to="/admin/approvals" className="block">
+                <Link to="/admin/approvals">
                   APPROVALS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/admin/appointments")}>
-                <Link to="/admin/appointments" className="block">
+                <Link to="/admin/appointments" >
                   BOOKINGS
                 </Link>
               </div>
             </li>
             <li className="mb-2">
               <div className={getLinkClass("/admin/cancelled_bookings")}>
-                <Link to="/admin/cancelled_bookings" className="block">
+                <Link to="/admin/cancelled_bookings" >
                   CANCELLED BOOKINGS
                 </Link>
               </div>
