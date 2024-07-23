@@ -31,7 +31,6 @@ function UserRoute() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!User.user) {
-      console.log("here calling")
       fetchUser(dispatch);
     }
   }, [User]);

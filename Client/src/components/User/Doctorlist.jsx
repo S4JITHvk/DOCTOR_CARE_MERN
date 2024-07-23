@@ -8,9 +8,6 @@ import {
   MdComment,
 } from "react-icons/md";
 import toast from "react-hot-toast";
-import Modal from "react-modal";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   doctorList,
@@ -20,8 +17,8 @@ import {
 } from "../../Services/User/userService";
 import fetchUser from "../../Services/usersFetch";
 import ReviewModal from "./Review/ReviewModal";
-import Loader from "./Loader"; 
-Modal.setAppElement("#root");
+import Loader from "./Loader";
+import BookSlotModal from "./slots/Bookslot";
 
 function DoctorList() {
   const location = useLocation();
@@ -46,7 +43,7 @@ function DoctorList() {
   const [doctorBookings, setDoctorBookings] = useState([]);
   const [doctorSlots, setDoctorSlots] = useState([]);
   const [favoriteDoctors, setFavoriteDoctors] = useState([]);
-  const shifts = ["9am-10am", "11am-12pm", "2pm-3pm", "5pm-6pm", "8pm-9pm"];
+  const shifts = ["9am-10am", "10am-11am","11am-12pm", "2pm-3pm", "3pm-4pm", "4pm-5pm","5pm-6pm"];
 
   useEffect(() => {
     fetchDoctors();
@@ -68,6 +65,7 @@ function DoctorList() {
     };
     fetchDoctorDetails();
   }, [Doctor]);
+
   const fetchDoctors = async () => {
     setLoading(true);
     const data = {
@@ -102,6 +100,7 @@ function DoctorList() {
     await getDoctorBookings(doctor._id);
     setIsModalOpen(true);
   };
+
   const handlereview = async (doctor) => {
     setSelectedDoctor(doctor);
     setreviewModalOpen(true);
@@ -112,17 +111,14 @@ function DoctorList() {
     setSelectedDoctor(null);
     setSelectedShift("");
   };
+
   const handlereviewModalClose = () => {
     setreviewModalOpen(false);
     setSelectedDoctor(null);
   };
+
   const handleShiftSelect = (shift) => {
     setSelectedShift(shift);
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(new Date(date));
-    setSelectedShift("");
   };
 
   const handleFavoriteToggle = async (doctor) => {
@@ -139,6 +135,7 @@ function DoctorList() {
       toast.success(response.data?.message);
     }
   };
+
   const filteredDoctors = doctors?.filter((doctor) => {
     return (
       (experienceFilter === "" ||
@@ -214,57 +211,57 @@ function DoctorList() {
         </div>
       </div>
       <div className="w-3/4 p-6">
-      {loading ? ( 
+        {loading ? (
           <Loader />
         ) : (
-        <div className="flex flex-wrap gap-6">
-          {filteredDoctors?.map((doctor) => (
-            <div
-              key={doctor._id}
-              className="w-64 p-4 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-            >
-              <img
-                src={doctor.profile || "/assets/doc.png"}
-                alt={doctor.name}
-                className="w-full h-40 object-cover rounded-t-lg"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-blue-800">
-                  DR {doctor.name}
-                </h3>
-                <p className="text-gray-700">EXPERTISE : {doctor.expertise}</p>
-                <p className="text-gray-500">
-                  EXPERIENCE : {doctor.experience_years} years
-                </p>
-                <p className="text-gray-500">GENDER : {doctor.gender}</p>
-                <div className="flex justify-between mt-4">
-                  <button
-                    onClick={() => handlereview(doctor)}
-                    className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700"
-                  >
-                    <MdComment />
-                  </button>
-                  <button
-                    onClick={() => handleFavoriteToggle(doctor)}
-                    className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700 flex items-center"
-                  >
-                    {favoriteDoctors.includes(doctor._id) ? (
-                      <MdFavorite className="text-red-500" />
-                    ) : (
-                      <MdFavoriteBorder />
-                    )}
-                  </button>
-                  <button
-                    onClick={() => handleBookSlot(doctor)}
-                    className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700"
-                  >
-                    Book Slot
-                  </button>
+          <div className="flex flex-wrap gap-6">
+            {filteredDoctors?.map((doctor) => (
+              <div
+                key={doctor._id}
+                className="w-64 p-4 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+              >
+                <img
+                  src={doctor.profile || "/assets/doc.png"}
+                  alt={doctor.name}
+                  className="w-full h-40 object-cover rounded-t-lg"
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    DR {doctor.name}
+                  </h3>
+                  <p className="text-gray-700">EXPERTISE : {doctor.expertise}</p>
+                  <p className="text-gray-500">
+                    EXPERIENCE : {doctor.experience_years} years
+                  </p>
+                  <p className="text-gray-500">GENDER : {doctor.gender}</p>
+                  <div className="flex justify-between mt-4">
+                    <button
+                      onClick={() => handlereview(doctor)}
+                      className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700"
+                    >
+                      <MdComment />
+                    </button>
+                    <button
+                      onClick={() => handleFavoriteToggle(doctor)}
+                      className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700 flex items-center"
+                    >
+                      {favoriteDoctors.includes(doctor._id) ? (
+                        <MdFavorite className="text-red-500" />
+                      ) : (
+                        <MdFavoriteBorder />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => handleBookSlot(doctor)}
+                      className="px-3 py-2 bg-black text-white rounded hover:bg-blue-700"
+                    >
+                      Book Slot
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))} 
-        </div>
+            ))}
+          </div>
         )}
         <div className="mt-6 flex justify-center">
           <button
@@ -295,114 +292,21 @@ function DoctorList() {
         </div>
       </div>
 
-      {/* Modal */}
-      <Modal
+      {/* Book Slot Modal */}
+      <BookSlotModal
         isOpen={isModalOpen}
         onRequestClose={handleModalClose}
-        contentLabel="Book Slot Modal"
-        className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50"
-        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
-      >
-        {selectedDoctor && (
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-semibold mb-4 text-blue-800">
-              Book Slot
-            </h2>
-            <div className="flex items-center mb-4">
-              <img
-                src={selectedDoctor.profile || "/assets/doc.png"}
-                alt="Doctor Profile"
-                className="w-12 h-12 rounded-full mr-4"
-              />
-              <div>
-                <h3 className="text-lg font-semibold">
-                  DR {selectedDoctor.name}
-                </h3>
-                <p className="text-gray-700">
-                  EXPERTISE: {selectedDoctor.expertise}
-                </p>
-                <p className="text-gray-500">
-                  EXPERIENCE: {selectedDoctor.experience_years} years
-                </p>
-                <p className="text-gray-500">GENDER: {selectedDoctor.gender}</p>
-              </div>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2 font-medium">
-                Select Date
-              </label>
-              <DatePicker
-                selected={selectedDate}
-                onChange={handleDateChange}
-                minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
-                maxDate={new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)}
-                className="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-300"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-2 font-medium">
-                Available Shifts
-              </label>
-              <div className="grid grid-cols-2 gap-4">
-                {shifts.map((shift) => (
-                  <button
-                    key={shift}
-                    onClick={() => handleShiftSelect(shift)}
-                    className={`p-2 border rounded ${
-                      isSlotUnavailable(shift, selectedDate)
-                        ? "border-red-500 text-red-500 cursor-not-allowed"
-                        : selectedShift === shift
-                        ? "border-green-500 text-green-500"
-                        : "border-green-500"
-                    }`}
-                    disabled={isSlotUnavailable(shift, selectedDate)}
-                    title={
-                      isSlotUnavailable(shift, selectedDate)
-                        ? "Slot not available"
-                        : "Slot available"
-                    }
-                  >
-                    {shift}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <button
-                onClick={handleModalClose}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 mr-2"
-              >
-                Cancel
-              </button>
-              {selectedShift ? (
-                <Link
-                  to="/Payment_process"
-                  state={{
-                    selectedDoctor,
-                    selectedDate,
-                    selectedShift,
-                  }}
-                >
-                  <button
-                    onClick={handleModalClose}
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                  >
-                    Book
-                  </button>
-                </Link>
-              ) : (
-                <button
-                  onClick={handleModalClose}
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 opacity-50 cursor-not-allowed"
-                  disabled
-                >
-                  Book
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-      </Modal>
+        selectedDoctor={selectedDoctor}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        selectedShift={selectedShift}
+        handleShiftSelect={handleShiftSelect}
+        isSlotUnavailable={isSlotUnavailable}
+        shifts={shifts}
+        handleModalClose={handleModalClose}
+      />
+
+      {/* Review Modal */}
       <ReviewModal
         isOpen={reviewModalOpen}
         onClose={handlereviewModalClose}

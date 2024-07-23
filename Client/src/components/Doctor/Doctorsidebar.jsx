@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import { clearDoctor } from "../../ReduxStore/features/doctorSlice";
 import profilePlaceholder from "/assets/doctor.jpg";
 import {doctorLogout} from "../../Services/Auth/doctorAuth"
-import { removeSlots } from "../../ReduxStore/features/slotavailableSlice";
 function Doctorsidebar() {
   const navigate = useNavigate();
   const doctorData = useSelector((state) => state.doctor);
@@ -16,7 +15,6 @@ function Doctorsidebar() {
       const response=await doctorLogout()
       if(response.status===200){
       dispatch(clearDoctor());
-      dispatch(removeSlots())
       navigate("/doctor/login");
       }
     } catch (err) {

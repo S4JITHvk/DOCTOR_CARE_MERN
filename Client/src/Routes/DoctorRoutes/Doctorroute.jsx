@@ -8,7 +8,6 @@ import DoctorAuth from '../../components/Auth/DoctorAuth';
 import Doctorlayout from '../../Pages/Doctors/Doctorlayout'; 
 import fetchDoctor from "../../Services/Doctorfetch"
 import {clearDoctor} from "../../ReduxStore/features/doctorSlice"
-import { fetchSlotsAsync } from "../../ReduxStore/features/slotavailableSlice";
 const Doctorsignup = lazy(() => import('../../Pages/Doctors/Doctorsignup'));
 const Doctorslogin = lazy(() => import('../../Pages/Doctors/Login'));
 const Dashboard = lazy(() => import('../../Pages/Doctors/Dashboard'));
@@ -28,11 +27,6 @@ function Doctorroute() {
       fetchDoctor(dispatch);
     }  
   }, [dispatch]);
-  useEffect(() => {
-    if(Doctor.doctor){
-      dispatch(fetchSlotsAsync(Doctor.doctor?._id));
-    }  
-  }, [Doctor.doctor]);
   
   return (
     <Suspense fallback={<Loader />}>

@@ -117,31 +117,14 @@ const ban_cancel_booking = async (docId) => {
     throw new Error(e.message);
   }
 };
-const slotUpdate = async (doctorId, availability, startTime, endTime) => {
+const slotUpdate = async (doctorId, date, shifts) => {
   try {
-    const existingSlot = await Slot.findOne({ doctorId });
-    if (existingSlot) {
-      existingSlot.availability = availability;
-      existingSlot.availableTimeFrom = startTime;
-      existingSlot.availableTimeTo = endTime;
-      await existingSlot.save();
-    } else {
-      const slot = new Slot({
-        doctorId: doctorId,
-        availability: availability,
-        availableTimeFrom: startTime,
-        availableTimeTo: endTime,
-      });
-      await slot.save();
-    }
-  } catch (e) {
-    throw new Error(e.message);
-  }
-};
-const fetch_slots = async (doctorId) => {
-  try {
-   const response=await Slot.findOne({doctorId:doctorId})
-    return response
+    const slot = new Slot({
+      doctorId: doctorId,
+      date: date,
+      shifts: shifts,
+    });
+    await slot.save();
   } catch (e) {
     throw new Error(e.message);
   }
@@ -171,5 +154,4 @@ module.exports = {
   ban_cancel_booking,
   slotUpdate,
   fetch_dash,
-  fetch_slots
 };
