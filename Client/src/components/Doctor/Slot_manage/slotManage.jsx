@@ -1,143 +1,404 @@
-import React, { useState, useEffect } from "react";
-import "react-calendar/dist/Calendar.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useSelector } from "react-redux";
-import { Tooltip } from "react-tooltip";
+import React, { useEffect, useState } from "react";
 import {
-  slotUpdate,
-  fetchappointment,
-} from "../../../Services/Doctor/doctorService";
-function SlotManage() {
-  const getDate = new Date();
-  getDate.setDate(getDate.getDate() + 1);
-  const [selectedDate, setSelectedDate] = useState(
-    getDate.toISOString().split("T")[0]
-  );
-  const [selectedSlots, setSelectedSlots] = useState([]);
-  const [bookedSlots, setBookedSlots] = useState([]);
-  const [doctorUpdatedSlots, setDoctorUpdatedSlots] = useState([]);
-  const doctorData = useSelector((state) => state.doctor);
-  const slots = ["9am-10am", "11am-12pm", "2pm-3pm", "5pm-6pm", "8pm-9pm"];
-  const handleDateChange = (date) => {
-    const formattedDate = date.toISOString().split("T")[0];
-    setSelectedDate(formattedDate);
-    setSelectedSlots([]);
-    setBookedSlots([]);
-    setDoctorUpdatedSlots([]);
-  };
+  Box,
+  Typography,
+  Checkbox,
+  Button,
+  FormControlLabel,
+  Divider,
+} from "@mui/material";
+import { toast } from "react-hot-toast";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { styled } from "@mui/system";
+import { TimePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import { fetchSlotsAsync } from "../../../ReduxStore/features/slotavailableSlice";
+import Api from "../../../API/DoctorCareApi";
+import { RRule } from "rrule";
 
-  const toggleSlotSelection = (slot) => {
-    setSelectedSlots((prevSlots) =>
-      prevSlots.includes(slot)
-        ? prevSlots.filter((s) => s !== slot)
-        : [...prevSlots, slot]
-    );
-  };
+const daysOfWeek = [
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY",
+];
 
-  const handleSubmit = async () => {
-    const data = {
-      date: selectedDate,
-      slots: selectedSlots,
-      doctorId: doctorData.doctor._id,
-    };
-    const response = await slotUpdate(data);
-    if (response.status === 200) {
-      alert("Slots locked successfully");
-      setDoctorUpdatedSlots((prev) => [...prev, ...selectedSlots]);
-      setSelectedSlots([]);
-    } else {
-      alert("Failed to book slots");
-    }
-  };
+const AvailableDate = styled("div")(({ theme }) => ({
+  backgroundColor: "#76c7c0",
+  color: "white",
+  borderRadius: "50%",
+  padding: "0.5rem",
+}));
 
-  const fetchAppointments = async () => {
-    const doctorId = doctorData.doctor._id;
-    const response = await fetchappointment(selectedDate, doctorId);
-    if (response.status === 200) {
-      setBookedSlots(
-        response.data.appointments.map((appointment) => appointment.shift)
-      );
-      const updatedSlots = response.data.Slots[0]?.shifts || [];
-      setDoctorUpdatedSlots(updatedSlots);
-    } else {
-      console.error("Failed to fetch appointments");
-    }
-  };
-
+const AddAvailabilityForm = () => {
+  const Doctor = useSelector((state) => state.doctor.doctor);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [docslots,setdocslots]=useState([])
+  const dispatch = useDispatch();
+  const { slots } = useSelector((state) => state.slots);
   useEffect(() => {
-    fetchAppointments(selectedDate);
-  }, [selectedDate, doctorData.doctor._id]);
+    if (slots) {
+      const initialDays = slots.availability;
+      const initialStartTime = slots?.availableTimeFrom || null;
+      const initialEndTime = slots?.availableTimeTo || null;
+      const rule = RRule.fromString(`${initialDays}`);
+        const now = new Date();
+        const nextMonth = new Date();
+        nextMonth.setMonth(now.getMonth() + 1);
+        const availableslots = rule.between(now, nextMonth);
+        setdocslots(availableslots)
+      setStartTime(dayjs(initialStartTime));
+      setEndTime(dayjs(initialEndTime));
+      setIsEdit(false);
+    }
+  }, [slots]);
+
+  const handleCheckboxChange = (day) => {
+    const currentIndex = selectedDays.indexOf(day);
+    const newSelectedDays = [...selectedDays];
+
+    if (currentIndex === -1) {
+      newSelectedDays.push(day);
+    } else {
+      newSelectedDays.splice(currentIndex, 1);
+    }
+    setSelectedDays(newSelectedDays);
+  };
+
+
+  const isAvailableDate = (date, slots) => {
+    return slots.some(slot => {
+        const slotDate = new Date(slot);
+        const slotDay = slotDate.toLocaleString('en-US', { weekday: 'long' }).toUpperCase(); 
+        const dateDay = date.toLocaleString('en-US', { weekday: 'long' }).toUpperCase(); 
+        return slotDay === dateDay;
+    });
+};
+
+  const tileClassName = ({ date }) => {
+    return isAvailableDate(date, docslots) ? 'available-date' : '';
+  };
+
+  const tileContent = ({ date }) => {
+    if (isAvailableDate(date, docslots)) {
+      return <AvailableDate >{date.getDate()}</AvailableDate>;
+    }
+    return null;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if (selectedDays.length === 0) {
+        toast.error("Select at least one day");
+        return;
+      }
+      if (!startTime || !endTime) {
+        toast.error("Select a time");
+        return;
+      }
+      const rrule = `FREQ=WEEKLY;BYDAY=${selectedDays
+        .map((day) => day.slice(0, 2))
+        .join(",")}`;
+      const response = await Api.post("/doctor/slotupdate", {
+        doctorId: Doctor._id,
+        availability: rrule,
+        startTime: startTime.toISOString(),
+        endTime: endTime.toISOString(),
+      });
+      if (response.status === 200) {
+        toast.success("Available Days successfully added");
+        dispatch(fetchSlotsAsync(Doctor?._id));
+        setIsEdit(false);
+      } else {
+        toast.error("Something went wrong. Try again!");
+      }
+    } catch (error) {
+      console.error("Error adding availability:", error);
+    }
+  };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Manage Slots</h1>
-      <div className="mb-4">
-        <h1 className="font-bold mt-5">SELECT DATE</h1>
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleDateChange}
-          minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
-          maxDate={new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)}
-          className="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-300"
-        />
-      </div>
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold mb-2">Available Slots</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {slots.map((slot) => (
-            <div
-              key={slot}
-              data-tooltip-id={slot}
-              data-tooltip-content={
-                doctorUpdatedSlots.includes(slot)
-                  ? "This slot is locked"
-                  : "This slot is already booked by the patient"
-              }
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Box
+        sx={{
+          backgroundColor: "gray",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "center",
+          minHeight: "95vh",
+          pb: 8,
+        }}
+      >
+        {!isEdit ? (
+        <Box
+        sx={{
+          width: "60rem",
+          backgroundColor: "white",
+          maxWidth: "90%",
+          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
+          borderRadius: "0.6rem",
+          display: "flex",
+          flexWrap: "wrap",
+          p: 3,
+          alignItems: "center",
+          justifyContent: "space-between",
+          transition: "box-shadow 0.3s ease-in-out",
+          "&:hover": {
+            boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: "45%",
+            maxHeight:"45%",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 3,
+            p: 2,
+            backgroundColor: "rgba(240, 240, 240, 0.5)",
+            borderRadius: "0.4rem",
+          }}
+        >
+          <Typography
+            sx={{
+              mt: 2,
+              mb: 2,
+              color: 'black',
+              fontSize: '1.2rem',
+              fontWeight: 700,
+            }}
+          >
+            Days and Time You Preferred
+          </Typography>
+          <Calendar
+            tileClassName={({ date }) => tileClassName({ date })}
+            tileContent={({ date }) => tileContent({ date })}
+          />
+        </Box>
+      
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: "40%",
+            maxHeight:"45%",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 3,
+            p: 2,
+            backgroundColor: "rgba(240, 240, 240, 0.5)",
+            borderRadius: "0.4rem",
+          }}
+        >
+          <Box sx={{ display: "flex", gap: 3, flexDirection: 'column', alignItems: 'center' }}>
+            <Typography
+              sx={{
+                mt: 0,
+                mb: 0,
+                color: "black",
+                fontSize: "1.2rem",
+                fontWeight: 700,
+              }}
             >
-              <button
-                onClick={() => toggleSlotSelection(slot)}
-                disabled={
-                  bookedSlots.includes(slot) ||
-                  doctorUpdatedSlots.includes(slot)
-                }
-                className={`p-4 w-48 rounded-lg border-2 transition duration-200 ease-in-out transform hover:scale-105 ${
-                  bookedSlots.includes(slot) ||
-                  doctorUpdatedSlots.includes(slot)
-                    ? "bg-gray-300 text-gray-700 cursor-not-allowed border-gray-400"
-                    : selectedSlots.includes(slot)
-                    ? "bg-blue-500 text-white border-blue-700"
-                    : "bg-white text-black border-gray-200 hover:bg-blue-100"
-                } ${
-                  doctorUpdatedSlots.includes(slot) ? "border-blue-500" : ""
-                }`}
+              Time you preferred: {dayjs(startTime).format('hh:mm A')} - {dayjs(endTime).format('hh:mm A')}
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "blue",
+                "&:hover": {
+                  backgroundColor: "#49873D",
+                  color: "white",
+                },
+                transition: "background-color 0.3s ease",
+                borderRadius: "0.4rem",
+                fontSize: "1rem",
+                fontWeight: 600,
+                padding: "0.5rem 1.5rem",
+              }}
+              onClick={() => setIsEdit(true)}
+            >
+              Update Availability
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+        ) : (
+          <Box
+            sx={{
+              width: "60rem",
+              backgroundColor: "white",
+              maxWidth: "90%",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 1.1)",
+              borderRadius: "0.6rem",
+              display: "flex",
+              flexWrap: "wrap",
+              p: 3,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                alignSelf: "start",
+                color: "#325343",
+                fontSize: "1rem",
+                fontWeight: 600,
+                mb: 2,
+              }}
+            >
+              Set your weekly available days and times. Changes will apply to
+              every week from now on. You can update your availability anytime.
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+                flexWrap: "wrap",
+                gap: "2.5rem",
+                width: "100%",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "flex-start",
+                  flexDirection: "column",
+                  width: "20rem",
+                  maxWidth: "90%",
+                }}
               >
-                {slot}
-              </button>
-              {(bookedSlots.includes(slot) ||
-                doctorUpdatedSlots.includes(slot)) && <Tooltip id={slot} />}
-            </div>
-          ))}
-        </div>
-      </div>
-      {selectedSlots.length > 0 && (
-        <button
-          onClick={handleSubmit}
-          className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition duration-200 ease-in-out transform hover:scale-105"
-        >
-          Submit
-        </button>
-      )}
-      {/* {deselectedSlots.length > 0 && (
-        <button
-          onClick={handledeselect}
-          className="px-6 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition duration-200 ease-in-out transform hover:scale-105"
-        >
-          Deselect
-        </button>
-      )} */}
-    </div>
-  );
-}
+                <Typography
+                  sx={{
+                    mb: 1,
+                    fontWeight: 600,
+                    color: "#325343",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Schedule your available days
+                </Typography>
+                <Divider sx={{ width: "80%" }} />
+                <Box
+                  sx={{
+                    display: "grid",
+                    p: 1,
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "8px",
+                    width: "30rem",
+                    maxWidth: "90%",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {daysOfWeek.map((day) => (
+                    <FormControlLabel
+                      key={day}
+                      control={
+                        <Checkbox
+                          checked={selectedDays.includes(day)}
+                          onChange={() => handleCheckboxChange(day)}
+                          color="success"
+                        />
+                      }
+                      label={day}
+                    />
+                  ))}
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "flex-start",
+                  flexDirection: "column",
+                  width: "20rem",
+                  maxWidth: "90%",
+                }}
+              >
+                <Typography
+                  sx={{
+                    alignSelf: "flex-start",
+                    mb: 1,
+                    color: "#325343",
+                    fontSize: "0.9rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  Schedule your available time
+                </Typography>
+                <Divider sx={{ width: "80%" }} />
+                <Typography
+                  sx={{
+                    mt: 2,
+                    color: "#325343",
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  Start time
+                </Typography>
+                <TimePicker
+                  views={["hours", "minutes"]}
+                  sx={{ width: "90%" }}
+                  value={startTime}
+                  onChange={(newTime) => setStartTime(dayjs(newTime))}
+                />
+                <Typography
+                  sx={{
+                    mt: 2,
+                    color: "#325343",
+                    fontSize: "0.9rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  End time
+                </Typography>
+                <TimePicker
+                  views={["hours", "minutes"]}
+                  sx={{ width: "90%" }}
+                  value={endTime}
+                  onChange={(newTime) => setEndTime(dayjs(newTime))}
+                />
+              </Box>
+            </Box>
+            <Divider sx={{ width: "100%", mb: 2 }} />
 
-export default SlotManage;
+            <Button
+              variant="contained"
+              sx={{
+                mt: 2,
+                backgroundColor: "#325343",
+                width: "10rem",
+                maxWidth: "90%",
+                "&:hover": {
+                  backgroundColor: "#49873D",
+                  color: "white",
+                },
+              }}
+              onClick={handleSubmit}
+            >
+              Add Availability
+            </Button>
+          </Box>
+        )}
+      </Box>
+    </LocalizationProvider>
+  );
+};
+
+export default AddAvailabilityForm;

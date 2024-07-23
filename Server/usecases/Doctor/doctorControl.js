@@ -174,15 +174,32 @@ const cancel_booking = async (req, res) => {
 };
 const slot_update = async (req, res) => {
   try {
-    const { doctorId, date, slots } = req.body;
-    await DocQuery.slotUpdate(doctorId, date, slots);
-    logger.info(`Slots updated for doctor ID ${doctorId} on ${date}`);
-    return res.status(200).json({ message: 'Slot locked successfully' });
+    const { doctorId,availability, startTime, endTime  } = req.body;
+    await DocQuery.slotUpdate(doctorId,availability, startTime, endTime);
+    logger.info(`Slots updated for doctor ID ${doctorId} `);
+    return res.status(200).json({ message: 'Success' });
   } catch (error) {
     logger.error("Error in slot_update: " + error.message);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+const fetchslots = async (req, res) => {
+  try {
+    const { doctorId } = req.params;
+    console.log(doctorId,"=>")
+    const slots = await DocQuery.fetch_slots(doctorId);
+    if (slots) {
+      logger.info(`Slots fetched for doctor ID ${doctorId}: slots=>${slots} `);
+      return res.status(200).json(slots);
+    } else {
+      return res.status(404).json({ error: "Slots not found" });
+    }
+  } catch (error) {
+    logger.error("Error in fetchslots: " + error.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const update_booking = async (req, res) => {
   try {
     const { bookingId } = req.params;
@@ -229,5 +246,6 @@ module.exports = {
   slot_update,
   update_booking,
   fetch_doc,
-  Doctor_logout
+  Doctor_logout,
+  fetchslots
 };

@@ -14,6 +14,7 @@ Router.post('/deleteprofilepic',doctorAuth,DoctorControl.delete_propic)
 Router.get('/appointments/:date/:doctorId',doctorAuth, DoctorControl.your_bookings);
 Router.post('/appointments/:id/cancel',doctorAuth,DoctorControl.cancel_booking)
 Router.post('/slotupdate',doctorAuth,DoctorControl.slot_update)
+Router.get('/fetchslots/:doctorId',doctorAuth,DoctorControl.fetchslots)
 Router.post('/consultation/:bookingId',doctorAuth,DoctorControl.update_booking)
 Router.get('/fetch-appointments/:id',doctorAuth,DoctorControl.fetch_doc)
 module.exports=Router
