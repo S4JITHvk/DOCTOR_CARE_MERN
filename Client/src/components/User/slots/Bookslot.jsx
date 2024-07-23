@@ -17,7 +17,7 @@ const BookSlotModal = ({
   handleShiftSelect,
   isSlotUnavailable,
   shifts,
-  handleModalClose
+  handleModalClose,
 }) => {
   const [doctorSlots, setDoctorSlots] = useState([]);
 
@@ -60,19 +60,31 @@ const BookSlotModal = ({
                 className="w-12 h-12 rounded-full mr-4"
               />
               <div>
-                <h3 className="text-lg font-semibold">DR {selectedDoctor.name}</h3>
-                <p className="text-gray-700">EXPERTISE: {selectedDoctor.expertise}</p>
-                <p className="text-gray-500">EXPERIENCE: {selectedDoctor.experience_years} years</p>
+                <h3 className="text-lg font-semibold">
+                  DR {selectedDoctor.name}
+                </h3>
+                <p className="text-gray-700">
+                  EXPERTISE: {selectedDoctor.expertise}
+                </p>
+                <p className="text-gray-500">
+                  EXPERIENCE: {selectedDoctor.experience_years} years
+                </p>
                 <p className="text-gray-500">GENDER: {selectedDoctor.gender}</p>
               </div>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2 font-medium">Select Date</label>
+              <label className="block text-gray-700 mb-2 font-medium">
+                Select Date
+              </label>
               <DatePicker
-                selected={selectedDate}
+                selected={new Date(selectedDate)}
                 onChange={handleDateChange}
                 minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
-                maxDate={new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)}
+                maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)}
+                filterDate={(date) =>
+                  date.getDay() !== 0 && date.getDay() !== 6
+                }
+                inline
                 className="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-300"
               />
             </div>
@@ -81,7 +93,9 @@ const BookSlotModal = ({
           {/* Right Column */}
           <div className="w-1/2 pl-4">
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2 font-medium">Available Shifts</label>
+              <label className="block text-gray-700 mb-2 font-medium">
+                Available Shifts
+              </label>
               <div className="grid grid-cols-2 gap-4">
                 {shifts.map((shift) => (
                   <button
@@ -96,7 +110,9 @@ const BookSlotModal = ({
                     }`}
                     disabled={isSlotUnavailable(shift, selectedDate)}
                     title={
-                      isSlotUnavailable(shift, selectedDate) ? "Slot not available" : "Slot available"
+                      isSlotUnavailable(shift, selectedDate)
+                        ? "Slot not available"
+                        : "Slot available"
                     }
                   >
                     {shift}

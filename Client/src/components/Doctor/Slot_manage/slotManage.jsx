@@ -20,7 +20,15 @@ function SlotManage() {
   const [bookedSlots, setBookedSlots] = useState([]);
   const [doctorUpdatedSlots, setDoctorUpdatedSlots] = useState([]);
   const doctorData = useSelector((state) => state.doctor);
-  const slots = ["9am-10am", "10am-11am", "11am-12pm", "2pm-3pm", "3pm-4pm", "4pm-5pm", "5pm-6pm"];
+  const slots = [
+    "9am-10am",
+    "10am-11am",
+    "11am-12pm",
+    "2pm-3pm",
+    "3pm-4pm",
+    "4pm-5pm",
+    "5pm-6pm",
+  ];
 
   const handleDateChange = (date) => {
     const formattedDate = date.toISOString().split("T")[0];
@@ -83,7 +91,8 @@ function SlotManage() {
               selected={new Date(selectedDate)}
               onChange={handleDateChange}
               minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
-              maxDate={new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)}
+              maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)}
+              filterDate={(date) => date.getDay() !== 0 && date.getDay() !== 6}
               inline
               className="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-300"
             />

@@ -1278,3 +1278,116 @@
 {"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:46:42.254Z"}
 {"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:46:43.605Z"}
 {"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:46:43.615Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:48:31.769Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:48:31.775Z"}
+{"level":"info","message":"Data retrieved for action 'fetchDoctorForUsers' with id '665ffbdd940b9c33cfa2fb95'","timestamp":"2024-07-23T05:55:08.090Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:55:11.004Z"}
+{"level":"info","message":"Data retrieved for action 'fetchDoctorForUsers' with id '665ffbdd940b9c33cfa2fb95'","timestamp":"2024-07-23T05:55:13.898Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:55:14.835Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:55:18.072Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:59:24.527Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:59:24.541Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:59:57.849Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T05:59:57.854Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:03:47.148Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:04:00.861Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:04:00.874Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:04:05.071Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:04:12.066Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-23T06:04:16.678Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-23T06:05:56.268Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-23T06:05:56.949Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:05:58.454Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:05:59.330Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-23T06:05:59.345Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-23T06:06:18.347Z"}
+{"level":"info","message":"Doctor sajithvk239@gmail.com logged in successfully","timestamp":"2024-07-23T06:06:30.059Z"}
+{"level":"info","message":"Doctor data fetched for ID 666006428225e18f4f2281dd","timestamp":"2024-07-23T06:06:30.648Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:06:31.004Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-23T06:06:31.047Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:06:32.228Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:06:32.308Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:12:31.293Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:12:31.369Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:12:47.692Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-26","timestamp":"2024-07-23T06:12:47.772Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:13:08.854Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-26","timestamp":"2024-07-23T06:13:08.938Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:16:07.757Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:16:07.838Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:16:26.564Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-26","timestamp":"2024-07-23T06:16:26.642Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:19:19.340Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-26","timestamp":"2024-07-23T06:19:19.419Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:19:37.466Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-27","timestamp":"2024-07-23T06:19:37.558Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:19:38.309Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-26","timestamp":"2024-07-23T06:19:38.388Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:19:39.186Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:19:39.264Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:21:21.026Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:21:21.104Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:21:21.873Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:21:21.951Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:21:50.254Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:21:50.335Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:21:56.452Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:21:56.531Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:01.485Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:01.563Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:02.700Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:02.781Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:04.461Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:04.538Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:05.488Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:05.565Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:06.961Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:07.054Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:21.444Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:21.522Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:23.636Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:23.717Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:24.497Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:24.576Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:26.092Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:26.174Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:26.543Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:26.622Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:33.456Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:33.532Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:35.438Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:35.516Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:35.776Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:35.856Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:37.195Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:37.276Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:42.570Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:42.652Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:43.924Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:44.004Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:48.487Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:48.693Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:49.101Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:49.175Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:55.486Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:55.564Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:56.469Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:56.546Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:22:59.159Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:22:59.250Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:25:04.118Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:25:04.194Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:28:50.586Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:28:50.676Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:30:32.474Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:30:32.565Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:30:52.797Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:30:52.875Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:31:05.581Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:31:05.660Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:31:12.833Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-26","timestamp":"2024-07-23T06:31:12.915Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:31:28.493Z"}
+{"level":"info","message":"Fetched dashboard appointments for doctor ID 666006428225e18f4f2281dd","timestamp":"2024-07-23T06:31:28.533Z"}
+{"level":"info","message":"Doctor 666006428225e18f4f2281dd authorized","timestamp":"2024-07-23T06:31:29.895Z"}
+{"level":"info","message":"Fetched bookings for doctor ID 666006428225e18f4f2281dd on 2024-07-24","timestamp":"2024-07-23T06:31:29.972Z"}
