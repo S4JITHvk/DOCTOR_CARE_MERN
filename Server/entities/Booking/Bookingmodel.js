@@ -22,6 +22,10 @@ const bookingSchema = new mongoose.Schema({
     type: String,
     default: 'Active' 
   },
+  reminderSent: {
+    type: Boolean,
+    default: false,
+  },
   payment: {
     chargeId: {
       type: String,

@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path = require('path');
 const connect = require("./infrastructure/config/mongodb");
-
+const cronJob=require("./util/Cron")
 const userRoute = require("./interface/routes/userRoute");
 const adminRoute = require("./interface/routes/adminRoute");
 const doctorRoute = require("./interface/routes/doctorRoute");
@@ -32,7 +32,7 @@ app.use('/api', userRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/doctor', doctorRoute);
 app.use('/api/message', messageRoute);
-
+cronJob()
 server.listen(process.env.PORT, () => console.log('listening on port ' + process.env.PORT));
 
 

@@ -8,7 +8,7 @@ import {
   slotUpdate,
   fetchappointment,
 } from "../../../Services/Doctor/doctorService";
-import "./SlotManage.css"; // Custom CSS for additional styling
+import "./SlotManage.css";
 
 function SlotManage() {
   const getDate = new Date();
