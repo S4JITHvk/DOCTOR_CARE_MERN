@@ -80,9 +80,9 @@ const BookSlotModal = ({
                 selected={new Date(selectedDate)}
                 onChange={handleDateChange}
                 minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
-                maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)}
-                filterDate={(date) =>
-                  date.getDay() !== 0 && date.getDay() !== 6
+                maxDate={new Date(Date.now() + 10 * 24 * 60 * 60 * 1000)}
+                filterDate={
+                  (date) => date.getDay() !== 0 && date.getDay() !== 6 
                 }
                 inline
                 className="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-blue-300"

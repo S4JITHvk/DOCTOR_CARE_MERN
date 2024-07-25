@@ -1432,3 +1432,15 @@
 {"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T05:26:19.656Z"}
 {"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T05:26:19.688Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-24T05:49:16.870Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-24T08:43:17.481Z"}
+{"level":"warn","message":"Wrong password in userLogin","timestamp":"2024-07-24T08:45:14.068Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-24T08:45:20.339Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-24T08:45:21.242Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T08:45:23.145Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T08:45:24.220Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T08:45:24.228Z"}
+{"level":"error","message":"Error in fetch_review controller: Error fetching doctor reviews: No reviews found for this doctor","timestamp":"2024-07-24T08:45:24.350Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T08:45:30.788Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T08:45:50.042Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-24T08:45:53.469Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-24T15:15:57.248Z"}
