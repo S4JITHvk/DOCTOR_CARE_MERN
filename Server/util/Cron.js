@@ -25,7 +25,7 @@ const getShiftStartTime = (date, shift) => {
   return shiftDateTime;
 };
 
-// Cron job to run every 1 minute
+
 const startCronJob = () => {
   cron.schedule('* * * * *', async () => {
     console.log('Cron job started at:', new Date());

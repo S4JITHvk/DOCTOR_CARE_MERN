@@ -194,7 +194,6 @@ function Doctorsignup() {
           });
         } else {
           const errorMessage =
-            response.data.message ||
             "Failed to register doctor. Please try again.";
           toast.error(errorMessage);
         }

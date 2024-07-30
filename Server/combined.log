@@ -1444,3 +1444,14 @@
 {"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-24T08:45:50.042Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-24T08:45:53.469Z"}
 {"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-24T15:15:57.248Z"}
+{"level":"warn","message":"Unauthorized request in fetchData: No token provided","timestamp":"2024-07-25T13:38:56.947Z"}
+{"level":"info","message":"Successfully logged in user in userLogin","timestamp":"2024-07-25T13:39:05.317Z"}
+{"level":"info","message":"Successfully fetched data in fetchData","timestamp":"2024-07-25T13:39:05.870Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:07.927Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:09.089Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:09.096Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:27.127Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:27.133Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:29.681Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:30.809Z"}
+{"level":"info","message":"User 665ffbdd940b9c33cfa2fb95 authorized","timestamp":"2024-07-25T13:39:30.817Z"}
