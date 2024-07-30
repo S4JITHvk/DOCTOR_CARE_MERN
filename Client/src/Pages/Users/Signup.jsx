@@ -5,7 +5,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useForm } from "react-hook-form";
 import { userSignup, googleLogin } from "../../Services/Auth/userAuth";
 import {  isPasswordValid } from "../../helpers/validation";
-import {jwtDecode} from "jwt-decode";
+
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
