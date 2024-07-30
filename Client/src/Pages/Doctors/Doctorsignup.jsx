@@ -186,7 +186,7 @@ function Doctorsignup() {
     event.preventDefault();
     const isValid = validateInputs();
     if (isValid) {
-        const response = doctorSignup(userData)
+        const response =await doctorSignup(userData)
         if (response.status === 200) {
           toast.success("Enter otp send to your mail");
           navigate("/otp", {
