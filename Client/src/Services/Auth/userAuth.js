@@ -14,8 +14,6 @@ export const googleLogin = async (email, name) => {
   try {
     const response = await Api.post("/google-login", { email, name });
     if (response.status === 200) {
-      const { token } = response.data;
-      document.cookie = `token=${token}`;
       window.location.reload();
     }
   } catch (err) {

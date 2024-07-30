@@ -30,7 +30,6 @@ function Login() {
     const { email, name } = data;
     try {
       await googleLogin(email, name);
-      window.location.reload();
     } catch (error) {
       const { status, data } = error.response;
       if (status) setErrorMessage(data.message);
